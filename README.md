@@ -11,3 +11,9 @@ Cada pestaña corresponde a un video e incluye:
 - Requisitos previos explicados de forma simple
 
 Es un único archivo `index.html` sin dependencias de compilación; se publica con GitHub Pages.
+
+## Cómo se actualiza
+
+1. Editar `src/laboratorio.html` (es la fuente; también se publica como artifact en claude.ai).
+2. Generar la página: `python3 build.py` (escribe `index.html`).
+3. Commit y push a `main`: GitHub Pages se vuelve a publicar solo.
