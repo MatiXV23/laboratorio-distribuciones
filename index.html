@@ -1,0 +1,1571 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Animaciones interactivas, ecuaciones comentadas y ejercicios resueltos de distribuciones discretas y continuas.">
+<title>Laboratorio de distribuciones</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=STIX+Two+Text:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: a lab notebook — sticky lesson/video switcher, then one panel per video: animated demos (canvas + controls) followed by worked exercises. */
+:root{
+  --bg:#F5F7FA; --surface:#FFFFFF; --ink:#16202E; --muted:#5A6577; --line:#DAE0E8; --grid:#E9EDF2;
+  --accent:#2F5BD3; --hit:#E0533C; --ok:#24946A; --tint:#EDF2FC; --tint-hit:#FDEDEA;
+  --f-display:'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --f-body:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono:'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0E131A; --surface:#161D27; --ink:#E5E9F0; --muted:#9AA4B3; --line:#2A3441; --grid:#212A36;
+  --accent:#7D9CF6; --hit:#FF7A62; --ok:#4CC390; --tint:#1A2435; --tint-hit:#33201D; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0E131A; --surface:#161D27; --ink:#E5E9F0; --muted:#9AA4B3; --line:#2A3441; --grid:#212A36;
+  --accent:#7D9CF6; --hit:#FF7A62; --ok:#4CC390; --tint:#1A2435; --tint-hit:#33201D; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1100px;margin:0 auto;padding-block:28px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-0.01em}
+h1{font-size:clamp(28px,4.6vw,42px);line-height:1.08;font-weight:700}
+h2{font-size:clamp(22px,3vw,28px);line-height:1.15;font-weight:600}
+h3{font-size:18px;line-height:1.25;font-weight:600}
+h4{font-size:16px;line-height:1.3;font-weight:600}
+p{margin:0}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.top{display:grid;gap:10px;margin-bottom:22px}
+.top p.lede{max-width:66ch;color:var(--muted)}
+
+/* nav */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:26px}
+.tabs-in{display:flex;gap:18px;overflow-x:auto;padding-block:10px;scrollbar-width:thin}
+.tgroup{display:flex;align-items:center;gap:6px;flex:none}
+.tgroup .gl{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px;white-space:nowrap}
+.tab{font:500 13px/1 var(--f-body);color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;white-space:nowrap}
+.tab:hover{border-color:var(--accent)}
+.tab[aria-current="page"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tab b{font-family:var(--f-mono);font-weight:500;margin-right:6px;opacity:.7}
+
+/* panel */
+.panel{display:grid;gap:22px}
+.ph{display:grid;gap:8px}
+.ph .lede{max-width:70ch;color:var(--muted)}
+.yt{font-size:13px;font-weight:500;width:max-content;max-width:100%}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:16px;min-width:0}
+.card-h{display:grid;gap:6px}
+.card-h p{color:var(--muted);max-width:75ch}
+.demo{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}
+@media (max-width:880px){.demo{grid-template-columns:minmax(0,1fr)}}
+.stage{display:grid;gap:8px;min-width:0}
+.cv{display:block;width:100%;height:280px;touch-action:manipulation}
+.cv.tall{height:330px}
+.cv.urn{height:300px}
+@media (max-width:560px){.cv{height:240px}.cv.tall{height:300px}.cv.urn{height:430px}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px}
+.sw.emp{background:var(--accent);opacity:.6}
+.sw.hit{background:var(--hit)}
+.sw.ok{border:2px solid var(--ok);border-radius:3px;width:10px;height:10px}
+.sw.theo{height:3px;width:14px;background:var(--ink);border-radius:1px}
+.sw.cmp{width:10px;height:10px;border:2px solid var(--muted);border-radius:50%}
+.sw.curve{height:3px;width:16px;background:var(--ink)}
+.sw.dash{height:0;width:16px;border-top:2px dashed var(--muted)}
+.side{display:grid;gap:16px;min-width:0}
+.ctl{display:grid;gap:12px}
+.field{display:grid;gap:4px}
+.field label,.field .lab{font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.field output,.num{font-family:var(--f-mono);font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font:500 13px/1 var(--f-body);padding:9px 13px;border-radius:8px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn:focus-visible,.tab:focus-visible,.chip:focus-visible,.seg button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip{font:500 12.5px/1.2 var(--f-body);padding:7px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--tint)}
+.seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:3px;border:1px solid var(--line);border-radius:9px}
+.side .seg{display:flex}
+.seg button{flex:1 1 auto;font:500 12.5px/1 var(--f-mono);padding:7px 9px;background:transparent;border:0;border-radius:6px;color:var(--ink);cursor:pointer;white-space:nowrap}
+.seg button:hover{background:var(--tint)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.sub{font-size:12px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin:0}
+.stats div{min-width:0}
+.stats dt{font-size:11.5px;color:var(--muted)}
+.stats dd{margin:0;font-family:var(--f-mono);font-size:14px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.stats .wide{grid-column:1/-1}
+.big{font-family:var(--f-display);font-size:30px;font-weight:600;line-height:1.1}
+.xl{font-family:var(--f-mono);font-size:12px;background:var(--tint);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:nowrap}
+.note{background:var(--tint);border-radius:8px;padding:10px 12px;font-size:13.5px}
+.note b{font-weight:600}
+.slots{display:flex;gap:8px}
+.slot{width:46px;height:46px;border-radius:8px;border:1.5px dashed var(--line);display:grid;place-items:center;font:600 15px var(--f-mono);color:var(--muted)}
+.slot.d{background:var(--hit);border:1.5px solid var(--hit);color:#fff}
+.slot.n{border:1.5px solid var(--ok);color:var(--ok)}
+.tbl-wrap{overflow-x:auto}
+table.seq{border-collapse:collapse;width:100%;font-size:12.5px;font-variant-numeric:tabular-nums}
+table.seq th{font-weight:500;color:var(--muted);text-align:left;padding:4px 6px;border-bottom:1px solid var(--line)}
+table.seq td{padding:4px 6px;border-bottom:1px solid var(--grid);font-family:var(--f-mono)}
+table.seq tr.cur td{background:var(--tint-hit)}
+.mini{display:inline-flex;gap:3px}
+.mini i{width:12px;height:12px;border-radius:3px;display:inline-block;border:1.5px solid var(--ok)}
+.mini i.d{background:var(--hit);border-color:var(--hit)}
+.steps{display:grid;gap:6px;font-size:13.5px}
+.steps .f{font-family:var(--f-mono);font-size:12.5px;overflow-x:auto;white-space:nowrap}
+.dieWrap{display:flex;align-items:center;gap:14px}
+#dice-die{width:84px;height:84px;flex:none}
+
+/* exercises */
+.exs{display:grid;gap:14px}
+.exs-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ex{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:grid;gap:12px;min-width:0}
+.ex-tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--hit)}
+.ex-q{max-width:78ch}
+.ex ol{margin:0;padding-left:22px;display:grid;gap:8px}
+.ex li{padding-left:4px;max-width:80ch}
+.ex li .f{display:block;font-family:var(--f-mono);font-size:13px;background:var(--tint);border-radius:6px;padding:6px 10px;margin-top:4px;overflow-x:auto;white-space:nowrap}
+.ex li.res{font-weight:600}
+.ex li.res .f{background:var(--tint-hit)}
+.ex .warn{font-size:13px;color:var(--muted)}
+/* intro, formulas, prerequisites */
+.jump{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.jump button{font:500 12px/1 var(--f-body);color:var(--muted);background:transparent;border:1px dashed var(--line);border-radius:999px;padding:6px 10px;cursor:pointer}
+.jump button:hover{color:var(--ink);border-color:var(--ink)}
+.sec-h{font-size:20px;padding-top:6px}
+.intro{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:820px){.intro{grid-template-columns:minmax(0,1fr)}}
+.intro .txt{display:grid;gap:10px;max-width:72ch}
+.intro .txt p{line-height:1.65}
+.intro aside{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:8px}
+.intro aside h4{font-size:14px}
+.intro aside ul{margin:0;padding-left:18px;display:grid;gap:5px;font-size:13.5px}
+.forms{display:grid;gap:14px}
+.fgroup{display:grid;gap:10px}
+.fgroup h4{font-size:15px;color:var(--muted);font-family:var(--f-mono);font-weight:500;letter-spacing:.03em;text-transform:uppercase}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+@media (max-width:420px){.fgrid{grid-template-columns:minmax(0,1fr)}}
+.fcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;align-content:start;min-width:0}
+.fcard .ft{font-weight:600;font-size:14px}
+.fbox{background:var(--tint);border-radius:8px;padding:10px 14px;overflow-x:auto}
+.math{font-family:'STIX Two Text','Cambria Math','Times New Roman',serif;font-size:19px;line-height:1.7;white-space:nowrap}
+.math sup,.math sub{font-size:.66em;line-height:0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .12em;font-size:.9em}
+.frac>span{padding:0 .25em;line-height:1.3}
+.frac>span:first-child{border-bottom:1px solid currentColor}
+.sum{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 .12em}
+.sum b{font-weight:400;font-size:1.35em}
+.sum small{font-size:.55em}
+.ov{border-top:1px solid currentColor;padding-top:1px}
+.fcard .fc{font-size:13.5px;color:var(--ink)}
+.fcard .fs{font-size:12.5px;color:var(--muted)}
+.fcard .fe{font-size:12.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:7px}
+.fcard .fe b{color:var(--ink);font-weight:600}
+.pre{display:grid;gap:12px}
+.pre-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+@media (max-width:420px){.pre-grid{grid-template-columns:minmax(0,1fr)}}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.pcard h4{font-size:15px}
+.pcard p{font-size:13.5px}
+.pcard .pe{font-size:12.5px;color:var(--muted);background:var(--tint);border-radius:6px;padding:7px 10px;overflow-x:auto}
+.cases{display:inline-flex;align-items:center;vertical-align:middle}
+.cases .br{font-size:2.4em;line-height:1;font-weight:300;margin-right:.12em}
+.cases .rows{display:inline-flex;flex-direction:column;font-size:.85em;line-height:1.45}
+.math.code{font-family:var(--f-mono);font-size:14px;line-height:1.6}
+.intro,.forms,.sec-h,.exs,.pre,.card{scroll-margin-top:72px}
+.fcard.wide{grid-column:1/-1}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}}
+</style>
+<style>html{color-scheme:light}body{margin:0}</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="tabs" aria-label="Videos">
+    <div class="tabs-in">
+      <div class="tgroup"><span class="gl">L7 · Discretas</span>
+        <button class="tab" data-go="l7v1"><b>V1</b>Uniforme y Bernoulli</button>
+        <button class="tab" data-go="l7v2"><b>V2</b>Binomial</button>
+        <button class="tab" data-go="l7v3"><b>V3</b>Hipergeométrica</button>
+        <button class="tab" data-go="l7v4"><b>V4</b>Poisson</button>
+        <button class="tab" data-go="l7v5"><b>V5</b>Geométrica</button>
+      </div>
+      <div class="tgroup"><span class="gl">L8 · Continuas</span>
+        <button class="tab" data-go="l8v1"><b>V1</b>Normal</button>
+        <button class="tab" data-go="l8v2"><b>V2</b>Ejercicios</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+  <!-- ======================= L7 V1 ======================= -->
+  <section class="panel" data-panel="l7v1" id="l7v1">
+    <header class="ph">
+      <p class="eyebrow">Lección 7 · Video 1</p>
+      <h2>Uniforme discreta y Bernoulli</h2>
+      <p class="lede">La uniforme reparte la probabilidad en partes iguales entre k valores. Bernoulli es un único ensayo con dos resultados (éxito o fracaso); repetirlo de forma independiente arma la binomial.</p>
+      <a class="yt" href="https://www.youtube.com/watch?v=f6fiukVf8-A" target="_blank" rel="noopener">Ver el video en YouTube ↗</a>
+    </header>
+    <div class="intro" data-intro="l7v1"></div>
+    <section class="forms" data-forms="l7v1"></section>
+    <h3 class="sec-h" data-sec="anim">Animaciones</h3>
+
+    <article class="card" id="card-dice">
+      <div class="card-h"><h3>Un dado legal: cada cara vale 1/6</h3>
+        <p>Cada tirada agrega una observación. Al principio las barras saltan mucho; con cientos de tiradas se pegan a la línea teórica de 1/6 ≈ 0,167. La media simulada se acerca a 3,5 y la varianza a 2,92.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv" id="dice-cv" role="img" aria-label="Frecuencia relativa de cada cara del dado comparada con 1/6"></canvas>
+          <div class="legend"><span><i class="sw emp"></i>Frecuencia simulada</span><span><i class="sw hit"></i>Última tirada</span><span><i class="sw theo"></i>Probabilidad teórica (1/6)</span></div>
+        </div>
+        <div class="side">
+          <div class="dieWrap"><canvas id="dice-die" role="img" aria-label="Cara del dado"></canvas>
+            <div class="row"><button class="btn" id="dice-play">Reproducir</button><button class="btn ghost" id="dice-1">Tirar 1</button><button class="btn ghost" id="dice-100">+100</button><button class="btn ghost" id="dice-reset">Reiniciar</button></div></div>
+          <dl class="stats">
+            <div><dt>Tiradas</dt><dd id="dice-n">0</dd></div>
+            <div><dt>Última cara</dt><dd id="dice-last">—</dd></div>
+            <div><dt>Media simulada</dt><dd id="dice-m">—</dd></div>
+            <div><dt>Media teórica μ</dt><dd>3,5000</dd></div>
+            <div><dt>Varianza simulada</dt><dd id="dice-v">—</dd></div>
+            <div><dt>Varianza teórica σ²</dt><dd>2,9167</dd></div>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" id="card-bern">
+      <div class="card-h"><h3>Tres artículos de una línea de producción</h3>
+        <p>Cada artículo es un ensayo de Bernoulli: defectuoso (D, éxito) con probabilidad p, o no defectuoso (N). Las 8 secuencias posibles se agrupan según X = cantidad de defectuosos. Así nace la binomial.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <div class="slots" id="bern-slots" aria-live="polite"><span class="slot">?</span><span class="slot">?</span><span class="slot">?</span></div>
+          <canvas class="cv" id="bern-cv" role="img" aria-label="Distribución de X, cantidad de defectuosos en 3 artículos"></canvas>
+          <div class="legend"><span><i class="sw emp"></i>Frecuencia simulada de X</span><span><i class="sw hit"></i>Resultado actual</span><span><i class="sw theo"></i>Probabilidad teórica</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><label for="bern-p">Probabilidad de defectuoso p <output id="bern-p-o"></output></label><input type="range" id="bern-p" min="0.05" max="0.95" step="0.05" value="0.25"></div>
+            <div class="row"><button class="btn" id="bern-play">Reproducir</button><button class="btn ghost" id="bern-100">+100</button><button class="btn ghost" id="bern-reset">Reiniciar</button></div>
+          </div>
+          <div class="tbl-wrap"><table class="seq"><thead><tr><th>Secuencia</th><th>X</th><th>Probabilidad</th><th>Veces</th></tr></thead><tbody id="bern-rows"></tbody></table></div>
+          <p class="sub" id="bern-n"></p>
+        </div>
+      </div>
+    </article>
+
+    <div class="exs" data-exs="l7v1"></div>
+    <section class="pre" data-pre="l7v1"></section>
+  </section>
+
+  <!-- ======================= L7 V2 ======================= -->
+  <section class="panel" data-panel="l7v2" id="l7v2" hidden>
+    <header class="ph">
+      <p class="eyebrow">Lección 7 · Video 2</p>
+      <h2>Distribución binomial</h2>
+      <p class="lede">X cuenta los éxitos en n ensayos independientes, todos con la misma probabilidad p. P(X = x) = C(n, x)·pˣ·(1 − p)ⁿ⁻ˣ, con media np y varianza npq.</p>
+      <a class="yt" href="https://www.youtube.com/watch?v=da_mZymTu6Y" target="_blank" rel="noopener">Ver el video en YouTube ↗</a>
+    </header>
+    <div class="intro" data-intro="l7v2"></div>
+    <section class="forms" data-forms="l7v2"></section>
+    <h3 class="sec-h" data-sec="anim">Animaciones</h3>
+
+    <article class="card" id="card-bin">
+      <div class="card-h"><h3>Simular muestras y contar éxitos</h3>
+        <p>Cada punto de arriba es un ensayo y se pinta si es éxito. Al terminar los n ensayos, el valor de X se suma al histograma. Elegí un evento para comparar su probabilidad teórica con la frecuencia simulada.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv tall" id="bin-cv" role="img" aria-label="Ensayos de la muestra actual e histograma de X comparado con la binomial"></canvas>
+          <div class="legend"><span><i class="sw emp"></i>Frecuencia simulada</span><span><i class="sw hit"></i>Valores del evento</span><span><i class="sw theo"></i>Binomial teórica</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><span class="lab">Ejemplos del video</span><div class="row" id="bin-pre">
+              <button class="chip" data-i="0">Asma: ninguna de 4</button><button class="chip" data-i="1">Asma: más de 2</button><button class="chip" data-i="2">Recién nacidos</button><button class="chip" data-i="3">Dispositivos</button></div></div>
+            <p class="sub" id="bin-succ"></p>
+            <div class="field"><label for="bin-n">Ensayos n <output id="bin-n-o"></output></label><input type="range" id="bin-n" min="1" max="40" step="1" value="10"></div>
+            <div class="field"><label for="bin-p">Probabilidad de éxito p <output id="bin-p-o"></output></label><input type="range" id="bin-p" min="0.01" max="0.99" step="0.01" value="0.5"></div>
+            <div class="field"><span class="lab">Evento</span>
+              <div class="row" style="align-items:center"><div class="seg" id="bin-ev"><button data-v="eq">X =</button><button data-v="le">X ≤</button><button data-v="ge">X ≥</button></div>
+              <input type="range" id="bin-k" min="0" max="10" step="1" value="5" style="flex:1;min-width:90px" aria-label="Valor k del evento"><output id="bin-k-o" class="num"></output></div></div>
+            <div class="row"><button class="btn" id="bin-play">Reproducir</button><button class="btn ghost" id="bin-500">+500</button><button class="btn ghost" id="bin-reset">Reiniciar</button></div>
+          </div>
+          <dl class="stats">
+            <div class="wide"><dt id="bin-evl">P(evento) teórica</dt><dd class="big" id="bin-pt">—</dd></div>
+            <div><dt>Frecuencia simulada</dt><dd id="bin-ps">—</dd></div>
+            <div><dt>Muestras</dt><dd id="bin-cnt">0</dd></div>
+            <div><dt>Media np / simulada</dt><dd id="bin-m">—</dd></div>
+            <div><dt>Varianza npq / simulada</dt><dd id="bin-v">—</dd></div>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" id="card-shape">
+      <div class="card-h"><h3>La forma depende de p y de n</h3>
+        <p>Con p = 0,5 es simétrica. Con p chica la masa queda a la izquierda (asimetría positiva) y con p grande, a la derecha (negativa). p y 1 − p dan gráficos espejo. Si n crece, se vuelve acampanada.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv" id="shape-cv" role="img" aria-label="Forma de la distribución binomial"></canvas>
+          <div class="legend"><span><i class="sw emp"></i>B(n, p)</span><span><i class="sw cmp"></i>Espejo B(n, 1 − p)</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><label for="shape-n">n <output id="shape-n-o"></output></label><input type="range" id="shape-n" min="2" max="60" step="1" value="20"></div>
+            <div class="field"><label for="shape-p">p <output id="shape-p-o"></output></label><input type="range" id="shape-p" min="0.02" max="0.98" step="0.01" value="0.2"></div>
+            <div class="row"><button class="btn" id="shape-ap">Recorrer p</button><button class="btn ghost" id="shape-an">Hacer crecer n</button><button class="chip" id="shape-mir" aria-pressed="true">Espejo 1 − p</button></div>
+          </div>
+          <dl class="stats">
+            <div class="wide"><dt>Forma</dt><dd id="shape-lab">—</dd></div>
+            <div><dt>Media np</dt><dd id="shape-m">—</dd></div>
+            <div><dt>Varianza npq</dt><dd id="shape-v">—</dd></div>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <div class="exs" data-exs="l7v2"></div>
+    <section class="pre" data-pre="l7v2"></section>
+  </section>
+
+  <!-- ======================= L7 V3 ======================= -->
+  <section class="panel" data-panel="l7v3" id="l7v3" hidden>
+    <header class="ph">
+      <p class="eyebrow">Lección 7 · Video 3</p>
+      <h2>Distribución hipergeométrica</h2>
+      <p class="lede">Muestreo sin reposición de una población finita de N elementos, M con la característica. Como cada extracción cambia la urna, los ensayos no son independientes y no es binomial.</p>
+      <a class="yt" href="https://www.youtube.com/watch?v=Z9Gxuzggcpw" target="_blank" rel="noopener">Ver el video en YouTube ↗</a>
+    </header>
+    <div class="intro" data-intro="l7v3"></div>
+    <section class="forms" data-forms="l7v3"></section>
+    <h3 class="sec-h" data-sec="anim">Animaciones</h3>
+
+    <article class="card" id="card-hyp">
+      <div class="card-h"><h3>La urna: sacar sin devolver</h3>
+        <p>Las bolitas pintadas tienen la característica (M de N). Se sacan n y X cuenta cuántas pintadas salieron. Las que ya salieron quedan apagadas porque no vuelven. Activá «Con reposición» y la distribución pasa a ser binomial.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv urn" id="hyp-cv" role="img" aria-label="Urna con bolitas e histograma de X"></canvas>
+          <div class="legend"><span><i class="sw hit"></i>Con la característica</span><span><i class="sw emp"></i>Frecuencia simulada</span><span><i class="sw theo"></i>Modelo actual</span><span><i class="sw cmp"></i>El otro modelo (para comparar)</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><span class="lab">Ejemplos</span><div class="row" id="hyp-pre">
+              <button class="chip" data-i="0">Batas (10, 2, 3)</button><button class="chip" data-i="1">Diplomáticos (20, 5, 3)</button><button class="chip" data-i="2">Población grande (100, 30, 5)</button></div></div>
+            <div class="field"><label for="hyp-N">Población N <output id="hyp-N-o"></output></label><input type="range" id="hyp-N" min="5" max="100" step="1" value="10"></div>
+            <div class="field"><label for="hyp-M">Con la característica M <output id="hyp-M-o"></output></label><input type="range" id="hyp-M" min="1" max="9" step="1" value="2"></div>
+            <div class="field"><label for="hyp-n">Muestra n <output id="hyp-n-o"></output></label><input type="range" id="hyp-n" min="1" max="10" step="1" value="3"></div>
+            <div class="field"><label for="hyp-k">Calcular P(X = k) <output id="hyp-k-o"></output></label><input type="range" id="hyp-k" min="0" max="3" step="1" value="0"></div>
+            <div class="row"><div class="seg" id="hyp-rep"><button data-v="sin">Sin reposición</button><button data-v="con">Con reposición</button></div></div>
+            <div class="row"><button class="btn" id="hyp-play">Reproducir</button><button class="btn ghost" id="hyp-500">+500</button><button class="btn ghost" id="hyp-reset">Reiniciar</button></div>
+          </div>
+          <dl class="stats">
+            <div class="wide"><dt id="hyp-evl">P(X = k)</dt><dd class="big" id="hyp-pt">—</dd></div>
+            <div><dt>Frecuencia simulada</dt><dd id="hyp-ps">—</dd></div>
+            <div><dt>Muestras</dt><dd id="hyp-cnt">0</dd></div>
+            <div><dt>Media n·M/N</dt><dd id="hyp-m">—</dd></div>
+            <div><dt>Factor (N − n)/(N − 1)</dt><dd id="hyp-f">—</dd></div>
+            <div><dt>σ² hipergeométrica</dt><dd id="hyp-vh">—</dd></div>
+            <div><dt>σ² binomial</dt><dd id="hyp-vb">—</dd></div>
+            <div class="wide"><dt>¿Se puede aproximar por binomial?</dt><dd id="hyp-ap" style="font-family:var(--f-body);font-size:13px">—</dd></div>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <div class="exs" data-exs="l7v3"></div>
+    <section class="pre" data-pre="l7v3"></section>
+  </section>
+
+  <!-- ======================= L7 V4 ======================= -->
+  <section class="panel" data-panel="l7v4" id="l7v4" hidden>
+    <header class="ph">
+      <p class="eyebrow">Lección 7 · Video 4</p>
+      <h2>Distribución de Poisson</h2>
+      <p class="lede">Cuenta cuántas veces ocurre un evento en un intervalo de tiempo o espacio. Tiene un solo parámetro, λ, que es a la vez la media y la varianza. Si cambia el intervalo, λ cambia en la misma proporción.</p>
+      <a class="yt" href="https://www.youtube.com/watch?v=QfZkqjhnO9g" target="_blank" rel="noopener">Ver el video en YouTube ↗</a>
+    </header>
+    <div class="intro" data-intro="l7v4"></div>
+    <section class="forms" data-forms="l7v4"></section>
+    <h3 class="sec-h" data-sec="anim">Animaciones</h3>
+
+    <article class="card" id="card-poi">
+      <div class="card-h"><h3>Llegadas al azar en una ventana de tiempo</h3>
+        <p>Los puntos son llegadas (clientes a la caja, accidentes en la fábrica). Cuando se cierra cada ventana se cuenta cuántas hubo y ese número va al histograma. Probá agrandar la ventana: con 2 clientes por minuto, en 2 minutos λ pasa a 4.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv tall" id="poi-cv" role="img" aria-label="Línea de tiempo con llegadas e histograma de conteos comparado con Poisson"></canvas>
+          <div class="legend"><span><i class="sw hit"></i>Llegada / valores del evento</span><span><i class="sw emp"></i>Frecuencia simulada</span><span><i class="sw theo"></i>Poisson teórica</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><span class="lab">Ejemplos del video</span><div class="row" id="poi-pre">
+              <button class="chip" data-i="0">Súper: 0 en 1 min</button><button class="chip" data-i="1">Súper: más de 1</button><button class="chip" data-i="2">Súper: 5 en 2 min</button>
+              <button class="chip" data-i="3">Calzado: 0 en 1 día</button><button class="chip" data-i="4">Calzado: 2 en 3 días</button><button class="chip" data-i="5">Calzado: ≤ 3 en 7 días</button></div></div>
+            <div class="field"><label for="poi-r">Tasa por unidad <output id="poi-r-o"></output></label><input type="range" id="poi-r" min="0.1" max="6" step="0.1" value="2"></div>
+            <div class="field"><label for="poi-t">Largo de la ventana <output id="poi-t-o"></output></label><input type="range" id="poi-t" min="1" max="7" step="1" value="1"></div>
+            <div class="field"><span class="lab">Evento</span>
+              <div class="row" style="align-items:center"><div class="seg" id="poi-ev"><button data-v="eq">X =</button><button data-v="le">X ≤</button><button data-v="ge">X ≥</button></div>
+              <input type="range" id="poi-k" min="0" max="15" step="1" value="0" style="flex:1;min-width:90px" aria-label="Valor k del evento"><output id="poi-k-o" class="num"></output></div></div>
+            <div class="row"><button class="btn" id="poi-play">Reproducir</button><button class="btn ghost" id="poi-500">+500</button><button class="btn ghost" id="poi-reset">Reiniciar</button></div>
+          </div>
+          <dl class="stats">
+            <div class="wide"><dt id="poi-evl">P(evento)</dt><dd class="big" id="poi-pt">—</dd></div>
+            <div><dt>λ de la ventana</dt><dd id="poi-l">—</dd></div>
+            <div><dt>Frecuencia simulada</dt><dd id="poi-ps">—</dd></div>
+            <div><dt>Media simulada</dt><dd id="poi-m">—</dd></div>
+            <div><dt>Varianza simulada</dt><dd id="poi-v">—</dd></div>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" id="card-apx">
+      <div class="card-h"><h3>Binomial con n grande y p chica ≈ Poisson</h3>
+        <p>Se deja fijo λ = n·p y se aumenta n (con lo que p = λ/n se achica). Las barras de la binomial se van pegando a las marcas de Poisson.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv" id="apx-cv" role="img" aria-label="Binomial comparada con Poisson"></canvas>
+          <div class="legend"><span><i class="sw emp"></i>Binomial B(n, λ/n)</span><span><i class="sw theo"></i>Poisson(λ)</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><label for="apx-l">λ = n·p <output id="apx-l-o"></output></label><input type="range" id="apx-l" min="0.5" max="8" step="0.5" value="2"></div>
+            <div class="field"><label for="apx-n">n <output id="apx-n-o"></output></label><input type="range" id="apx-n" min="0" max="7" step="1" value="0"></div>
+            <div class="row"><button class="btn" id="apx-play">Aumentar n</button></div>
+          </div>
+          <dl class="stats">
+            <div><dt>p = λ/n</dt><dd id="apx-p">—</dd></div>
+            <div><dt>Mayor diferencia</dt><dd id="apx-d">—</dd></div>
+            <div><dt>P(X = 1) binomial</dt><dd id="apx-b1">—</dd></div>
+            <div><dt>P(X = 1) Poisson</dt><dd id="apx-p1">—</dd></div>
+            <div><dt>P(X ≤ 3) binomial</dt><dd id="apx-b3">—</dd></div>
+            <div><dt>P(X ≤ 3) Poisson</dt><dd id="apx-p3">—</dd></div>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <div class="exs" data-exs="l7v4"></div>
+    <section class="pre" data-pre="l7v4"></section>
+  </section>
+
+  <!-- ======================= L7 V5 ======================= -->
+  <section class="panel" data-panel="l7v5" id="l7v5" hidden>
+    <header class="ph">
+      <p class="eyebrow">Lección 7 · Video 5</p>
+      <h2>Distribución geométrica</h2>
+      <p class="lede">Se repiten ensayos de Bernoulli hasta el primer éxito, y X es el número del ensayo en que aparece. P(X = x) = p·(1 − p)ˣ⁻¹, con media 1/p.</p>
+      <a class="yt" href="https://www.youtube.com/watch?v=pPOJZyo27Qs" target="_blank" rel="noopener">Ver el video en YouTube ↗</a>
+    </header>
+    <div class="intro" data-intro="l7v5"></div>
+    <section class="forms" data-forms="l7v5"></section>
+    <h3 class="sec-h" data-sec="anim">Animaciones</h3>
+
+    <article class="card" id="card-geo">
+      <div class="card-h"><h3>Revisar autos hasta encontrar el primero que contamina</h3>
+        <p>Cada auto tiene falla con probabilidad p. La fila se corta en el primer auto con falla y ese número va al histograma. En promedio hacen falta 1/p autos: con p = 0,05, unos 20.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv tall" id="geo-cv" role="img" aria-label="Fila de autos revisados e histograma de X comparado con la geométrica"></canvas>
+          <div class="legend"><span><i class="sw ok"></i>Auto sin falla</span><span><i class="sw hit"></i>Primer auto con falla / valor k</span><span><i class="sw emp"></i>Frecuencia simulada</span><span><i class="sw theo"></i>Geométrica teórica</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><label for="geo-p">Probabilidad de falla p <output id="geo-p-o"></output></label><input type="range" id="geo-p" min="0.02" max="0.6" step="0.01" value="0.05"></div>
+            <div class="field"><label for="geo-k">Calcular P(X = k) <output id="geo-k-o"></output></label><input type="range" id="geo-k" min="1" max="40" step="1" value="10"></div>
+            <div class="row"><button class="btn" id="geo-play">Reproducir</button><button class="btn ghost" id="geo-500">+500</button><button class="btn ghost" id="geo-reset">Reiniciar</button></div>
+          </div>
+          <dl class="stats">
+            <div class="wide"><dt id="geo-evl">P(X = k)</dt><dd class="big" id="geo-pt">—</dd></div>
+            <div><dt>Frecuencia simulada</dt><dd id="geo-ps">—</dd></div>
+            <div><dt>Búsquedas</dt><dd id="geo-cnt">0</dd></div>
+            <div><dt>E(X) = 1/p</dt><dd id="geo-m">—</dd></div>
+            <div><dt>Media simulada</dt><dd id="geo-ms">—</dd></div>
+            <div class="wide"><dt id="geo-bl">Con una muestra fija</dt><dd id="geo-b" style="font-family:var(--f-body);font-size:13px">—</dd></div>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <div class="exs" data-exs="l7v5"></div>
+    <section class="pre" data-pre="l7v5"></section>
+  </section>
+
+  <!-- ======================= L8 V1 ======================= -->
+  <section class="panel" data-panel="l8v1" id="l8v1" hidden>
+    <header class="ph">
+      <p class="eyebrow">Lección 8 · Video 1</p>
+      <h2>La distribución normal</h2>
+      <p class="lede">Una campana simétrica definida por μ y σ. Para calcular probabilidades se estandariza con Z = (X − μ)/σ, y por el Teorema Central del Límite aparece cada vez que se promedian muchas observaciones.</p>
+      <a class="yt" href="https://www.youtube.com/watch?v=bBTNJH9kd_c" target="_blank" rel="noopener">Ver el video en YouTube ↗</a>
+    </header>
+    <div class="intro" data-intro="l8v1"></div>
+    <section class="forms" data-forms="l8v1"></section>
+    <h3 class="sec-h" data-sec="anim">Animaciones</h3>
+
+    <article class="card" id="card-nor">
+      <div class="card-h"><h3>μ mueve la campana, σ la achata</h3>
+        <p>μ desplaza la curva sin cambiar su forma. σ la hace más aguda (chico) o más achatada (grande). El área total siempre es 1, los puntos de inflexión están en μ ± σ y media, mediana y moda coinciden en μ.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv" id="nor-cv" role="img" aria-label="Curva normal con μ y σ ajustables"></canvas>
+          <div class="legend"><span><i class="sw curve"></i>N(μ, σ²)</span><span><i class="sw dash"></i>Referencia N(0, 1)</span><span><i class="sw emp"></i>Área de la regla empírica</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><label for="nor-m">Media μ <output id="nor-m-o"></output></label><input type="range" id="nor-m" min="-5" max="5" step="0.1" value="0"></div>
+            <div class="field"><label for="nor-s">Desvío σ <output id="nor-s-o"></output></label><input type="range" id="nor-s" min="0.5" max="3.5" step="0.05" value="1"></div>
+            <div class="field"><span class="lab">Regla empírica</span><div class="seg" id="nor-band"><button data-v="0">Sin área</button><button data-v="1">±1σ</button><button data-v="2">±2σ</button><button data-v="3">±3σ</button></div></div>
+            <div class="row"><button class="btn" id="nor-play">Animar</button></div>
+          </div>
+          <dl class="stats">
+            <div class="wide"><dt id="nor-bl">P(μ − σ &lt; X &lt; μ + σ)</dt><dd class="big" id="nor-bp">—</dd></div>
+            <div><dt>Altura máxima</dt><dd id="nor-h">—</dd></div>
+            <div><dt>Área total</dt><dd>1,0000</dd></div>
+            <div class="wide"><dt>Puntos de inflexión</dt><dd id="nor-inf">—</dd></div>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" id="card-std">
+      <div class="card-h"><h3>Estandarizar: de X a Z sin cambiar el área</h3>
+        <p>Primero se resta μ y la campana se corre hasta 0. Después se divide por σ y la campana se angosta y sube. El área sombreada no cambia, por eso alcanza con una sola tabla, la de la normal estándar.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv" id="std-cv" role="img" aria-label="Animación de la estandarización de una normal"></canvas>
+          <div class="legend"><span><i class="sw curve"></i>Curva actual</span><span><i class="sw dash"></i>Curva original</span><span><i class="sw emp"></i>Área (no cambia)</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="row">
+              <div class="field" style="flex:1;min-width:110px"><label for="std-m">μ</label><input class="num" type="number" id="std-m" value="12" step="any"></div>
+              <div class="field" style="flex:1;min-width:110px"><label for="std-s">σ</label><input class="num" type="number" id="std-s" value="3" step="any" min="0.01"></div>
+            </div>
+            <div class="row">
+              <div class="field" style="flex:1;min-width:110px"><label for="std-a">Desde a</label><input class="num" type="number" id="std-a" value="14" step="any"></div>
+              <div class="field" style="flex:1;min-width:110px"><label for="std-b">Hasta b</label><input class="num" type="number" id="std-b" value="17" step="any"></div>
+            </div>
+            <div class="field"><label for="std-t">Progreso <output id="std-t-o"></output></label><input type="range" id="std-t" min="0" max="1" step="0.01" value="0"></div>
+            <div class="row"><button class="btn" id="std-play">Estandarizar</button></div>
+          </div>
+          <div class="steps" id="std-steps"></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" id="card-tcl">
+      <div class="card-h"><h3>Teorema Central del Límite</h3>
+        <p>Se sacan muestras de tamaño n de una población que no es normal y se grafica la media de cada muestra. A medida que n crece, el histograma de las medias se parece cada vez más a una normal, con desvío σ/√n.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv tall" id="tcl-cv" role="img" aria-label="Población arriba e histograma de medias muestrales abajo"></canvas>
+          <div class="legend"><span><i class="sw hit"></i>Muestra actual y su media</span><span><i class="sw emp"></i>Medias muestrales</span><span><i class="sw curve"></i>Normal N(μ, σ²/n)</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><span class="lab">Población</span><div class="row" id="tcl-pop">
+              <button class="chip" data-v="exp">Exponencial (sesgada)</button><button class="chip" data-v="uni">Uniforme</button><button class="chip" data-v="dado">Un dado</button><button class="chip" data-v="bim">Bimodal</button></div></div>
+            <div class="field"><label for="tcl-n">Tamaño de muestra n <output id="tcl-n-o"></output></label><input type="range" id="tcl-n" min="1" max="50" step="1" value="10"></div>
+            <div class="row"><button class="btn" id="tcl-play">Reproducir</button><button class="btn ghost" id="tcl-500">+500</button><button class="btn ghost" id="tcl-reset">Reiniciar</button></div>
+          </div>
+          <dl class="stats">
+            <div><dt>Medias calculadas</dt><dd id="tcl-cnt">0</dd></div>
+            <div><dt>μ de la población</dt><dd id="tcl-mu">—</dd></div>
+            <div><dt>Media de las medias</dt><dd id="tcl-mm">—</dd></div>
+            <div><dt>σ/√n teórico</dt><dd id="tcl-se">—</dd></div>
+            <div><dt>Desvío de las medias</dt><dd id="tcl-sd">—</dd></div>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <div class="exs" data-exs="l8v1"></div>
+    <section class="pre" data-pre="l8v1"></section>
+  </section>
+
+  <!-- ======================= L8 V2 ======================= -->
+  <section class="panel" data-panel="l8v2" id="l8v2" hidden>
+    <header class="ph">
+      <p class="eyebrow">Lección 8 · Video 2</p>
+      <h2>Ejercicios con la normal</h2>
+      <p class="lede">Dos caminos. Directo: dado un intervalo, calcular el área (la probabilidad). Inverso: dado un área, encontrar el valor de x que la deja a la izquierda o a la derecha.</p>
+      <a class="yt" href="https://www.youtube.com/watch?v=KiDTgWhNi70" target="_blank" rel="noopener">Ver el video en YouTube ↗</a>
+    </header>
+    <div class="intro" data-intro="l8v2"></div>
+    <section class="forms" data-forms="l8v2"></section>
+    <h3 class="sec-h" data-sec="anim">Animaciones</h3>
+
+    <article class="card" id="card-area">
+      <div class="card-h"><h3>Calculadora de áreas</h3>
+        <p>Elegí un ejemplo del video o cargá tus valores. La animación pinta el área y al costado aparece el paso a paso con z.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv" id="area-cv" role="img" aria-label="Área bajo la curva normal"></canvas>
+          <div class="legend"><span><i class="sw curve"></i>N(μ, σ²)</span><span><i class="sw hit"></i>Área pedida</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><span class="lab">Ejemplos del video</span><div class="row" id="area-pre">
+              <button class="chip" data-i="0">Baterías &lt; 2,3 años</button><button class="chip" data-i="1">Cojinetes descartados</button><button class="chip" data-i="2">Z &gt; 1,84</button><button class="chip" data-i="3">−1,97 &lt; Z &lt; 0,86</button><button class="chip" data-i="4">N(12, 9): 14 a 17</button></div></div>
+            <div class="seg" id="area-mode"><button data-v="le">X ≤ b</button><button data-v="ge">X ≥ a</button><button data-v="in">a ≤ X ≤ b</button><button data-v="out">Fuera de [a, b]</button></div>
+            <div class="row">
+              <div class="field" style="flex:1;min-width:110px"><label for="area-m">μ</label><input class="num" type="number" id="area-m" value="3" step="any"></div>
+              <div class="field" style="flex:1;min-width:110px"><label for="area-s">σ</label><input class="num" type="number" id="area-s" value="0.5" step="any" min="0.0001"></div>
+            </div>
+            <div class="row">
+              <div class="field" style="flex:1;min-width:110px"><label for="area-a">a</label><input class="num" type="number" id="area-a" value="2" step="any"></div>
+              <div class="field" style="flex:1;min-width:110px"><label for="area-b">b</label><input class="num" type="number" id="area-b" value="2.3" step="any"></div>
+            </div>
+          </div>
+          <dl class="stats"><div class="wide"><dt>Probabilidad</dt><dd class="big" id="area-p">—</dd></div></dl>
+          <div class="steps" id="area-steps"></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" id="card-inv">
+      <div class="card-h"><h3>Problema inverso: de la probabilidad a x</h3>
+        <p>La línea avanza acumulando área hasta llegar a la probabilidad buscada. Ese punto es z en la normal estándar, y se vuelve a la escala original con x = μ + z·σ.</p></div>
+      <div class="demo">
+        <div class="stage">
+          <canvas class="cv" id="inv-cv" role="img" aria-label="Búsqueda del valor x que deja un área dada"></canvas>
+          <div class="legend"><span><i class="sw curve"></i>N(μ, σ²)</span><span><i class="sw hit"></i>Área acumulada</span></div>
+        </div>
+        <div class="side">
+          <div class="ctl">
+            <div class="field"><span class="lab">Ejemplos del video</span><div class="row" id="inv-pre">
+              <button class="chip" data-i="0">45 % a la izquierda, N(40, 6²)</button><button class="chip" data-i="1">14 % a la derecha, N(40, 6²)</button><button class="chip" data-i="2">Pesos: 5 % superior</button><button class="chip" data-i="3">P(Z &gt; k) = 0,3015</button></div></div>
+            <div class="seg" id="inv-dir"><button data-v="left">Área a la izquierda</button><button data-v="right">Área a la derecha</button></div>
+            <div class="row">
+              <div class="field" style="flex:1;min-width:90px"><label for="inv-m">μ</label><input class="num" type="number" id="inv-m" value="40" step="any"></div>
+              <div class="field" style="flex:1;min-width:90px"><label for="inv-s">σ</label><input class="num" type="number" id="inv-s" value="6" step="any" min="0.0001"></div>
+              <div class="field" style="flex:1;min-width:90px"><label for="inv-p">Área</label><input class="num" type="number" id="inv-p" value="0.45" step="0.0001" min="0.0001" max="0.9999"></div>
+            </div>
+            <div class="row"><button class="btn" id="inv-play">Buscar x</button></div>
+          </div>
+          <dl class="stats"><div class="wide"><dt>Valor buscado</dt><dd class="big" id="inv-x">—</dd></div></dl>
+          <div class="steps" id="inv-steps"></div>
+        </div>
+      </div>
+    </article>
+
+    <div class="exs" data-exs="l8v2"></div>
+    <section class="pre" data-pre="l8v2"></section>
+  </section>
+  </main>
+</div>
+
+<script>
+(function(){
+'use strict';
+// ================================================================ utilities
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function fmt(x,d=4){ if(!isFinite(x)) return x>0?'∞':'−∞'; if(Math.abs(x)<0.5*Math.pow(10,-d)) x=0; return x.toFixed(d).replace('-','−').replace('.',','); }
+const fmtInt=n=>Math.round(n).toLocaleString('es-UY');
+function fmtSmart(x){ const a=Math.abs(x); if(a===0) return '0'; const d=a>=100?1:a>=10?2:a>=1?2:a>=0.1?3:4; return fmt(x,d).replace(/,?0+$/,'')||'0'; }
+const xl=x=>String(+(+x).toFixed(6)).replace('.',',');
+const set=(id,t)=>{ const e=document.getElementById(id); if(e) e.textContent=t; };
+const setH=(id,h)=>{ const e=document.getElementById(id); if(e) e.innerHTML=h; };
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+
+// math
+const LF=[0]; for(let i=1;i<=3000;i++) LF[i]=LF[i-1]+Math.log(i);
+const lC=(n,k)=>LF[n]-LF[k]-LF[n-k];
+const binom=(n,p,k)=> k<0||k>n?0 : p<=0?(k===0?1:0) : p>=1?(k===n?1:0) : Math.exp(lC(n,k)+k*Math.log(p)+(n-k)*Math.log1p(-p));
+const pois=(l,k)=> k<0?0:Math.exp(-l+k*Math.log(l)-LF[k]);
+const hyper=(N,M,n,k)=>{ if(k<Math.max(0,n-(N-M))||k>Math.min(n,M)) return 0; return Math.exp(lC(M,k)+lC(N-M,n-k)-lC(N,n)); };
+const geom=(p,k)=> k<1?0:p*Math.pow(1-p,k-1);
+const npdf=(x,m=0,s=1)=>Math.exp(-0.5*((x-m)/s)**2)/(s*Math.sqrt(2*Math.PI));
+function erf(x){ const t=1/(1+0.3275911*Math.abs(x)); const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x); return x>=0?y:-y; }
+const Phi=z=> z===Infinity?1 : z===-Infinity?0 : 0.5*(1+erf(z/Math.SQRT2));
+function Phinv(p){
+  const a=[-3.969683028665376e+01,2.209460984245205e+02,-2.759285104469687e+02,1.383577518672690e+02,-3.066479806614716e+01,2.506628277459239e+00];
+  const b=[-5.447609879822406e+01,1.615858368580409e+02,-1.556989798598866e+02,6.680131188771972e+01,-1.328068155288572e+01];
+  const c=[-7.784894002430293e-03,-3.223964580411365e-01,-2.400758277161838e+00,-2.549732539343734e+00,4.374664141464968e+00,2.938163982698783e+00];
+  const d=[7.784695709041462e-03,3.224671290700398e-01,2.445134137142996e+00,3.754408661907416e+00];
+  const pl=0.02425; let q,r;
+  if(p<pl){ q=Math.sqrt(-2*Math.log(p)); return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1); }
+  if(p>1-pl){ q=Math.sqrt(-2*Math.log(1-p)); return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1); }
+  q=p-0.5; r=q*q; return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
+}
+// samplers
+const rBinom=(n,p)=>{ let x=0; for(let i=0;i<n;i++) if(Math.random()<p) x++; return x; };
+const rPois=l=>{ const L=Math.exp(-l); let k=0,p=1; do{ k++; p*=Math.random(); }while(p>L); return k-1; };
+const rGeom=p=>Math.max(1,Math.ceil(Math.log(1-Math.random())/Math.log(1-p)));
+const rNorm=()=>{ let u=0; while(u===0) u=Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*Math.random()); };
+const rHyper=(N,M,n)=>{ let g=M,t=N,x=0; for(let i=0;i<n;i++){ if(Math.random()*t<g){ x++; g--; } t--; } return x; };
+
+// ================================================================ theme + canvas
+const T={};
+function readTheme(){ const s=getComputedStyle(document.documentElement); ['bg','surface','ink','muted','line','grid','accent','hit','ok','tint'].forEach(k=>T[k]=s.getPropertyValue('--'+k).trim()); demos.forEach(d=>d.dirty=true); }
+const FM='"JetBrains Mono", ui-monospace, Menlo, monospace', FB='Inter, system-ui, sans-serif';
+function prep(cv){
+  const w=cv.clientWidth, h=cv.clientHeight; if(!w||!h) return null;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){ cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); }
+  const c=cv.getContext('2d'); c.setTransform(dpr,0,0,dpr,0,0); c.clearRect(0,0,w,h); return {c,w,h};
+}
+function niceMax(v){ for(const x of [0.02,0.05,0.1,0.15,0.2,0.25,0.3,0.4,0.5,0.6,0.8,1]) if(v<=x) return x; return Math.ceil(v*10)/10; }
+function niceStep(r){ const e=Math.pow(10,Math.floor(Math.log10(r))); const f=r/e; return (f<1.5?1:f<3.5?2:f<7.5?5:10)*e; }
+
+// bar chart in a box
+function bars(c,box,o){
+  const L=box.x+40, R=box.x+box.w-6, Tp=box.y+10, B=box.y+box.h-22, pw=R-L, ph=B-Tp;
+  const n=o.max-o.min+1; let m=0;
+  for(const a of [o.emp,o.theo,o.cmp]) if(a) for(const v of a) if(v>m) m=v;
+  const ym=o.ymax||niceMax(m*1.06||0.1);
+  c.font='10px '+FM; c.textAlign='right'; c.textBaseline='middle';
+  const dec=ym<=0.1?3:2, sc=Math.pow(10,dec); const nt=[4,3,5,2].find(q=>Math.abs(ym/q*sc-Math.round(ym/q*sc))<1e-6)||4;
+  for(let i=0;i<=nt;i++){ const y=Math.round(B-ph*i/nt)+.5; c.strokeStyle=T.grid; c.lineWidth=1; c.beginPath(); c.moveTo(L,y); c.lineTo(R,y); c.stroke(); c.fillStyle=T.muted; c.fillText(fmt(ym*i/nt,dec),L-6,y); }
+  const bw=pw/n, gap=Math.max(1,Math.min(bw*0.2,8)), H=v=>Math.min(ph,Math.max(0,v)/ym*ph);
+  for(let i=0;i<n;i++){
+    const k=o.min+i, x0=L+i*bw+gap/2, w=Math.max(1,bw-gap), hi=o.hi?o.hi(k):false;
+    if(o.emp){ const v=o.emp[i]||0; c.fillStyle=hi?T.hit:T.accent; c.globalAlpha=hi?0.85:0.5; c.fillRect(x0,B-H(v),w,H(v)); c.globalAlpha=1; }
+    else if(o.fillTheo&&o.theo){ const v=o.theo[i]||0; c.fillStyle=hi?T.hit:T.accent; c.globalAlpha=hi?0.85:0.6; c.fillRect(x0,B-H(v),w,H(v)); c.globalAlpha=1; }
+    if(o.theo&&!o.fillTheo){ const y=B-H(o.theo[i]||0); c.strokeStyle=T.ink; c.lineWidth=2; c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+w,y); c.stroke(); if(w>7){ c.fillStyle=T.ink; c.beginPath(); c.arc(x0+w/2,y,2.3,0,7); c.fill(); } }
+    if(o.cmp){ const y=B-H(o.cmp[i]||0); c.strokeStyle=T.muted; c.lineWidth=1.5; c.beginPath(); c.arc(x0+w/2,y,Math.max(2,Math.min(4.5,w/2.6)),0,7); c.stroke(); }
+  }
+  c.strokeStyle=T.line; c.lineWidth=1; c.beginPath(); c.moveTo(L,B+.5); c.lineTo(R,B+.5); c.stroke();
+  c.fillStyle=T.muted; c.textAlign='center'; c.textBaseline='top'; c.font='10.5px '+FM;
+  const step=Math.max(1,Math.ceil(n/(pw/(o.labW||24))));
+  for(let i=0;i<n;i++){ const k=o.min+i; const last=i===n-1; if(i%step!==0 && !(last&&o.lastLabel)) continue; if(last&&o.lastLabel&&i%step!==0&&(i%step)<step*0.6) continue;
+    c.fillText(last&&o.lastLabel?o.lastLabel:String(k), L+i*bw+bw/2, B+5); }
+  if(o.xTitle){ c.textAlign='right'; c.fillText(o.xTitle,R,B+5); }
+}
+// continuous axes
+function axes(c,box,xmin,xmax,ymax,opt={}){
+  const L=box.x+(opt.noY?10:40), R=box.x+box.w-10, Tp=box.y+(opt.top||14), B=box.y+box.h-24;
+  const X=x=>L+(x-xmin)/(xmax-xmin)*(R-L), Y=y=>B-(y/ymax)*(B-Tp);
+  c.strokeStyle=T.line; c.lineWidth=1; c.beginPath(); c.moveTo(L,B+.5); c.lineTo(R,B+.5); c.stroke();
+  const st=niceStep((xmax-xmin)/Math.max(3,(R-L)/70)); const dec=Math.max(0,Math.ceil(-Math.log10(st)-1e-9));
+  c.font='10.5px '+FM; c.fillStyle=T.muted; c.textAlign='center'; c.textBaseline='top';
+  for(let v=Math.ceil(xmin/st)*st; v<=xmax+1e-9; v+=st){ const x=X(v); c.beginPath(); c.moveTo(x+.5,B); c.lineTo(x+.5,B+4); c.stroke(); c.fillText(fmt(v,dec),x,B+6); }
+  return {X,Y,L,R,Tp,B,xmin,xmax};
+}
+function plot(c,ax,f,color,width=2,dash=null){
+  c.save(); c.strokeStyle=color; c.lineWidth=width; if(dash) c.setLineDash(dash); c.beginPath();
+  const n=Math.max(60,Math.round(ax.R-ax.L));
+  for(let i=0;i<=n;i++){ const x=ax.xmin+(ax.xmax-ax.xmin)*i/n; const y=Math.max(ax.Tp-2, ax.Y(f(x))); i?c.lineTo(ax.X(x),y):c.moveTo(ax.X(x),y); }
+  c.stroke(); c.restore();
+}
+function shade(c,ax,f,a,b,color,alpha=0.35){
+  a=Math.max(a,ax.xmin); b=Math.min(b,ax.xmax); if(b<=a) return;
+  c.save(); c.fillStyle=color; c.globalAlpha=alpha; c.beginPath(); c.moveTo(ax.X(a),ax.B);
+  const n=Math.max(20,Math.round((ax.X(b)-ax.X(a))/2));
+  for(let i=0;i<=n;i++){ const x=a+(b-a)*i/n; c.lineTo(ax.X(x),Math.max(ax.Tp-2,ax.Y(f(x)))); }
+  c.lineTo(ax.X(b),ax.B); c.closePath(); c.fill(); c.restore();
+}
+function vline(c,ax,x,color,label,dash=[4,4],lab2){
+  if(x<ax.xmin||x>ax.xmax) return; const X=ax.X(x);
+  c.save(); c.strokeStyle=color; c.lineWidth=1.5; c.setLineDash(dash); c.beginPath(); c.moveTo(X+.5,ax.Tp); c.lineTo(X+.5,ax.B); c.stroke(); c.restore();
+  if(label){ c.font='11px '+FM; c.fillStyle=color; c.textBaseline='top'; c.textAlign=X>ax.R-90?'right':X<ax.L+90?'left':'center'; c.fillText(label,X+(c.textAlign==='left'?4:c.textAlign==='right'?-4:0),ax.Tp-12+ (lab2?0:0)); if(lab2){ c.fillText(lab2,X+(c.textAlign==='left'?4:c.textAlign==='right'?-4:0),ax.Tp+2); } }
+}
+
+// ================================================================ demo loop
+const demos=[]; let active='l7v1';
+function demo(panel,obj){ obj.panel=panel; obj.dirty=true; obj.running=false; demos.push(obj); return obj; }
+let lastT=performance.now();
+function loop(t){ const dt=Math.min(0.05,(t-lastT)/1000); lastT=t;
+  for(const d of demos){ if(d.panel!==active) continue; const was=d.running; if(was&&d.update) d.update(dt); if(was||d.running||d.dirty){ d.dirty=false; d.draw(); } }
+  requestAnimationFrame(loop); }
+function bindPlay(id,d,labels=['Reproducir','Pausar']){
+  const b=$('#'+id); d.setRun=v=>{ d.running=v; b.textContent=v?labels[1]:labels[0]; b.setAttribute('aria-pressed',String(v)); d.dirty=true; };
+  b.addEventListener('click',()=>d.setRun(!d.running)); b.textContent=labels[0];
+}
+function bindRange(id,fo,cb){ const el=$('#'+id), out=$('#'+id+'-o');
+  const show=()=>{ if(out) out.textContent=fo(+el.value); };
+  el.addEventListener('input',()=>{ show(); cb(+el.value); }); show();
+  return { el, get v(){ return +el.value; }, set(v){ el.value=v; show(); }, range(min,max){ el.min=min; el.max=max; show(); } };
+}
+function bindSeg(id,cb){ const root=$('#'+id); const bs=$$('button',root);
+  const sel=v=>bs.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===String(v))));
+  bs.forEach(b=>b.addEventListener('click',()=>{ sel(b.dataset.v); cb(b.dataset.v); })); return {sel}; }
+function bindPresets(id,cb){ const bs=$$('button',$('#'+id)); const mark=i=>bs.forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===i)));
+  bs.forEach(b=>b.addEventListener('click',()=>{ mark(+b.dataset.i); cb(+b.dataset.i); })); return {mark}; }
+const evLab={eq:'=',le:'≤',ge:'≥'};
+const evTest=(ev,k)=>x=> ev==='eq'?x===k : ev==='le'?x<=k : x>=k;
+const LOAD={};
+
+// ================================================================ L7V1 · dado
+(function(){
+  const cv=$('#dice-cv'), die=$('#dice-die');
+  const d=demo('l7v1',{counts:[0,0,0,0,0,0],n:0,s:0,s2:0,face:0,anim:0,timer:0});
+  const roll=()=>{ const f=1+Math.floor(Math.random()*6); d.counts[f-1]++; d.n++; d.s+=f; d.s2+=f*f; d.face=f; };
+  const many=k=>{ for(let i=0;i<k;i++) roll(); d.anim=0; d.dirty=true; };
+  d.update=dt=>{ d.timer+=dt; d.anim=Math.max(0,d.anim-dt); if(d.timer>=0.3){ d.timer=0; roll(); d.anim=RM?0:0.18; } };
+  const pips={1:[[.5,.5]],2:[[.27,.27],[.73,.73]],3:[[.27,.27],[.5,.5],[.73,.73]],4:[[.27,.27],[.73,.27],[.27,.73],[.73,.73]],5:[[.27,.27],[.73,.27],[.5,.5],[.27,.73],[.73,.73]],6:[[.27,.25],[.73,.25],[.27,.5],[.73,.5],[.27,.75],[.73,.75]]};
+  function drawDie(){ const P=prep(die); if(!P) return; const {c,w,h}=P; const f=d.anim>0?1+Math.floor(Math.random()*6):(d.face||5);
+    c.save(); c.translate(w/2,h/2); if(d.anim>0) c.rotate((Math.random()-.5)*0.5); const s=Math.min(w,h)-10;
+    c.fillStyle=T.surface; c.strokeStyle=T.ink; c.lineWidth=2; c.beginPath(); c.roundRect(-s/2,-s/2,s,s,12); c.fill(); c.stroke();
+    c.fillStyle=T.ink; for(const [x,y] of pips[f]){ c.beginPath(); c.arc(-s/2+x*s,-s/2+y*s,s*0.075,0,7); c.fill(); } c.restore(); }
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P; const emp=d.counts.map(v=>d.n?v/d.n:0);
+    bars(c,{x:0,y:0,w,h},{min:1,max:6,emp,theo:Array(6).fill(1/6),hi:k=>k===d.face&&d.n>0,ymax:Math.max(0.3,niceMax(Math.max(...emp)*1.06))});
+    drawDie(); set('dice-n',fmtInt(d.n)); set('dice-last',d.face||'—');
+    if(d.n){ const m=d.s/d.n; set('dice-m',fmt(m)); set('dice-v',fmt(d.s2/d.n-m*m)); } else { set('dice-m','—'); set('dice-v','—'); } };
+  bindPlay('dice-play',d);
+  $('#dice-1').onclick=()=>{ roll(); d.anim=RM?0:0.18; d.dirty=true; };
+  $('#dice-100').onclick=()=>many(100);
+  $('#dice-reset').onclick=()=>{ d.counts=[0,0,0,0,0,0]; d.n=d.s=d.s2=0; d.face=0; d.dirty=true; };
+  d.anim0=true; d.update2=null; many(60);
+  // let the die's roll animation finish even when paused
+  const orig=d.draw; d.draw=()=>{ orig(); if(!d.running&&d.anim>0){ d.anim=Math.max(0,d.anim-0.016); d.dirty=true; } };
+  LOAD.dice=()=>{ $('#dice-reset').click(); many(600); };
+})();
+
+// ================================================================ L7V1 · Bernoulli 3 artículos
+(function(){
+  const cv=$('#bern-cv'), rowsEl=$('#bern-rows'), slots=$$('#bern-slots .slot');
+  const SEQ=[[0,0,0],[1,0,0],[0,1,0],[0,0,1],[1,1,0],[1,0,1],[0,1,1],[1,1,1]];
+  const d=demo('l7v1',{p:0.25,counts:Array(8).fill(0),n:0,cur:[],t:0,hiRow:-1});
+  rowsEl.innerHTML=SEQ.map((s,i)=>`<tr data-r="${i}"><td><span class="mini">${s.map(v=>`<i class="${v?'d':''}" title="${v?'Defectuoso':'No defectuoso'}"></i>`).join('')}</span> ${s.map(v=>v?'D':'N').join('')}</td><td>${s.reduce((a,b)=>a+b,0)}</td><td class="pr"></td><td class="ct"></td></tr>`).join('');
+  const trs=$$('tr',rowsEl);
+  const frac={0:'27/64',1:'9/64',2:'3/64',3:'1/64'};
+  const idxOf=r=>SEQ.findIndex(s=>s.every((v,i)=>v===r[i]));
+  const register=r=>{ const i=idxOf(r); d.counts[i]++; d.n++; d.hiRow=i; };
+  const many=k=>{ for(let j=0;j<k;j++) register([0,1,2].map(()=>Math.random()<d.p?1:0)); d.cur=[]; renderSlots(); d.dirty=true; };
+  function renderSlots(){ slots.forEach((s,i)=>{ const v=d.cur[i]; s.className='slot'+(v===undefined?'':v?' d':' n'); s.textContent=v===undefined?'?':v?'D':'N'; }); }
+  d.update=dt=>{ d.t+=dt; if(d.cur.length<3){ if(d.t>(RM?0.05:0.3)){ d.cur.push(Math.random()<d.p?1:0); d.t=0; renderSlots(); } } else if(d.t>(RM?0.1:0.6)){ register(d.cur); d.cur=[]; d.t=0; renderSlots(); } };
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P; const q=1-d.p;
+    const emp=[0,0,0,0]; SEQ.forEach((s,i)=>emp[s.reduce((a,b)=>a+b,0)]+=d.counts[i]); const empF=emp.map(v=>d.n?v/d.n:0);
+    const hx=d.hiRow>=0?SEQ[d.hiRow].reduce((a,b)=>a+b,0):-1;
+    bars(c,{x:0,y:0,w,h},{min:0,max:3,emp:empF,theo:[0,1,2,3].map(k=>binom(3,d.p,k)),hi:k=>k===hx,xTitle:'X = defectuosos'});
+    trs.forEach((tr,i)=>{ const k=SEQ[i].reduce((a,b)=>a+b,0); const pr=Math.pow(d.p,k)*Math.pow(q,3-k);
+      $('.pr',tr).textContent=fmt(pr)+(Math.abs(d.p-0.25)<1e-9?` = ${frac[k]}`:''); $('.ct',tr).textContent=fmtInt(d.counts[i]); tr.classList.toggle('cur',i===d.hiRow); });
+    set('bern-n',`${fmtInt(d.n)} grupos de 3 artículos simulados. P(X = 1) = 3·p·q² = ${fmt(3*d.p*q*q)}${Math.abs(d.p-0.25)<1e-9?' = 27/64':''}.`); };
+  bindPlay('bern-play',d);
+  const P=bindRange('bern-p',v=>fmt(v,2),v=>{ d.p=v; reset(); });
+  function reset(){ d.counts=Array(8).fill(0); d.n=0; d.cur=[]; d.hiRow=-1; renderSlots(); d.dirty=true; }
+  $('#bern-100').onclick=()=>many(100); $('#bern-reset').onclick=reset;
+  many(64);
+  LOAD.bern=()=>{ P.set(0.25); d.p=0.25; reset(); many(640); };
+})();
+
+// ================================================================ L7V2 · binomial simulación
+(function(){
+  const cv=$('#bin-cv');
+  const d=demo('l7v2',{n:10,p:0.5,ev:'eq',k:5,hist:[],cnt:0,s:0,s2:0,cur:[],t:0,last:-1,succ:'cara al tirar una moneda'});
+  const PRE=[{n:4,p:0.3,ev:'eq',k:0,succ:'una persona con asma'},{n:4,p:0.3,ev:'ge',k:3,succ:'una persona con asma'},{n:12,p:0.9,ev:'le',k:10,succ:'un recién nacido varón'},{n:20,p:0.03,ev:'ge',k:1,succ:'un dispositivo defectuoso'}];
+  const N=bindRange('bin-n',v=>v,v=>{ d.n=v; K.range(0,v); if(d.k>v){ d.k=v; K.set(v); } reset(); });
+  const Pp=bindRange('bin-p',v=>fmt(v,2),v=>{ d.p=v; reset(); });
+  const K=bindRange('bin-k',v=>v,v=>{ d.k=v; d.dirty=true; });
+  const EV=bindSeg('bin-ev',v=>{ d.ev=v; d.dirty=true; });
+  const PR=bindPresets('bin-pre',i=>apply(PRE[i]));
+  function apply(o){ d.n=o.n; d.p=o.p; d.ev=o.ev; d.k=o.k; d.succ=o.succ; N.set(o.n); Pp.set(o.p); K.range(0,o.n); K.set(o.k); EV.sel(o.ev); reset(); many(500); }
+  function reset(){ d.hist=Array(d.n+1).fill(0); d.cnt=d.s=d.s2=0; d.cur=[]; d.t=0; d.last=-1; d.dirty=true; }
+  const rec=x=>{ d.hist[x]++; d.cnt++; d.s+=x; d.s2+=x*x; d.last=x; };
+  const many=m=>{ for(let i=0;i<m;i++) rec(rBinom(d.n,d.p)); d.dirty=true; };
+  d.update=dt=>{ d.t+=dt; const per=RM?0.01:Math.min(0.08,1.4/d.n);
+    if(d.cur.length<d.n){ while(d.t>per&&d.cur.length<d.n){ d.cur.push(Math.random()<d.p?1:0); d.t-=per; } }
+    else if(d.t>(RM?0.1:0.55)){ rec(d.cur.reduce((a,b)=>a+b,0)); d.cur=[]; d.t=0; } };
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P;
+    // ensayos strip
+    const sh=46, r=Math.max(2.5,Math.min(9,(w-20)/(d.n*2.5))), gap=r*2.5, x0=w/2-(d.n-1)*gap/2;
+    c.font='11px '+FB; c.fillStyle=T.muted; c.textAlign='left'; c.textBaseline='top'; c.fillText('Muestra actual',0,0);
+    const shown=d.cur.length?d.cur:[]; let xs=0;
+    for(let i=0;i<d.n;i++){ const x=x0+i*gap, y=28; c.beginPath(); c.arc(x,y,r,0,7);
+      if(i<shown.length){ if(shown[i]){ c.fillStyle=T.hit; c.fill(); xs++; } else { c.strokeStyle=T.ok; c.lineWidth=1.5; c.stroke(); } }
+      else { c.strokeStyle=T.grid; c.lineWidth=1.5; c.stroke(); } }
+    c.textAlign='right'; c.fillStyle=T.ink; c.font='12px '+FM; c.fillText(shown.length?`X = ${xs}`:(d.last>=0?`última X = ${d.last}`:''),w,0);
+    const test=evTest(d.ev,d.k);
+    bars(c,{x:0,y:sh,w,h:h-sh},{min:0,max:d.n,emp:d.hist.map(v=>d.cnt?v/d.cnt:0),theo:d.hist.map((_,k)=>binom(d.n,d.p,k)),hi:test,xTitle:'X'});
+    let pt=0; for(let k=0;k<=d.n;k++) if(test(k)) pt+=binom(d.n,d.p,k);
+    let ps=0; d.hist.forEach((v,k)=>{ if(test(k)) ps+=v; });
+    set('bin-evl',`P(X ${evLab[d.ev]} ${d.k}) teórica`); set('bin-pt',fmt(pt)); set('bin-ps',d.cnt?fmt(ps/d.cnt):'—'); set('bin-cnt',fmtInt(d.cnt));
+    const m=d.cnt?d.s/d.cnt:NaN; set('bin-m',`${fmtSmart(d.n*d.p)} / ${d.cnt?fmtSmart(m):'—'}`); set('bin-v',`${fmtSmart(d.n*d.p*(1-d.p))} / ${d.cnt?fmtSmart(d.s2/d.cnt-m*m):'—'}`);
+    set('bin-k-o',d.k); set('bin-succ',`Éxito = ${d.succ}.`);
+    const a=`${d.n}; ${xl(d.p)}`; };
+  bindPlay('bin-play',d); $('#bin-500').onclick=()=>many(500); $('#bin-reset').onclick=reset;
+  EV.sel('eq'); K.range(0,10); reset(); many(400);
+  LOAD.bin=i=>{ PR.mark(i); apply(PRE[i]); };
+})();
+
+// ================================================================ L7V2 · forma
+(function(){
+  const cv=$('#shape-cv');
+  const d=demo('l7v2',{n:20,p:0.2,mir:true,mode:null,t:0});
+  const N=bindRange('shape-n',v=>v,v=>{ d.n=v; d.dirty=true; });
+  const Pp=bindRange('shape-p',v=>fmt(v,2),v=>{ d.p=v; d.dirty=true; });
+  const mir=$('#shape-mir'); mir.onclick=()=>{ d.mir=!d.mir; mir.setAttribute('aria-pressed',String(d.mir)); d.dirty=true; };
+  const bp=$('#shape-ap'), bn=$('#shape-an');
+  const start=m=>{ d.mode=m; d.t=0; d.running=true; };
+  bp.onclick=()=>start('p'); bn.onclick=()=>start('n');
+  d.update=dt=>{ d.t+=dt;
+    if(d.mode==='p'){ const T2=6; d.p=+(0.5-0.46*Math.cos(Math.min(1,d.t/T2)*2*Math.PI)).toFixed(2); Pp.set(d.p); if(d.t>=T2){ d.running=false; d.dirty=true; } }
+    if(d.mode==='n'){ const T2=5; d.n=Math.round(2+58*Math.min(1,d.t/T2)); N.set(d.n); if(d.t>=T2){ d.running=false; d.dirty=true; } } };
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P; const ks=[...Array(d.n+1).keys()];
+    bars(c,{x:0,y:0,w,h},{min:0,max:d.n,theo:ks.map(k=>binom(d.n,d.p,k)),fillTheo:true,cmp:d.mir?ks.map(k=>binom(d.n,1-d.p,k)):null,xTitle:'X'});
+    set('shape-lab', Math.abs(d.p-0.5)<0.015?'Simétrica (p = 0,5)': d.p<0.5?'Asimetría positiva: masa a la izquierda, cola a la derecha':'Asimetría negativa: masa a la derecha, cola a la izquierda');
+    set('shape-m',fmtSmart(d.n*d.p)); set('shape-v',fmtSmart(d.n*d.p*(1-d.p))); };
+})();
+
+// ================================================================ L7V3 · hipergeométrica
+(function(){
+  const cv=$('#hyp-cv');
+  const d=demo('l7v3',{N:10,M:2,n:3,k:0,rep:false,balls:[],hist:[],cnt:0,cur:[],t:0,last:-1});
+  const PRE=[{N:10,M:2,n:3,k:0},{N:20,M:5,n:3,k:2},{N:100,M:30,n:5,k:2}];
+  const sN=bindRange('hyp-N',v=>v,v=>{ d.N=v; limits(); reset(); });
+  const sM=bindRange('hyp-M',v=>v,v=>{ d.M=v; limits(); reset(); });
+  const sn=bindRange('hyp-n',v=>v,v=>{ d.n=v; limits(); reset(); });
+  const sk=bindRange('hyp-k',v=>v,v=>{ d.k=v; d.dirty=true; });
+  const REP=bindSeg('hyp-rep',v=>{ d.rep=v==='con'; limits(); reset(); many(500); });
+  const PR=bindPresets('hyp-pre',i=>apply(PRE[i]));
+  function limits(){ sM.range(1,d.N-1); if(d.M>d.N-1){ d.M=d.N-1; sM.set(d.M); } const nmax=Math.min(d.N,30); sn.range(1,nmax); if(d.n>nmax){ d.n=nmax; sn.set(nmax); }
+    const kmax=d.rep?d.n:Math.min(d.n,d.M); sk.range(0,kmax); if(d.k>kmax){ d.k=kmax; sk.set(kmax); } }
+  function apply(o){ Object.assign(d,o); d.rep=false; REP.sel('sin'); sN.set(o.N); limits(); sM.set(o.M); sn.set(o.n); limits(); sk.set(o.k); reset(); many(500); }
+  function shuffleBalls(){ const a=Array(d.N).fill(0).map((_,i)=>i<d.M?1:0); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } d.balls=a; }
+  function reset(){ shuffleBalls(); const top=d.rep?d.n:Math.min(d.n,d.M); d.hist=Array(top+1).fill(0); d.cnt=0; d.cur=[]; d.t=0; d.last=-1; d.dirty=true; }
+  const rec=x=>{ d.hist[x]++; d.cnt++; d.last=x; };
+  const many=m=>{ for(let i=0;i<m;i++) rec(d.rep?rBinom(d.n,d.M/d.N):rHyper(d.N,d.M,d.n)); d.dirty=true; };
+  d.update=dt=>{ d.t+=dt; const per=RM?0.02:Math.min(0.32,2.4/d.n);
+    if(d.cur.length<d.n){ if(d.t>per){ d.t=0; let i; if(d.rep) i=Math.floor(Math.random()*d.N); else { const left=[]; for(let j=0;j<d.N;j++) if(!d.cur.includes(j)) left.push(j); i=left[Math.floor(Math.random()*left.length)]; } d.cur.push(i); } }
+    else if(d.t>(RM?0.1:0.8)){ rec(d.cur.reduce((a,i)=>a+d.balls[i],0)); d.cur=[]; d.t=0; if(!d.rep) shuffleBalls(); } };
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P; const side=w>=560;
+    const urn=side?{x:0,y:0,w:w*0.4,h}:{x:0,y:0,w,h:h*0.42}; const hb=side?{x:w*0.42,y:0,w:w*0.58,h}:{x:0,y:h*0.44,w,h:h*0.56};
+    // urn
+    c.font='11px '+FB; c.fillStyle=T.muted; c.textAlign='left'; c.textBaseline='top';
+    const xs=d.cur.reduce((a,i)=>a+d.balls[i],0);
+    c.fillText(d.cur.length?`Sacadas ${d.cur.length} de ${d.n} · X = ${xs}`:(d.last>=0?`Última muestra: X = ${d.last}`:'Urna'),urn.x,urn.y);
+    const ux=urn.x, uy=urn.y+20, uw=urn.w-8, uh=urn.h-26; const ar=uw/uh; const cols=Math.max(1,Math.ceil(Math.sqrt(d.N*ar))), rows=Math.ceil(d.N/cols);
+    const cell=Math.min(uw/cols,uh/rows), r=Math.max(2,cell*0.36); const ox=ux+(uw-cols*cell)/2, oy=uy+(uh-rows*cell)/2;
+    const lastPick=d.cur.length?d.cur[d.cur.length-1]:-1;
+    for(let i=0;i<d.N;i++){ const cx=ox+(i%cols+0.5)*cell, cy=oy+(Math.floor(i/cols)+0.5)*cell; const out=!d.rep&&d.cur.includes(i);
+      c.globalAlpha=out?0.18:1; c.beginPath(); c.arc(cx,cy,r,0,7);
+      if(d.balls[i]){ c.fillStyle=T.hit; c.fill(); } else { c.strokeStyle=T.muted; c.lineWidth=1.3; c.stroke(); }
+      c.globalAlpha=1;
+      if(d.cur.includes(i)){ c.strokeStyle=T.ink; c.lineWidth=i===lastPick?2.5:1.5; c.beginPath(); c.arc(cx,cy,r+3,0,7); c.stroke(); } }
+    const top=d.hist.length-1; const ks=[...Array(top+1).keys()];
+    const th=ks.map(k=>hyper(d.N,d.M,d.n,k)), tb=ks.map(k=>binom(d.n,d.M/d.N,k));
+    bars(c,hb,{min:0,max:top,emp:d.hist.map(v=>d.cnt?v/d.cnt:0),theo:d.rep?tb:th,cmp:d.rep?th:tb,hi:k=>k===d.k,xTitle:'X'});
+    const pt=d.rep?binom(d.n,d.M/d.N,d.k):hyper(d.N,d.M,d.n,d.k);
+    set('hyp-evl',`P(X = ${d.k}) · ${d.rep?'binomial (con reposición)':'hipergeométrica'}`); set('hyp-pt',fmt(pt));
+    set('hyp-ps',d.cnt?fmt((d.hist[d.k]||0)/d.cnt):'—'); set('hyp-cnt',fmtInt(d.cnt));
+    const p=d.M/d.N, f=(d.N-d.n)/(d.N-1); set('hyp-m',fmtSmart(d.n*p)); set('hyp-f',fmt(f)); set('hyp-vh',fmt(f*d.n*p*(1-p))); set('hyp-vb',fmt(d.n*p*(1-p)));
+    const pct=d.n/d.N*100; set('hyp-ap',`n es el ${fmt(pct,1)} % de N. ${pct<5?'Es menos del 5 %: la binomial con p = M/N aproxima bien.':'Es 5 % o más: conviene usar la hipergeométrica.'}`); };
+  bindPlay('hyp-play',d); $('#hyp-500').onclick=()=>many(500); $('#hyp-reset').onclick=reset;
+  REP.sel('sin'); limits(); reset(); many(500);
+  LOAD.hyp=i=>{ PR.mark(i); apply(PRE[i]); };
+})();
+
+// ================================================================ L7V4 · Poisson llegadas
+(function(){
+  const cv=$('#poi-cv');
+  const d=demo('l7v4',{r:2,t:1,unit:'min',ev:'eq',k:0,hist:[],kmax:8,cnt:0,s:0,s2:0,arr:[],clock:0,wait:0});
+  const PRE=[{r:2,t:1,unit:'min',ev:'eq',k:0},{r:2,t:1,unit:'min',ev:'ge',k:2},{r:2,t:2,unit:'min',ev:'eq',k:5},{r:0.2,t:1,unit:'día',ev:'eq',k:0},{r:0.2,t:3,unit:'día',ev:'eq',k:2},{r:0.2,t:7,unit:'día',ev:'le',k:3}];
+  const uLab=()=>d.unit==='min'?['minuto','minutos']:['día','días'];
+  const R=bindRange('poi-r',v=>`${fmtSmart(v)} por ${uLab()[0]}`,v=>{ d.r=v; reset(); });
+  const Tt=bindRange('poi-t',v=>`${v} ${v===1?uLab()[0]:uLab()[1]}`,v=>{ d.t=v; reset(); });
+  const K=bindRange('poi-k',v=>v,v=>{ d.k=v; d.dirty=true; });
+  const EV=bindSeg('poi-ev',v=>{ d.ev=v; d.dirty=true; });
+  const PR=bindPresets('poi-pre',i=>apply(PRE[i]));
+  function apply(o){ Object.assign(d,o); R.set(o.r); Tt.set(o.t); EV.sel(o.ev); reset(); K.set(o.k); d.k=o.k; many(500); }
+  function reset(){ const l=d.r*d.t; d.kmax=Math.max(6,Math.ceil(l+4*Math.sqrt(l)+2)); K.range(0,d.kmax); if(d.k>d.kmax){ d.k=d.kmax; K.set(d.kmax); }
+    d.hist=Array(d.kmax+1).fill(0); d.raw=[]; d.cnt=d.s=d.s2=0; newWin(); d.dirty=true; R.set(d.r); Tt.set(d.t); }
+  function newWin(){ d.arr=[]; let x=0; for(;;){ x+=-Math.log(1-Math.random())/d.r; if(x>d.t) break; d.arr.push({x,y:Math.random()}); } d.clock=0; d.wait=0; }
+  const rec=x=>{ d.hist[Math.min(x,d.kmax)]++; d.raw[x]=(d.raw[x]||0)+1; d.cnt++; d.s+=x; d.s2+=x*x; };
+  const many=m=>{ const l=d.r*d.t; for(let i=0;i<m;i++) rec(rPois(l)); d.dirty=true; };
+  d.update=dt=>{ if(d.clock<d.t){ d.clock=Math.min(d.t,d.clock+dt*d.t/(RM?0.3:2.4)); } else { d.wait+=dt; if(d.wait>(RM?0.05:0.6)){ rec(d.arr.length); newWin(); } } };
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P; const l=d.r*d.t;
+    // timeline
+    const L=40,Rr=w-10,y=52; const X=x=>L+x/d.t*(Rr-L);
+    c.strokeStyle=T.muted; c.lineWidth=2; c.beginPath(); c.moveTo(L,y); c.lineTo(Rr,y); c.stroke();
+    c.font='10.5px '+FM; c.fillStyle=T.muted; c.textAlign='center'; c.textBaseline='top';
+    for(let u=0;u<=d.t;u++){ c.beginPath(); c.moveTo(X(u),y-4); c.lineTo(X(u),y+4); c.strokeStyle=T.muted; c.lineWidth=1; c.stroke(); c.fillText(String(u),X(u),y+7); }
+    c.textAlign='left'; c.font='11px '+FB; c.fillText(`Ventana de ${d.t} ${d.t===1?uLab()[0]:uLab()[1]} · λ = ${fmtSmart(d.r)} × ${d.t} = ${fmtSmart(l)}`,0,0);
+    let seen=0; for(const a of d.arr){ if(a.x>d.clock) continue; seen++; c.fillStyle=T.hit; c.beginPath(); c.arc(X(a.x),y-10-a.y*16,4.5,0,7); c.fill(); }
+    c.strokeStyle=T.ink; c.lineWidth=1.5; c.beginPath(); c.moveTo(X(d.clock),y-30); c.lineTo(X(d.clock),y+4); c.stroke();
+    c.textAlign='right'; c.fillStyle=T.ink; c.font='12px '+FM; c.fillText(`llegadas: ${seen}`,w,0);
+    const test=evTest(d.ev,d.k); const ks=[...Array(d.kmax+1).keys()];
+    const theo=ks.map(k=>k<d.kmax?pois(l,k):1-ks.slice(0,d.kmax).reduce((a,j)=>a+pois(l,j),0));
+    bars(c,{x:0,y:76,w,h:h-76},{min:0,max:d.kmax,emp:d.hist.map(v=>d.cnt?v/d.cnt:0),theo,hi:test,lastLabel:d.kmax+'+',xTitle:'X'});
+    let pt=0; if(d.ev==='eq') pt=pois(l,d.k); else if(d.ev==='le'){ for(let k=0;k<=d.k;k++) pt+=pois(l,k); } else { pt=1; for(let k=0;k<d.k;k++) pt-=pois(l,k); }
+    let ps=0; d.raw.forEach((v,k)=>{ if(test(k)) ps+=v; });
+    set('poi-evl',`P(X ${evLab[d.ev]} ${d.k}) con λ = ${fmtSmart(l)}`); set('poi-pt',fmt(pt)); set('poi-l',fmtSmart(l));
+    set('poi-ps',d.cnt?fmt(ps/d.cnt):'—'); const m=d.s/d.cnt; set('poi-m',d.cnt?fmtSmart(m):'—'); set('poi-v',d.cnt?fmtSmart(d.s2/d.cnt-m*m):'—'); set('poi-k-o',d.k); };
+  bindPlay('poi-play',d); $('#poi-500').onclick=()=>many(500); $('#poi-reset').onclick=reset;
+  EV.sel('eq'); reset(); many(400);
+  LOAD.poi=i=>{ PR.mark(i); apply(PRE[i]); };
+})();
+
+// ================================================================ L7V4 · aproximación
+(function(){
+  const cv=$('#apx-cv'); const NS=[5,10,20,50,100,200,400,1000];
+  const d=demo('l7v4',{l:2,i:0,t:0});
+  const Lr=bindRange('apx-l',v=>fmtSmart(v),v=>{ d.l=v; d.dirty=true; });
+  const Nr=bindRange('apx-n',v=>NS[v],v=>{ d.i=v; d.dirty=true; });
+  bindPlay('apx-play',d,['Aumentar n','Pausar']);
+  d.update=dt=>{ d.t+=dt; if(d.t>(RM?0.2:0.9)){ d.t=0; if(d.i<NS.length-1){ d.i++; Nr.set(d.i); } else { d.setRun(false); } } };
+  const origPlay=$('#apx-play'); origPlay.addEventListener('click',()=>{ if(d.running&&d.i>=NS.length-1){ d.i=0; Nr.set(0); } });
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P; const n=NS[d.i], p=d.l/n;
+    const top=Math.min(n,Math.max(6,Math.ceil(d.l+4*Math.sqrt(d.l)+2))); const ks=[...Array(top+1).keys()];
+    const b=ks.map(k=>binom(n,p,k)), po=ks.map(k=>pois(d.l,k));
+    bars(c,{x:0,y:0,w,h},{min:0,max:top,emp:b,theo:po,xTitle:'X'});
+    let md=0; for(let k=0;k<=Math.min(n,200);k++) md=Math.max(md,Math.abs(binom(n,p,k)-pois(d.l,k)));
+    set('apx-p',fmtSmart(p)); set('apx-d',fmt(md)); set('apx-b1',fmt(binom(n,p,1))); set('apx-p1',fmt(pois(d.l,1)));
+    let b3=0,p3=0; for(let k=0;k<=3;k++){ b3+=binom(n,p,k); p3+=pois(d.l,k); } set('apx-b3',fmt(b3)); set('apx-p3',fmt(p3)); };
+  LOAD.apx=()=>{ Lr.set(2); d.l=2; d.i=6; Nr.set(6); d.dirty=true; };
+})();
+
+// ================================================================ L7V5 · geométrica
+(function(){
+  const cv=$('#geo-cv');
+  const d=demo('l7v5',{p:0.05,k:10,K:60,hist:[],cnt:0,s:0,cur:[],t:0,wait:0,last:-1});
+  const Pp=bindRange('geo-p',v=>fmt(v,2),v=>{ d.p=v; reset(); many(500); });
+  const Kk=bindRange('geo-k',v=>v,v=>{ d.k=v; d.dirty=true; });
+  function reset(){ d.K=Math.min(60,Math.max(10,Math.ceil(Math.log(0.03)/Math.log(1-d.p)))); Kk.range(1,d.K-1); if(d.k>d.K-1){ d.k=d.K-1; Kk.set(d.k); }
+    d.hist=Array(d.K+1).fill(0); d.cnt=d.s=0; d.cur=[]; d.t=d.wait=0; d.last=-1; d.dirty=true; }
+  const rec=x=>{ d.hist[Math.min(x,d.K)]++; d.cnt++; d.s+=x; d.last=x; };
+  const many=m=>{ for(let i=0;i<m;i++) rec(rGeom(d.p)); d.dirty=true; };
+  d.update=dt=>{ const done=d.cur.length&&d.cur[d.cur.length-1]===1;
+    if(!done){ d.t+=dt; const per=RM?0.005:(d.p<0.1?0.05:0.11); while(d.t>per){ d.t-=per; d.cur.push(Math.random()<d.p?1:0); if(d.cur[d.cur.length-1]===1) break; } }
+    else { d.wait+=dt; if(d.wait>(RM?0.1:0.9)){ rec(d.cur.length); d.cur=[]; d.wait=0; d.t=0; } } };
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P;
+    const cw=14, ch=10, gap=4, perRow=Math.max(5,Math.floor(w/(cw+gap))), cap=perRow*3;
+    const n=d.cur.length, start=Math.max(0,n-cap);
+    c.font='11px '+FB; c.fillStyle=T.muted; c.textAlign='left'; c.textBaseline='top';
+    c.fillText(n?`Revisando auto nº ${n}${d.cur[n-1]===1?' · ¡falla! X = '+n:''}`:(d.last>0?`Última búsqueda: X = ${d.last}`:'Fila de autos'),0,0);
+    for(let i=start;i<n;i++){ const j=i-start, x=(j%perRow)*(cw+gap), y=20+Math.floor(j/perRow)*(ch+12);
+      const bad=d.cur[i]===1; c.beginPath(); c.roundRect(x,y,cw,ch,3); if(bad){ c.fillStyle=T.hit; c.fill(); } else { c.strokeStyle=T.ok; c.lineWidth=1.4; c.stroke(); }
+      c.fillStyle=bad?T.hit:T.muted; c.beginPath(); c.arc(x+3.5,y+ch+2,1.8,0,7); c.arc(x+cw-3.5,y+ch+2,1.8,0,7); c.fill(); }
+    const top=20+3*(ch+12)+6;
+    const ks=[...Array(d.K).keys()].map(i=>i+1);
+    const theo=ks.map(k=>k<d.K?geom(d.p,k):Math.pow(1-d.p,d.K-1));
+    bars(c,{x:0,y:top,w,h:h-top},{min:1,max:d.K,emp:ks.map(k=>d.cnt?d.hist[k]/d.cnt:0),theo,hi:k=>k===d.k,lastLabel:d.K+'+',labW:26,xTitle:'X'});
+    set('geo-evl',`P(X = ${d.k}): la primera falla aparece en el auto ${d.k}`); set('geo-pt',fmt(geom(d.p,d.k)));
+    set('geo-ps',d.cnt?fmt(d.hist[d.k]/d.cnt):'—'); set('geo-cnt',fmtInt(d.cnt)); set('geo-m',fmtSmart(1/d.p)); set('geo-ms',d.cnt?fmtSmart(d.s/d.cnt):'—');
+    const nf=Math.round(1/d.p); set('geo-bl',`Con una muestra fija de n = ${nf} autos (binomial)`); set('geo-b',`P(ninguno con falla) = (1 − p)^${nf} = ${fmt(Math.pow(1-d.p,nf))}. Con el esquema geométrico siempre se encuentra uno.`); };
+  bindPlay('geo-play',d); $('#geo-500').onclick=()=>many(500); $('#geo-reset').onclick=reset;
+  reset(); many(500);
+  LOAD.geo=()=>{ Pp.set(0.05); d.p=0.05; reset(); Kk.set(10); d.k=10; many(2000); };
+})();
+
+// ================================================================ L8V1 · normal explorer
+(function(){
+  const cv=$('#nor-cv');
+  const d=demo('l8v1',{mu:0,sd:1,tmu:0,tsd:1,band:1,t:0,script:null});
+  const M=bindRange('nor-m',v=>fmt(v,1),v=>{ d.tmu=v; d.dirty=true; d.anim=true; });
+  const S=bindRange('nor-s',v=>fmt(v,2),v=>{ d.tsd=v; d.dirty=true; d.anim=true; });
+  const B=bindSeg('nor-band',v=>{ d.band=+v; d.dirty=true; });
+  const KF=[[0,1],[0,0.6],[0,2.6],[0,1],[-4,1],[4,1],[4,2],[0,1]];
+  $('#nor-play').onclick=()=>{ d.script=0; d.t=0; d.running=true; };
+  d.update=dt=>{ if(d.script!==null){ d.t+=dt; const seg=1.3, i=Math.floor(d.t/seg); if(i>=KF.length-1){ d.script=null; [d.tmu,d.tsd]=KF[KF.length-1]; M.set(d.tmu); S.set(d.tsd); d.running=false; }
+      else { const u=ease((d.t-i*seg)/seg); d.tmu=KF[i][0]+(KF[i+1][0]-KF[i][0])*u; d.tsd=KF[i][1]+(KF[i+1][1]-KF[i][1])*u; M.set(+d.tmu.toFixed(1)); S.set(+d.tsd.toFixed(2)); } } };
+  d.draw=()=>{ const k=RM||d.script!==null?1:0.25; d.mu+=(d.tmu-d.mu)*k; d.sd+=(d.tsd-d.sd)*k; if(Math.abs(d.tmu-d.mu)>1e-3||Math.abs(d.tsd-d.sd)>1e-3) d.dirty=true;
+    const P=prep(cv); if(!P) return; const {c,w,h}=P; const ax=axes(c,{x:0,y:0,w,h},-12,12,0.85,{top:26});
+    const f=x=>npdf(x,d.mu,d.sd);
+    if(d.band) { shade(c,ax,f,d.mu-d.band*d.sd,d.mu+d.band*d.sd,T.accent,0.3); }
+    plot(c,ax,x=>npdf(x),T.muted,1.5,[5,4]);
+    plot(c,ax,f,T.ink,2.4);
+    vline(c,ax,d.mu,T.ink,'μ = '+fmt(d.mu,1));
+    for(const s of [-1,1]){ const x=d.mu+s*d.sd; if(x<ax.xmin||x>ax.xmax) continue; c.fillStyle=T.surface; c.strokeStyle=T.hit; c.lineWidth=2; c.beginPath(); c.arc(ax.X(x),ax.Y(f(x)),4.5,0,7); c.fill(); c.stroke(); }
+    if(d.band){ const pb=Phi(d.band)-Phi(-d.band); c.font='600 13px '+FM; c.fillStyle=T.ink; c.textAlign='center'; c.textBaseline='bottom'; const yy=Math.max(ax.Tp+14,ax.Y(f(d.mu)*0.45)); c.fillText(fmt(pb*100,1)+' %',ax.X(d.mu),yy); }
+    set('nor-bl',d.band?`P(μ − ${d.band}σ < X < μ + ${d.band}σ)`:'Elegí una banda de la regla empírica'); set('nor-bp',d.band?fmt(Phi(d.band)-Phi(-d.band)):'—');
+    set('nor-h',fmt(1/(d.sd*Math.sqrt(2*Math.PI)))); set('nor-inf',`x = μ − σ = ${fmt(d.mu-d.sd,2)}  y  x = μ + σ = ${fmt(d.mu+d.sd,2)}`); };
+  B.sel('1');
+})();
+
+// ================================================================ L8V1 · estandarización
+(function(){
+  const cv=$('#std-cv');
+  const d=demo('l8v1',{mu:12,sd:3,a:14,b:17,t:0,dir:1});
+  const inp=id=>$('#'+id);
+  const read=()=>{ const m=+inp('std-m').value, s=+inp('std-s').value, a=+inp('std-a').value, b=+inp('std-b').value; if(isFinite(m)) d.mu=m; if(s>0) d.sd=s; if(isFinite(a)) d.a=a; if(isFinite(b)) d.b=b; d.dirty=true; };
+  ['std-m','std-s','std-a','std-b'].forEach(id=>inp(id).addEventListener('input',read));
+  const Tr=bindRange('std-t',v=>Math.round(v*100)+' %',v=>{ d.t=v; d.dirty=true; });
+  $('#std-play').onclick=()=>{ if(d.t>=1) d.t=0; d.running=true; };
+  d.update=dt=>{ d.t=Math.min(1,d.t+dt/(RM?0.4:3.2)); Tr.set(d.t); if(d.t>=1) d.running=false; };
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P;
+    const s=ease(Math.min(1,d.t*2)), u=ease(Math.max(0,d.t*2-1)); const shift=s*d.mu, k=1+u*(d.sd-1);
+    const cm=(d.mu-shift)/k, cs=d.sd/k, A=(d.a-shift)/k, B=(d.b-shift)/k;
+    const lo=Math.min(d.mu-4*d.sd,-4), hi=Math.max(d.mu+4*d.sd,4); const ymax=Math.max(npdf(0),npdf(0,0,d.sd))*1.18;
+    const ax=axes(c,{x:0,y:0,w,h},lo,hi,ymax,{top:30});
+    const f=x=>npdf(x,cm,cs);
+    if(d.t>0) plot(c,ax,x=>npdf(x,d.mu,d.sd),T.muted,1.5,[5,4]);
+    shade(c,ax,f,Math.min(A,B),Math.max(A,B),T.accent,0.4); plot(c,ax,f,T.ink,2.4);
+    vline(c,ax,A,T.hit,fmt(A,2)); vline(c,ax,B,T.hit,fmt(B,2));
+    c.font='12px '+FB; c.fillStyle=T.ink; c.textAlign='left'; c.textBaseline='top';
+    const phase=d.t===0?'Normal original X':d.t<0.5?`Paso 1: restar μ = ${fmtSmart(d.mu)} (se corre)`:d.t<1?`Paso 2: dividir por σ = ${fmtSmart(d.sd)} (se angosta)`:'Normal estándar Z ~ N(0, 1)';
+    c.fillText(phase,ax.L,0);
+    const area=Phi((Math.max(d.a,d.b)-d.mu)/d.sd)-Phi((Math.min(d.a,d.b)-d.mu)/d.sd);
+    c.textAlign='right'; c.font='600 12px '+FM; c.fillText('Área = '+fmt(area),ax.R,0);
+    const za=(d.a-d.mu)/d.sd, zb=(d.b-d.mu)/d.sd, r2=x=>Math.round(x*100)/100;
+    setH('std-steps',`<div><b>z de cada extremo</b></div>
+      <div class="f">z₁ = (${fmtSmart(d.a)} − ${fmtSmart(d.mu)}) / ${fmtSmart(d.sd)} = ${fmt(za)}</div>
+      <div class="f">z₂ = (${fmtSmart(d.b)} − ${fmtSmart(d.mu)}) / ${fmtSmart(d.sd)} = ${fmt(zb)}</div>
+      <div><b>Probabilidad</b></div>
+      <div class="f">Φ(${fmt(zb,2)}) − Φ(${fmt(za,2)}) = ${fmt(Phi(r2(zb))-Phi(r2(za)))} (tabla)</div>
+      <div class="f">valor exacto = ${fmt(area)}</div>
+      <div class="sub">En el video se usa z = 0,66 y 1,66 y da 0,2061. Redondeando a 0,67 y 1,67 da 0,2039, y el valor exacto es 0,2047: todas son la misma área con distinto redondeo.</div>`); };
+  LOAD.std=()=>{ inp('std-m').value=12; inp('std-s').value=3; inp('std-a').value=14; inp('std-b').value=17; read(); d.t=0; Tr.set(0); d.running=true; };
+})();
+
+// ================================================================ L8V1 · TCL
+(function(){
+  const cv=$('#tcl-cv');
+  const POP={
+    exp:{lo:0,hi:6,mu:1,v:1,r:()=>-Math.log(1-Math.random()),f:x=>x<0?0:Math.exp(-x)},
+    uni:{lo:0,hi:1,mu:0.5,v:1/12,r:()=>Math.random(),f:x=>x>=0&&x<=1?1:0},
+    dado:{lo:0.5,hi:6.5,mu:3.5,v:35/12,r:()=>1+Math.floor(Math.random()*6),disc:true},
+    bim:{lo:0,hi:9,mu:4.5,v:0.36+6.25,r:()=>(Math.random()<0.5?2:7)+0.6*rNorm(),f:x=>0.5*npdf(x,2,0.6)+0.5*npdf(x,7,0.6)}};
+  const NB=48;
+  const d=demo('l8v1',{pop:'exp',n:10,bins:Array(NB).fill(0),cnt:0,s:0,s2:0,cur:[],t:0});
+  const popB=$$('#tcl-pop button'); const selPop=v=>popB.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===v)));
+  popB.forEach(b=>b.onclick=()=>{ d.pop=b.dataset.v; selPop(d.pop); reset(); many(500); });
+  bindRange('tcl-n',v=>v,v=>{ d.n=v; reset(); many(500); });
+  function reset(){ d.bins=Array(NB).fill(0); d.cnt=d.s=d.s2=0; d.cur=[]; d.dirty=true; }
+  const rec=m=>{ const P=POP[d.pop]; const i=Math.floor((m-P.lo)/(P.hi-P.lo)*NB); if(i>=0&&i<NB) d.bins[i]++; d.cnt++; d.s+=m; d.s2+=m*m; };
+  const sample=()=>{ const P=POP[d.pop]; const xs=[]; for(let i=0;i<d.n;i++) xs.push(P.r()); return xs; };
+  const many=k=>{ for(let i=0;i<k;i++){ const xs=sample(); rec(xs.reduce((a,b)=>a+b,0)/xs.length); } d.dirty=true; };
+  d.update=dt=>{ d.t+=dt; if(d.t>(RM?0.05:0.45)){ d.t=0; d.cur=sample(); rec(d.cur.reduce((a,b)=>a+b,0)/d.cur.length); } };
+  d.draw=()=>{ const Pc=prep(cv); if(!Pc) return; const {c,w,h}=Pc; const P=POP[d.pop];
+    const h1=h*0.36;
+    // population
+    let pmax=P.disc?1/6:0; if(!P.disc) for(let i=0;i<=200;i++) pmax=Math.max(pmax,P.f(P.lo+(P.hi-P.lo)*i/200));
+    const ax1=axes(c,{x:0,y:0,w,h:h1},P.lo,P.hi,pmax*1.25,{top:16});
+    c.font='11px '+FB; c.fillStyle=T.muted; c.textAlign='left'; c.textBaseline='top'; c.fillText('Población',ax1.L,0);
+    if(P.disc){ for(let v=1;v<=6;v++){ c.fillStyle=T.muted; c.globalAlpha=0.35; const x=ax1.X(v-0.3), x2=ax1.X(v+0.3); c.fillRect(x,ax1.Y(1/6),x2-x,ax1.B-ax1.Y(1/6)); c.globalAlpha=1; } }
+    else { shade(c,ax1,P.f,P.lo,P.hi,T.muted,0.25); plot(c,ax1,P.f,T.muted,1.5); }
+    if(d.cur.length){ c.fillStyle=T.hit; for(const x of d.cur){ c.globalAlpha=0.75; c.beginPath(); c.arc(ax1.X(clamp(x,P.lo,P.hi)),ax1.B-5,3.2,0,7); c.fill(); } c.globalAlpha=1;
+      const m=d.cur.reduce((a,b)=>a+b,0)/d.cur.length; const X=ax1.X(m); c.fillStyle=T.ink; c.beginPath(); c.moveTo(X,ax1.B-12); c.lineTo(X-6,ax1.B-22); c.lineTo(X+6,ax1.B-22); c.closePath(); c.fill(); }
+    // means histogram
+    const se=Math.sqrt(P.v/d.n), bw=(P.hi-P.lo)/NB; const dens=d.bins.map(v=>d.cnt?v/(d.cnt*bw):0);
+    const ymax=Math.max(npdf(0,0,se),...dens)*1.12;
+    const ax2=axes(c,{x:0,y:h1+6,w,h:h-h1-6},P.lo,P.hi,ymax,{top:18});
+    c.font='11px '+FB; c.fillStyle=T.muted; c.textAlign='left'; c.textBaseline='top'; c.fillText(`Medias de muestras de tamaño n = ${d.n}`,ax2.L,h1+6);
+    c.fillStyle=T.accent; c.globalAlpha=0.5; for(let i=0;i<NB;i++){ const x=ax2.X(P.lo+i*bw), x2=ax2.X(P.lo+(i+1)*bw); const y=ax2.Y(Math.min(ymax,dens[i])); c.fillRect(x+0.5,y,Math.max(1,x2-x-1),ax2.B-y); } c.globalAlpha=1;
+    plot(c,ax2,x=>npdf(x,P.mu,se),T.ink,2);
+    set('tcl-cnt',fmtInt(d.cnt)); set('tcl-mu',fmtSmart(P.mu)); const mm=d.s/d.cnt; set('tcl-mm',d.cnt?fmt(mm):'—'); set('tcl-se',fmt(se)); set('tcl-sd',d.cnt>1?fmt(Math.sqrt(Math.max(0,d.s2/d.cnt-mm*mm))):'—'); };
+  bindPlay('tcl-play',d); $('#tcl-500').onclick=()=>many(500); $('#tcl-reset').onclick=reset;
+  selPop('exp'); reset(); many(600);
+})();
+
+// ================================================================ L8V2 · calculadora
+(function(){
+  const cv=$('#area-cv');
+  const d=demo('l8v2',{mu:3,sd:0.5,a:2,b:2.3,mode:'le',f:1});
+  const PRE=[{mu:3,sd:0.5,a:2,b:2.3,mode:'le'},{mu:3,sd:0.005,a:2.99,b:3.01,mode:'out'},{mu:0,sd:1,a:1.84,b:3,mode:'ge'},{mu:0,sd:1,a:-1.97,b:0.86,mode:'in'},{mu:12,sd:3,a:14,b:17,mode:'in'}];
+  const ids=['area-m','area-s','area-a','area-b'];
+  const read=()=>{ const v=ids.map(i=>+$('#'+i).value); if(isFinite(v[0])) d.mu=v[0]; if(v[1]>0) d.sd=v[1]; if(isFinite(v[2])) d.a=v[2]; if(isFinite(v[3])) d.b=v[3]; d.f=1; d.dirty=true; };
+  ids.forEach(i=>$('#'+i).addEventListener('input',read));
+  const MO=bindSeg('area-mode',v=>{ d.mode=v; ui(); go(); });
+  const PR=bindPresets('area-pre',i=>apply(PRE[i]));
+  function ui(){ $('#area-a').disabled=d.mode==='le'; $('#area-b').disabled=d.mode==='ge'; }
+  function apply(o){ Object.assign(d,o); $('#area-m').value=o.mu; $('#area-s').value=o.sd; $('#area-a').value=o.a; $('#area-b').value=o.b; MO.sel(o.mode); ui(); go(); }
+  function go(){ d.f=0; d.running=true; }
+  d.update=dt=>{ d.f=Math.min(1,d.f+dt/(RM?0.1:1.1)); if(d.f>=1) d.running=false; };
+  const prob=()=>{ const za=(d.a-d.mu)/d.sd, zb=(d.b-d.mu)/d.sd; const lo=Math.min(za,zb), hi=Math.max(za,zb);
+    return d.mode==='le'?Phi(zb): d.mode==='ge'?1-Phi(za): d.mode==='in'?Phi(hi)-Phi(lo): Phi(lo)+1-Phi(hi); };
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P;
+    const lo=d.mu-4*d.sd, hi=d.mu+4*d.sd; const ax=axes(c,{x:0,y:0,w,h},lo,hi,npdf(0,0,d.sd)*1.25,{top:30});
+    const f=x=>npdf(x,d.mu,d.sd); const cut=lo+(hi-lo)*ease(d.f);
+    const A=Math.min(d.a,d.b), B=Math.max(d.a,d.b);
+    const regs=d.mode==='le'?[[-Infinity,d.b]]: d.mode==='ge'?[[d.a,Infinity]]: d.mode==='in'?[[A,B]]:[[-Infinity,A],[B,Infinity]];
+    for(const [r1,r2] of regs) shade(c,ax,f,r1,Math.min(r2,cut),T.hit,0.45);
+    plot(c,ax,f,T.ink,2.4);
+    const z=x=>(x-d.mu)/d.sd;
+    if(d.mode!=='le') vline(c,ax,d.mode==='ge'?d.a:A,T.ink,`${d.mode==='ge'?'a':'a'} = ${fmtSmart(d.mode==='ge'?d.a:A)}`,[4,4],`z = ${fmt(z(d.mode==='ge'?d.a:A),2)}`);
+    if(d.mode!=='ge') vline(c,ax,d.mode==='le'?d.b:B,T.ink,`b = ${fmtSmart(d.mode==='le'?d.b:B)}`,[4,4],`z = ${fmt(z(d.mode==='le'?d.b:B),2)}`);
+    const p=prob(); set('area-p',`${fmt(p)}  (${fmt(p*100,2)} %)`);
+    const za=z(A), zb=z(B), zA=z(d.a), zB=z(d.b), m=xl(d.mu), s=xl(d.sd);
+    let html=''; const zline=(n,x,zz)=>`<div class="f">z${n} = (${fmtSmart(x)} − ${fmtSmart(d.mu)}) / ${fmtSmart(d.sd)} = ${fmt(zz)}</div>`;
+    if(d.mode==='le') html=`<div><b>Estandarizar</b></div>${zline('',d.b,zB)}<div><b>Leer la acumulada</b></div><div class="f">P(X ≤ ${fmtSmart(d.b)}) = Φ(${fmt(zB,2)}) = ${fmt(Phi(zB))}</div>`;
+    if(d.mode==='ge') html=`<div><b>Estandarizar</b></div>${zline('',d.a,zA)}<div><b>Complemento</b></div><div class="f">P(X ≥ ${fmtSmart(d.a)}) = 1 − Φ(${fmt(zA,2)}) = 1 − ${fmt(Phi(zA))} = ${fmt(1-Phi(zA))}</div>`;
+    if(d.mode==='in') html=`<div><b>Estandarizar</b></div>${zline('₁',A,za)}${zline('₂',B,zb)}<div><b>Restar acumuladas</b></div><div class="f">Φ(${fmt(zb,2)}) − Φ(${fmt(za,2)}) = ${fmt(Phi(zb))} − ${fmt(Phi(za))} = ${fmt(Phi(zb)-Phi(za))}</div>`;
+    if(d.mode==='out') html=`<div><b>Estandarizar</b></div>${zline('₁',A,za)}${zline('₂',B,zb)}<div><b>Sumar las dos colas</b></div><div class="f">Φ(${fmt(za,2)}) + [1 − Φ(${fmt(zb,2)})] = ${fmt(Phi(za))} + ${fmt(1-Phi(zb))} = ${fmt(Phi(za)+1-Phi(zb))}</div>`;
+    setH('area-steps',html); };
+  apply(PRE[0]); PR.mark(0); d.f=1; d.running=false;
+  LOAD.area=i=>{ PR.mark(i); apply(PRE[i]); };
+})();
+
+// ================================================================ L8V2 · inverso
+(function(){
+  const cv=$('#inv-cv');
+  const d=demo('l8v2',{mu:40,sd:6,p:0.45,dir:'left',f:1});
+  const PRE=[{mu:40,sd:6,p:0.45,dir:'left'},{mu:40,sd:6,p:0.14,dir:'right'},{mu:60.5,sd:7.1,p:0.05,dir:'right'},{mu:0,sd:1,p:0.3015,dir:'right'}];
+  const ids=['inv-m','inv-s','inv-p'];
+  const read=()=>{ const v=ids.map(i=>+$('#'+i).value); if(isFinite(v[0])) d.mu=v[0]; if(v[1]>0) d.sd=v[1]; if(v[2]>0&&v[2]<1) d.p=v[2]; d.f=1; d.dirty=true; };
+  ids.forEach(i=>$('#'+i).addEventListener('input',read));
+  const DIR=bindSeg('inv-dir',v=>{ d.dir=v; go(); });
+  const PR=bindPresets('inv-pre',i=>apply(PRE[i]));
+  function apply(o){ Object.assign(d,o); $('#inv-m').value=o.mu; $('#inv-s').value=o.sd; $('#inv-p').value=o.p; DIR.sel(o.dir); go(); }
+  function go(){ d.f=0; d.running=true; }
+  $('#inv-play').onclick=go;
+  d.update=dt=>{ d.f=Math.min(1,d.f+dt/(RM?0.1:2)); if(d.f>=1) d.running=false; };
+  d.draw=()=>{ const P=prep(cv); if(!P) return; const {c,w,h}=P;
+    const lo=d.mu-4*d.sd, hi=d.mu+4*d.sd; const ax=axes(c,{x:0,y:0,w,h},lo,hi,npdf(0,0,d.sd)*1.25,{top:30});
+    const f=x=>npdf(x,d.mu,d.sd);
+    const zL=Phinv(d.dir==='left'?d.p:1-d.p); const xT=d.mu+zL*d.sd;
+    const e=ease(d.f); const xc=d.dir==='left'? lo+(xT-lo)*e : hi-(hi-xT)*e;
+    if(d.dir==='left') shade(c,ax,f,-Infinity,xc,T.hit,0.45); else shade(c,ax,f,xc,Infinity,T.hit,0.45);
+    plot(c,ax,f,T.ink,2.4);
+    const cur=d.dir==='left'?Phi((xc-d.mu)/d.sd):1-Phi((xc-d.mu)/d.sd);
+    vline(c,ax,xc,T.ink,`x = ${fmt(xc,2)}`,[4,4],`área = ${fmt(cur)}`);
+    const z2=Math.round(zL*100)/100; const pl=d.dir==='left'?d.p:1-d.p;
+    set('inv-x',d.f>=1?`x = ${fmt(xT,2)}`:'buscando…');
+    setH('inv-steps',`<div><b>1. Pasar a área a la izquierda</b></div>
+      <div class="f">${d.dir==='left'?`P(X ≤ x) = ${fmt(d.p)}`:`P(X ≥ x) = ${fmt(d.p)}  →  P(X ≤ x) = 1 − ${fmt(d.p)} = ${fmt(pl)}`}</div>
+      <div><b>2. Buscar z en la tabla (inversa)</b></div>
+      <div class="f">z = Φ⁻¹(${fmt(pl)}) = ${fmt(zL)}  ≈ ${fmt(z2,2)}</div>
+      <div><b>3. Volver a la escala de X</b></div>
+      <div class="f">x = μ + z·σ = ${fmtSmart(d.mu)} + (${fmt(z2,2)})·${fmtSmart(d.sd)} = ${fmt(d.mu+z2*d.sd,2)}</div>
+      <div class="sub">Con z sin redondear: x = ${fmt(xT,4)}.</div>
+      `); };
+  apply(PRE[0]); PR.mark(0); d.f=1; d.running=false;
+  LOAD.inv=i=>{ PR.mark(i); apply(PRE[i]); };
+})();
+
+// ================================================================ ejercicios resueltos
+const EX={
+ l7v1:[
+  {t:'Media y varianza de un dado legal',q:'Se lanza un dado legal y X es el número de puntos. Calcular E(X) y Var(X).',load:['dice'],steps:[
+   ['Es una uniforme discreta con k = 6 valores, cada uno con probabilidad 1/6.','P(X = x) = 1/6,  x = 1, 2, …, 6'],
+   ['La media es el promedio de los valores.','μ = (1 + 2 + 3 + 4 + 5 + 6) / 6 = 21 / 6 = 3,5'],
+   ['La varianza promedia los desvíos al cuadrado.','(1−3,5)² + (2−3,5)² + … + (6−3,5)² = 6,25 + 2,25 + 0,25 + 0,25 + 2,25 + 6,25 = 17,5'],
+   ['Resultado','σ² = 17,5 / 6 ≈ 2,9167   (el video lo redondea a 2,91)',1]]},
+  {t:'Tres artículos con 25 % de defectuosos',q:'Se seleccionan 3 artículos al azar de un proceso que produce 25 % de defectuosos. Hallar la distribución de X = número de defectuosos.',load:['bern'],steps:[
+   ['Cada artículo es un ensayo de Bernoulli con p = 1/4 (defectuoso) y q = 3/4. Los ensayos son independientes, así que se multiplican.','P(N D N) = 3/4 · 1/4 · 3/4 = 9/64'],
+   ['X = 1 se da con tres órdenes distintos: DNN, NDN, NND. Se suman.','P(X = 1) = 3 · 9/64 = 27/64'],
+   ['Lo mismo para el resto de los valores.','P(X = 0) = (3/4)³ = 27/64   P(X = 2) = 3 · (1/4)²(3/4) = 9/64   P(X = 3) = (1/4)³ = 1/64'],
+   ['Distribución (suma 64/64 = 1)','X:   0       1       2      3\nP: 27/64  27/64  9/64  1/64',1]]}],
+ l7v2:[
+  {t:'Asma en una muestra de 4 personas',q:'El 30 % de los habitantes padece asma. En una muestra de 4 personas: a) ninguna tiene asma; b) más de dos tienen asma.',load:['bin',0],load2:['bin',1],steps:[
+   ['Identificar el modelo: n = 4 ensayos independientes con p = 0,3.','X ~ B(4; 0,3)'],
+   ['a) Ninguna: X = 0.','P(X = 0) = C(4,0) · 0,3⁰ · 0,7⁴ = 1 · 1 · 0,2401 = 0,2401'],
+   ['b) Más de dos significa X ≥ 3, es decir X = 3 o X = 4.','P(X = 3) = C(4,3) · 0,3³ · 0,7 = 4 · 0,027 · 0,7 = 0,0756\nP(X = 4) = 0,3⁴ = 0,0081'],
+   ['Resultado','a) 0,2401    b) 0,0756 + 0,0081 = 0,0837',1]]},
+  {t:'Dispositivos defectuosos (binomial dentro de binomial)',q:'La tasa de defectuosos es 3 %. a) Si se revisan 20 dispositivos, ¿probabilidad de al menos uno defectuoso? b) En 10 cargamentos de 20 dispositivos cada uno, ¿probabilidad de que exactamente 3 cargamentos tengan al menos un defectuoso?',load:['bin',3],steps:[
+   ['a) X ~ B(20; 0,03). "Al menos uno" se resuelve por complemento.','P(X ≥ 1) = 1 − P(X = 0) = 1 − 0,97²⁰ = 1 − 0,5438 = 0,4562'],
+   ['b) Cada cargamento es ahora un ensayo de Bernoulli: "éxito" = tener al menos un defectuoso, con p = 0,4562.','Y ~ B(10; 0,4562)'],
+   ['Aplicar la fórmula binomial con y = 3.','P(Y = 3) = C(10,3) · 0,4562³ · 0,5438⁷ = 120 · 0,09494 · 0,01406'],
+   ['Resultado','a) 0,4562    b) 0,1602',1]]},
+  {t:'Recién nacidos: como máximo 10 varones de 12',q:'El 90 % de los recién nacidos son varones. En 12 nacimientos, ¿probabilidad de que como máximo 10 sean varones?',load:['bin',2],steps:[
+   ['X ~ B(12; 0,9). "Como máximo 10" es X ≤ 10; conviene el complemento.','P(X ≤ 10) = 1 − P(X = 11) − P(X = 12)'],
+   ['Calcular los dos términos.','P(X = 11) = 12 · 0,9¹¹ · 0,1 = 0,3766\nP(X = 12) = 0,9¹² = 0,2824'],
+   ['Otra forma: Y = nenas ~ B(12; 0,1). "Como máximo 10 varones" = "al menos 2 nenas".','P(Y ≥ 2) = 1 − P(Y ≤ 1)   (el video escribe 1 − P(Y ≤ 2), que es un error)'],
+   ['Resultado','P(X ≤ 10) = 1 − 0,3766 − 0,2824 = 0,3410',1]]}],
+ l7v3:[
+  {t:'Comisión de diplomáticos',q:'De 20 diplomáticos, 5 son venezolanos. Se elige al azar una comisión de 3. ¿Probabilidad de que tenga exactamente 2 venezolanos?',load:['hyp',1],steps:[
+   ['Es sin reposición de una población chica: hipergeométrica con N = 20, M = 5, n = 3.','X ~ H(20, 5, 3)'],
+   ['Contar las formas: 2 venezolanos de 5 y 1 no venezolano de 15, sobre todas las comisiones posibles.','C(5,2) = 10    C(15,1) = 15    C(20,3) = 1140'],
+   ['Resultado','P(X = 2) = 10 · 15 / 1140 = 150 / 1140 = 0,1316',1]]},
+  {t:'Batas con defecto',q:'En un lote de 10 batas hay 2 con un defecto. Un cliente compra 3 al azar. Dar la distribución de X = batas defectuosas compradas.',load:['hyp',0],steps:[
+   ['Hipergeométrica con N = 10, M = 2, n = 3. X solo puede valer 0, 1 o 2 porque hay 2 defectuosas.','C(10,3) = 120'],
+   ['X = 0: las 3 salen de las 8 sanas.','P(X = 0) = C(2,0) · C(8,3) / 120 = 56 / 120 = 0,4667'],
+   ['X = 1 y X = 2.','P(X = 1) = C(2,1) · C(8,2) / 120 = 2 · 28 / 120 = 0,4667\nP(X = 2) = C(2,2) · C(8,1) / 120 = 8 / 120 = 0,0667'],
+   ['Resultado (suma 1)','P(0) = 0,4667   P(1) = 0,4667   P(2) = 0,0667',1]]},
+  {t:'Estudiantes de ingeniería (aproximación binomial)',q:'En una universidad de 10.000 estudiantes, 3.000 estudian ingeniería. En una muestra de 10, ¿probabilidad de que la mitad estudie ingeniería?',load:['hyp',2],steps:[
+   ['En rigor es hipergeométrica H(10.000; 3.000; 10), pero n = 10 es el 0,1 % de N (menos del 5 %).','Se aproxima con B(n = 10, p = M/N = 0,3)'],
+   ['Aplicar la binomial con x = 5.','P(X = 5) = C(10,5) · 0,3⁵ · 0,7⁵ = 252 · 0,00243 · 0,16807'],
+   ['Resultado','P(X = 5) ≈ 0,1029  (la hipergeométrica exacta también da 0,1029)',1]]}],
+ l7v4:[
+  {t:'Clientes en la caja del supermercado',q:'Llegan en promedio 2 clientes por minuto. Calcular: a) que no llegue nadie en un minuto; b) que llegue más de uno en un minuto; c) que lleguen 5 en 2 minutos.',load:['poi',0],load2:['poi',2],steps:[
+   ['X = clientes en un minuto ~ Poisson(λ = 2).','P(X = x) = e^(−2) · 2ˣ / x!'],
+   ['a) X = 0.','P(X = 0) = e^(−2) = 0,1353'],
+   ['b) Más de uno: complemento de 0 o 1.','P(X > 1) = 1 − P(0) − P(1) = 1 − 0,1353 − 0,2707 = 0,5940'],
+   ['c) Cambia la unidad a 2 minutos, así que λ se duplica.','Y ~ Poisson(4)    P(Y = 5) = e^(−4) · 4⁵ / 5! = 0,0183 · 1024 / 120'],
+   ['Resultado','a) 0,1353    b) 0,5940    c) 0,1563',1]]},
+  {t:'Accidentes en una fábrica de calzado',q:'Hubo 7 accidentes en 35 días. a) Ningún accidente en un día; b) 2 accidentes en 3 días; c) como máximo 3 accidentes en 7 días.',load:['poi',3],load2:['poi',5],steps:[
+   ['Promedio por día: λ = 7 / 35 = 0,2.','X ~ Poisson(0,2)'],
+   ['a) Un día.','P(X = 0) = e^(−0,2) = 0,8187'],
+   ['b) Tres días: λ = 3 · 0,2 = 0,6.','P(Y = 2) = e^(−0,6) · 0,6² / 2! = 0,5488 · 0,18 = 0,0988'],
+   ['c) Siete días: λ = 7 · 0,2 = 1,4. "Como máximo 3" suma 0, 1, 2 y 3.','P(W ≤ 3) = e^(−1,4) · (1 + 1,4 + 1,4²/2 + 1,4³/6) = 0,2466 · 3,8373'],
+   ['Resultado','a) 0,8187    b) 0,0988    c) 0,9463',1]]},
+  {t:'Aproximación: accidentes muy poco frecuentes',q:'La probabilidad de accidente en un día es 0,005 y los días son independientes. En 400 días: a) exactamente un día con accidente; b) como máximo 3.',load:['apx'],steps:[
+   ['En rigor X ~ B(400; 0,005). Como n es grande y p chica, se aproxima con Poisson.','λ = n · p = 400 · 0,005 = 2   (el video escribe p = 0,05, pero tiene que ser 0,005)'],
+   ['a) X = 1.','P(X = 1) ≈ e^(−2) · 2 = 0,2707'],
+   ['b) Suma de 0 a 3.','P(X ≤ 3) ≈ e^(−2) · (1 + 2 + 2 + 4/3) = 0,1353 · 6,3333'],
+   ['Resultado','a) 0,2707    b) 0,8571   (la binomial exacta da 0,2707 y 0,8576)',1]]}],
+ l7v5:[
+  {t:'Autos que contaminan',q:'5 de cada 100 autos tienen una falla que contamina. Se revisan uno tras otro. a) ¿Probabilidad de que el décimo sea el primero con falla? b) ¿Cuántos autos hay que revisar en promedio?',load:['geo'],steps:[
+   ['X = número de autos revisados hasta el primero con falla. Es geométrica con p = 0,05.','X ~ G(0,05)    P(X = x) = p · (1 − p)^(x − 1)'],
+   ['a) Los primeros 9 sin falla y el décimo con falla.','P(X = 10) = 0,05 · 0,95⁹ = 0,05 · 0,6302'],
+   ['b) Media y varianza.','E(X) = 1 / p = 1 / 0,05 = 20    Var(X) = (1 − p) / p² = 0,95 / 0,0025 = 380'],
+   ['Resultado','a) 0,0315    b) 20 autos en promedio',1]]}],
+ l8v1:[
+  {t:'Estandarizar una normal',q:'X ~ N(μ = 12, σ² = 9). Calcular P(X > 12) y P(14 < X < 17).',load:['std'],steps:[
+   ['Si σ² = 9, entonces σ = 3. Se estandariza con Z = (X − 12) / 3.','Z ~ N(0, 1)'],
+   ['P(X > 12): z = (12 − 12)/3 = 0. Por simetría queda la mitad del área.','P(X > 12) = P(Z > 0) = 0,5'],
+   ['P(14 < X < 17): estandarizar cada extremo.','z₁ = (14 − 12)/3 = 0,67    z₂ = (17 − 12)/3 = 1,67'],
+   ['Restar acumuladas de la tabla.','P(0,67 < Z < 1,67) = Φ(1,67) − Φ(0,67) = 0,9525 − 0,7486'],
+   ['Resultado','P(X > 12) = 0,5    P(14 < X < 17) ≈ 0,2039 (exacto 0,2047; el video usa 0,66 y 1,66 y da 0,2061)',1]]}],
+ l8v2:[
+  {t:'Áreas con la normal estándar',q:'Con Z ~ N(0, 1), hallar: a) el área a la derecha de 1,84; b) el área entre −1,97 y 0,86.',load:['area',2],load2:['area',3],steps:[
+   ['a) Área a la derecha = 1 − área a la izquierda.','P(Z > 1,84) = 1 − Φ(1,84) = 1 − 0,9671 = 0,0329'],
+   ['b) Área entre dos valores = resta de acumuladas.','P(−1,97 < Z < 0,86) = Φ(0,86) − Φ(−1,97) = 0,8051 − 0,0244'],
+   ['Resultado','a) 0,0329    b) 0,7807',1]]},
+  {t:'Duración de baterías',q:'Las baterías duran en promedio 3 años con σ = 0,5 (distribución normal). ¿Probabilidad de que una dure menos de 2,3 años?',load:['area',0],steps:[
+   ['Estandarizar el valor 2,3.','z = (2,3 − 3) / 0,5 = −1,4'],
+   ['Leer la acumulada.','P(X < 2,3) = P(Z < −1,4) = Φ(−1,4)'],
+   ['Resultado','≈ 0,0808, es decir un 8 % de las baterías',1]]},
+  {t:'Cojinetes fuera de especificación',q:'El diámetro debe ser 3,0 ± 0,01 cm. El proceso da diámetros N(3,0; σ = 0,005). ¿Qué porcentaje se descarta?',load:['area',1],steps:[
+   ['Los límites aceptados son 2,99 y 3,01. Estandarizar ambos.','z₁ = (2,99 − 3,0)/0,005 = −2    z₂ = (3,01 − 3,0)/0,005 = 2'],
+   ['Se descartan las dos colas. Por simetría valen lo mismo.','P(Z < −2) = 0,0228    P(Z > 2) = 0,0228'],
+   ['Resultado','0,0228 + 0,0228 = 0,0456 → se descarta el 4,56 % de las piezas',1]]},
+  {t:'Problema inverso: encontrar x',q:'X ~ N(μ = 40, σ = 6). Hallar x que deja: a) el 45 % del área a la izquierda; b) el 14 % a la derecha.',load:['inv',0],load2:['inv',1],steps:[
+   ['a) Buscar z con área 0,45 a la izquierda (inversa de la tabla).','z = −0,13'],
+   ['Volver a X con x = μ + z·σ.','x = 40 + (−0,13) · 6 = 39,22'],
+   ['b) 14 % a la derecha equivale a 86 % a la izquierda.','z = Φ⁻¹(0,86) = 1,08    x = 40 + 1,08 · 6 = 46,48'],
+   ['Resultado','a) x = 39,22    b) x = 46,48',1]]},
+  {t:'Peso del 5 % más pesado',q:'Los pesos de los adultos siguen N(60,5; 50,41). ¿A partir de qué peso está el 5 % más pesado?',load:['inv',2],steps:[
+   ['σ² = 50,41, entonces σ = 7,1. Se busca x con P(X > x) = 0,05.','P(X ≤ x) = 0,95'],
+   ['Buscar z con 0,95 a la izquierda.','z = 1,645  (el video usa 1,64)'],
+   ['Volver a X.','x = 60,5 + 1,645 · 7,1 = 72,18   (con 1,64: 72,14)'],
+   ['Resultado','Desde unos 72,1 kg está el 5 % más pesado',1]]}]
+};
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function renderEx(){
+  for(const root of $$('[data-exs]')){ const key=root.dataset.exs; const list=EX[key]||[];
+    root.innerHTML=`<div class="exs-h"><h3>Ejercicios resueltos</h3><span class="sub">Probá resolverlos antes de ver cada paso.</span></div>`+
+    list.map((e,i)=>`<article class="ex" data-k="${key}" data-i="${i}">
+      <p class="ex-tag">Ejercicio ${i+1}</p><h4>${esc(e.t)}</h4><p class="ex-q">${esc(e.q)}</p>
+      <ol>${e.steps.map((s,j)=>`<li class="${s[2]?'res':''}" ${j>0?'hidden':''}>${esc(s[0])}<span class="f">${esc(s[1]).replace(/\n/g,'<br>')}</span></li>`).join('')}</ol>
+      <div class="row"><button class="btn" data-a="next">Siguiente paso</button><button class="btn ghost" data-a="all">Ver todo</button>
+      <button class="btn ghost" data-a="load">Verlo en la animación</button>${e.load2?'<button class="btn ghost" data-a="load2">Ver la otra parte</button>':''}</div>
+    </article>`).join('');
+  }
+  document.addEventListener('click',ev=>{ const b=ev.target.closest('.ex button'); if(!b) return; const art=b.closest('.ex'); const e=EX[art.dataset.k][+art.dataset.i];
+    const lis=$$('li',art);
+    if(b.dataset.a==='next'){ const h=lis.find(l=>l.hidden); if(h) h.hidden=false; if(!lis.some(l=>l.hidden)) b.disabled=true; }
+    if(b.dataset.a==='all'){ lis.forEach(l=>l.hidden=false); $('[data-a="next"]',art).disabled=true; }
+    if(b.dataset.a==='load'||b.dataset.a==='load2'){ const [fn,arg]=b.dataset.a==='load'?e.load:e.load2; LOAD[fn](arg);
+      const cardId={dice:'card-dice',bern:'card-bern',bin:'card-bin',hyp:'card-hyp',poi:'card-poi',apx:'card-apx',geo:'card-geo',std:'card-std',area:'card-area',inv:'card-inv'}[fn];
+      const el=document.getElementById(cardId); if(el) el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'}); }
+  });
+}
+
+// ================================================================ introducción, ecuaciones y requisitos previos
+const fr=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+const SUM=(lo,hi)=>`<span class="sum"><small>${hi||'&nbsp;'}</small><b>Σ</b><small>${lo}</small></span>`;
+const INT=(lo,hi)=>`<span class="sum"><small>${hi}</small><b>∫</b><small>${lo}</small></span>`;
+const cases=rows=>`<span class="cases"><span class="br">{</span><span class="rows">${rows.map(r=>`<span>${r}</span>`).join('')}</span></span>`;
+const Cb=(n,k)=>`C(${n}, ${k})`;
+const Xbar='<span class="ov">X</span>';
+
+const INTRO={
+ l7v1:{p:[
+  'Hasta ahora una variable aleatoria era una lista de valores con sus probabilidades, armada a mano para cada problema. En esta lección aparecen los <b>modelos</b>: distribuciones con nombre propio que se repiten en muchísimas situaciones reales. Si reconocés que un problema encaja en un modelo, ya tenés la fórmula, la media y la varianza, sin calcular nada desde cero.',
+  'El video arranca con la diferencia entre dos tipos de modelos. Un modelo <b>determinista</b> dice qué va a pasar con seguridad: si se dan ciertas condiciones, el resultado es siempre el mismo (causa y efecto). Un modelo <b>probabilístico</b> solo dice qué tan probable es cada resultado: al tirar un dado no sabés qué cara sale, pero sí que cada una tiene probabilidad 1/6. Las distribuciones de probabilidad son modelos probabilísticos.',
+  'Después presenta los dos modelos más simples. En la <b>uniforme discreta</b> todos los valores son igual de probables. En <b>Bernoulli</b> hay un solo ensayo con dos resultados posibles, que se llaman éxito y fracaso (el nombre lo elige quien analiza, no tiene que ser algo "bueno"). Bernoulli es la pieza con la que se arman la binomial y la geométrica, que vienen en los próximos videos.'],
+  l:['Modelo determinista y modelo probabilístico','Qué es un modelo discreto','Uniforme discreta: fórmula, media y varianza','Bernoulli: éxito, fracaso y el parámetro p','Las 4 condiciones del proceso de Bernoulli','Ejemplo de 3 artículos, que anticipa la binomial']},
+ l7v2:{p:[
+  'La binomial responde a una pregunta muy común: <b>si repito n veces un experimento de Bernoulli, ¿cuántos éxitos voy a obtener?</b> Por ejemplo: de 4 personas elegidas al azar, ¿cuántas tienen asma?; de 20 dispositivos revisados, ¿cuántos vienen fallados?',
+  'Para poder usarla se tienen que cumplir tres condiciones: un número <b>fijo</b> n de ensayos, que sean <b>independientes</b> entre sí y que todos tengan la <b>misma</b> probabilidad de éxito p. La fórmula junta dos ideas: la probabilidad de una secuencia concreta con x éxitos (pˣ·qⁿ⁻ˣ) y cuántas secuencias distintas tienen x éxitos (el número combinatorio C(n, x)).',
+  'El video también muestra recursos que aparecen en casi todos los ejercicios: usar el complemento para "al menos uno", cambiar éxito por fracaso para acortar cuentas y usar el resultado de una binomial como p de otra. Termina con gráficos que muestran cómo cambia la forma de la distribución según p y n.'],
+  l:['La binomial como suma de n Bernoulli','Cuándo un muestreo es binomial (con o sin reposición)','Fórmula, notación B(n, p), media y varianza','Ejemplos: asma, recién nacidos, dispositivos','Forma: simetría y asimetría según p']},
+ l7v3:{p:[
+  'La hipergeométrica aparece cuando se <b>sacan elementos sin devolverlos</b> de un grupo chico. Por ejemplo, elegir 3 personas de 20 para una comisión: la persona que ya salió no puede volver a salir, y eso cambia las probabilidades de las extracciones siguientes.',
+  'Por eso no sirve la binomial: los ensayos dejan de ser independientes. En lugar de multiplicar probabilidades, se <b>cuentan casos</b>. Se cuenta de cuántas formas se pueden elegir x "éxitos" entre los M que hay y n − x "fracasos" entre los N − M restantes, y se divide por todas las muestras posibles de tamaño n.',
+  'La media es igual a la de la binomial (n·p, con p = M/N), pero la varianza es más chica porque se multiplica por un <b>factor de corrección</b>. Cuando la población es muy grande comparada con la muestra, sacar sin devolver casi no cambia las proporciones y la hipergeométrica se puede aproximar por la binomial.'],
+  l:['Población dicotómica: N, M y n','Fórmula con números combinatorios','Media y varianza con el factor de corrección','Ejemplos: diplomáticos, batas, estudiantes','Regla del 5 % para aproximar con la binomial']},
+ l7v4:{p:[
+  'La Poisson cuenta <b>cuántas veces ocurre algo en un intervalo</b> de tiempo o de espacio: clientes que llegan por minuto, accidentes por mes, errores por página, bacterias por cultivo. A diferencia de la binomial no hay un número fijo de ensayos: los eventos pueden pasar en cualquier momento del intervalo y no hay un máximo.',
+  'Tiene un único parámetro, <b>λ (lambda)</b>, que es el promedio de ocurrencias en la unidad considerada. Clave para los ejercicios: si cambia el tamaño del intervalo, λ cambia en la misma proporción. Si llegan 2 clientes por minuto, en 2 minutos el promedio es 4, y hay que usar λ = 4 en la fórmula.',
+  'Además funciona como atajo de la binomial. Cuando n es muy grande y p muy chica (eventos raros), la cuenta binomial es pesada, y la Poisson con λ = n·p da prácticamente lo mismo.'],
+  l:['Experimento y proceso de Poisson (3 propiedades)','Fórmula y significado de λ','Media = varianza = λ','Cambio de la unidad de tiempo','Aproximación de la binomial con n grande y p chica']},
+ l7v5:{p:[
+  'La geométrica responde a: <b>¿cuántos intentos necesito hasta el primer éxito?</b> Por ejemplo, revisar autos uno tras otro hasta encontrar el primero que contamina, o tirar un dado hasta que salga un 6.',
+  'Las condiciones son las mismas que en la binomial (ensayos de Bernoulli independientes con la misma p), pero no hay un n fijo: se sigue hasta que aparece el éxito. Para que el primer éxito llegue en el intento x, tienen que fallar los x − 1 anteriores y acertar el x-ésimo. De ahí sale directamente la fórmula.',
+  'La media es 1/p: si un evento tiene probabilidad 1/20, en promedio hay que esperar 20 intentos.'],
+  l:['Definición: ensayos hasta el primer éxito','Fórmula, media y varianza','Geométrica o binomial cuando p es muy chica','Ejemplo de los autos']},
+ l8v1:{p:[
+  'En la lección 8 se pasa a las <b>variables continuas</b>: las que pueden tomar cualquier valor dentro de un intervalo, como un tiempo, una estatura o un peso. Ya no tiene sentido preguntar por la probabilidad de un valor exacto (es 0). Se pregunta por intervalos, y la probabilidad es el <b>área bajo una curva</b> llamada función de densidad.',
+  'La más importante es la <b>normal</b> o campana de Gauss. Queda definida por dos números: la media μ, que es el centro, y el desvío σ, que da el ancho. Muchísimos fenómenos se comportan aproximadamente así. Además, por el Teorema Central del Límite, los promedios de muestras grandes también son normales aunque los datos originales no lo sean.',
+  'Como hay infinitas normales (una por cada par μ y σ), se usa un truco: <b>estandarizar</b>. Al restar la media y dividir por el desvío, cualquier normal se transforma en la normal estándar Z ~ N(0, 1), que está tabulada. Así una sola tabla sirve para todos los problemas.'],
+  l:['Variables discretas y continuas','Densidad normal y sus parámetros μ y σ','Propiedades de la campana','Regla empírica 68 – 95 – 99,7','Teorema Central del Límite','Estandarización y uso de la tabla']},
+ l8v2:{p:[
+  'Este video es práctico: aplica la normal a problemas concretos y muestra cómo se resuelven con la tabla de la normal estándar.',
+  'Hay dos tipos de preguntas. Las <b>directas</b> dan un valor de x y piden la probabilidad: ¿qué proporción de baterías dura menos de 2,3 años? Las <b>inversas</b> dan la probabilidad y piden el valor de x: ¿a partir de qué peso está el 5 % más pesado? En las directas se estandariza y se busca en la tabla. En las inversas se busca en la tabla "al revés" y después se despeja x.',
+  'En los dos casos el paso más útil es <b>dibujar la campana y sombrear el área pedida</b> antes de calcular. Así se ve enseguida si hay que usar el complemento, restar dos áreas o sumar dos colas.'],
+  l:['Áreas con la normal estándar','Problema inverso: de la probabilidad al valor','Aplicaciones: baterías, cojinetes y pesos']}
+};
+
+const FORMS={
+ l7v1:[
+  {h:'Modelo discreto',f:[
+   {t:'Condición de toda distribución discreta',m:`0 ≤ P(X = x) ≤ 1 &nbsp;&nbsp; y &nbsp;&nbsp; ${SUM('todo x')} P(X = x) = 1`,c:'Un modelo discreto es la lista de valores de X con sus probabilidades. Ninguna probabilidad puede ser negativa ni mayor que 1, y entre todas suman 1. El video usa esta condición para deducir que q = 1 − p en Bernoulli.'}]},
+  {h:'Uniforme discreta',f:[
+   {t:'Función de probabilidad',m:`P(X = x) = ${fr('1','k')}, &nbsp; x = x<sub>1</sub>, x<sub>2</sub>, …, x<sub>k</sub>`,c:'Todos los valores tienen la misma probabilidad. La distribución depende de cuántos valores hay (k) y de cuáles son.',s:'k: cantidad de valores distintos que puede tomar X.',e:'<b>Dado:</b> k = 6, entonces P(X = x) = 1/6 para x = 1, …, 6.'},
+   {t:'Media (esperanza)',m:`E(X) = μ = ${fr('1','k')} ${SUM('i = 1','k')} x<sub>i</sub>`,c:'Como todos los valores pesan igual, la media es el promedio común de los valores.',e:'<b>Dado:</b> (1 + 2 + 3 + 4 + 5 + 6) / 6 = 3,5.'},
+   {t:'Varianza',m:`σ<sup>2</sup> = ${fr('1','k')} ${SUM('i = 1','k')} (x<sub>i</sub> − μ)<sup>2</sup>`,c:'Es el promedio de las distancias al cuadrado entre cada valor y la media. Mide qué tan dispersos están los valores.',e:'<b>Dado:</b> 17,5 / 6 ≈ 2,92.'}]},
+  {h:'Bernoulli',f:[
+   {t:'Probabilidad de fracaso',m:'q = 1 − p',c:'Solo hay dos resultados y sus probabilidades suman 1, así que el fracaso es lo que le falta al éxito.',s:'p: probabilidad de éxito · q: probabilidad de fracaso.'},
+   {t:'Función de probabilidad (por casos)',m:`P(X = x) = ${cases(['q = 1 − p &nbsp; si x = 0','p &nbsp; si x = 1','0 &nbsp; en otro caso'])}`,c:'X vale 1 si hay éxito y 0 si hay fracaso. Es la forma "de tabla" que muestra el video.'},
+   {t:'Función de probabilidad (en una línea)',m:'P(X = x) = p<sup>x</sup> · (1 − p)<sup>1 − x</sup>, &nbsp; x = 0, 1',c:'Es lo mismo escrito en una fórmula: con x = 1 queda p y con x = 0 queda 1 − p.'},
+   {t:'Media y varianza',m:'μ = p &nbsp;&nbsp;&nbsp;&nbsp; σ<sup>2</sup> = p · (1 − p)',c:'Dependen solo de p, que es el único parámetro. Para cada p distinto hay una Bernoulli distinta. La varianza es máxima con p = 0,5.'},
+   {t:'Ensayos independientes: se multiplica',m:`P(N D N) = ${fr('3','4')} · ${fr('1','4')} · ${fr('3','4')} = ${fr('9','64')}`,c:'Como los ensayos son independientes, la probabilidad de una secuencia es el producto de las probabilidades. En el ejemplo de los 3 artículos, X = 1 tiene 3 órdenes posibles y se suma 3 veces.',e:'<b>Resultado:</b> P(X = 1) = 3 · 9/64 = 27/64.'}]}],
+ l7v2:[
+  {h:'Definición',f:[
+   {t:'La binomial suma Bernoulli',m:'X = X<sub>1</sub> + X<sub>2</sub> + … + X<sub>n</sub>',c:'Cada X<sub>i</sub> vale 1 (éxito) o 0 (fracaso). Al sumarlas se cuentan los éxitos. Por eso la binomial es "n ensayos de Bernoulli independientes".',s:'n: cantidad de ensayos.'},
+   {t:'Valores posibles',m:'X = 0, 1, 2, …, n &nbsp;&nbsp; (n + 1 valores)',c:'Puede no haber ningún éxito, o que lo sean todos.',e:'<b>Moneda tirada 2 veces:</b> 0, 1 o 2 caras, es decir 3 valores.'}]},
+  {h:'Fórmula y parámetros',f:[
+   {t:'Función de probabilidad',m:`P(X = x) = ${Cb('n','x')} · p<sup>x</sup> · (1 − p)<sup>n − x</sup>, &nbsp; x = 0, 1, …, n`,c:'pˣ·(1 − p)ⁿ⁻ˣ es la probabilidad de una secuencia concreta con x éxitos y n − x fracasos. C(n, x) cuenta cuántas secuencias distintas tienen x éxitos.',s:'Notación: X ~ B(n, p). Parámetros: n y p.'},
+   {t:'Número combinatorio',m:`${Cb('n','x')} = ${fr('n!','x! · (n − x)!')}`,c:'Cuenta las formas de elegir en cuáles x de los n ensayos caen los éxitos. El video lo llama "combinatoria de n en x".',e:'C(4, 3) = 24 / (6 · 1) = 4.'},
+   {t:'Desarrollo del binomio',m:`(q + p)<sup>n</sup> = ${SUM('x = 0','n')} ${Cb('n','x')} p<sup>x</sup> q<sup>n − x</sup> = 1`,c:'Cada término del desarrollo es una probabilidad binomial, y de ahí viene el nombre. Como q + p = 1, todas las probabilidades suman 1.'},
+   {t:'Media y varianza',m:'μ = n · p &nbsp;&nbsp;&nbsp;&nbsp; σ<sup>2</sup> = n · p · q = n · p · (1 − p)',c:'Son n veces la media y la varianza de una Bernoulli.',e:'<b>Asma</b> (n = 4, p = 0,3): μ = 1,2 y σ² = 0,84.'}]},
+  {h:'Recursos de los ejercicios',f:[
+   {t:'Complemento para "al menos uno"',m:'P(X ≥ 1) = 1 − P(X = 0) = 1 − (1 − p)<sup>n</sup>',c:'Es mucho más rápido que sumar P(1) + P(2) + … + P(n).',e:'<b>Dispositivos:</b> 1 − 0,97²⁰ = 0,4562.'},
+   {t:'"Más de dos"',m:'P(X &gt; 2) = P(X ≥ 3) = P(X = 3) + P(X = 4)',c:'Hay que traducir las palabras a desigualdades: "más de 2" no incluye al 2.',e:'<b>Asma:</b> 0,0756 + 0,0081 = 0,0837.'},
+   {t:'Cambiar éxito por fracaso',m:'Y = n − X ~ B(n, 1 − p) &nbsp;&nbsp; ⇒ &nbsp;&nbsp; P(X ≤ 10) = P(Y ≥ 2) = 1 − P(Y ≤ 1)',c:'Si X cuenta varones, Y cuenta nenas. A veces la cuenta queda más corta con la otra variable. El video escribe 1 − P(Y ≤ 2), pero lo correcto es 1 − P(Y ≤ 1).',e:'<b>Recién nacidos:</b> 0,3410 con cualquiera de las dos.'},
+   {t:'Binomial dentro de otra binomial',m:'Y ~ B(10; 0,4562) &nbsp;&nbsp; P(Y = 3) = 0,1602',c:'La probabilidad de la parte a) (que un cargamento tenga al menos un defectuoso) pasa a ser la p de una nueva binomial: cada cargamento es un ensayo de Bernoulli.'}]}],
+ l7v3:[
+  {h:'Planteo',f:[
+   {t:'Población dicotómica',m:'N = M + (N − M)',c:'De los N elementos, M tienen la característica y N − M no. Se toma una muestra de tamaño n <b>sin reposición</b> y X cuenta cuántos de la muestra tienen la característica.',s:'N: población · M: con la característica · n: tamaño de la muestra.'}]},
+  {h:'Fórmula',f:[
+   {t:'Función de probabilidad',m:`P(X = x) = ${fr(`${Cb('M','x')} · ${Cb('N − M','n − x')}`,Cb('N','n'))}`,c:'Es casos favorables sobre casos posibles. Arriba van las formas de elegir x de los M "éxitos" y n − x de los N − M "fracasos" (regla de la multiplicación). Abajo, todas las muestras posibles de tamaño n.',s:'Notación: X ~ H(N, M, n). Parámetros: N, M y n.'},
+   {t:'Valores posibles',m:'x = 0, 1, …, mín(n, M)',c:'No pueden salir más éxitos que los que hay en la población (M) ni más que el tamaño de la muestra (n).',e:'<b>Batas:</b> M = 2, así que X vale 0, 1 o 2 aunque n = 3.'}]},
+  {h:'Media y varianza',f:[
+   {t:'Media',m:`μ = n · ${fr('M','N')} = n · p, &nbsp; con p = ${fr('M','N')}`,c:'Es igual a la de la binomial, tomando como p la proporción de éxitos en la población.'},
+   {t:'Varianza',m:`σ<sup>2</sup> = ${fr('N − n','N − 1')} · n · ${fr('M','N')} · (1 − ${fr('M','N')}) = ${fr('N − n','N − 1')} · n p q`,c:'Es la varianza binomial multiplicada por el <b>factor de corrección para población finita</b>, (N − n)/(N − 1). Ese factor es menor que 1, así que la hipergeométrica siempre varía menos que la binomial.'}]},
+  {h:'Aproximación por la binomial',f:[
+   {t:'Regla del 5 %',m:`n &lt; 0,05 · N &nbsp;&nbsp; ⇒ &nbsp;&nbsp; H(N, M, n) ≈ B(n, p = ${fr('M','N')})`,c:'Si la muestra es menos del 5 % de la población, sacar sin devolver casi no cambia las proporciones y se puede usar la binomial.',e:'<b>Estudiantes:</b> n = 10 de N = 10.000, se usa B(10; 0,3) y P(X = 5) = 0,1029.'}]}],
+ l7v4:[
+  {h:'Fórmula',f:[
+   {t:'Función de probabilidad',m:`P(X = x) = ${fr('e<sup>−λ</sup> · λ<sup>x</sup>','x!')}, &nbsp; x = 0, 1, 2, … &nbsp; λ &gt; 0`,c:'λ es el promedio de ocurrencias en la unidad de tiempo o espacio considerada. No hay un valor máximo para x.',s:'e ≈ 2,71828 · x! = x · (x − 1) · … · 1 · Notación: X ~ P(λ).'},
+   {t:'Media y varianza',m:'μ = λ &nbsp;&nbsp;&nbsp;&nbsp; σ<sup>2</sup> = λ',c:'La media y la varianza son iguales, una característica propia de la Poisson.'}]},
+  {h:'Propiedades del proceso de Poisson',f:[
+   {t:'1. Sin memoria',m:'ocurrencias en intervalos disjuntos son independientes',c:'Lo que pasa en un minuto no influye en lo que pasa en el siguiente.'},
+   {t:'2. Proporcional al tamaño',m:'P(una ocurrencia en Δt) ∝ Δt',c:'En un intervalo muy corto, la probabilidad de un evento es proporcional a su largo.'},
+   {t:'3. No hay dos a la vez',m:'P(más de una ocurrencia en Δt muy chico) ≈ 0',c:'En un intervalo muy chico, que ocurran dos eventos es despreciable.'}]},
+  {h:'Cambio de unidad',f:[
+   {t:'λ se escala con el intervalo',m:'λ<sub>nuevo</sub> = λ · t',c:'Si el intervalo se multiplica por t, el promedio también. Antes de usar la fórmula siempre hay que calcular el λ del intervalo que pide el problema.',e:'2 clientes/min → en 2 min λ = 4 · 0,2 accidentes/día → en 3 días λ = 0,6 y en 7 días λ = 1,4.'},
+   {t:'Estimar λ con datos',m:`λ = ${fr('7 accidentes','35 días')} = 0,2 por día`,c:'λ es un promedio: el total de ocurrencias dividido el total de unidades observadas.'}]},
+  {h:'Probabilidades acumuladas',f:[
+   {t:'"Como máximo"',m:'P(X ≤ 3) = P(0) + P(1) + P(2) + P(3)',c:'"Como máximo 3" suma desde 0 hasta 3.',e:'<b>λ = 1,4:</b> 0,9463.'},
+   {t:'"Más de" por complemento',m:'P(X &gt; 1) = 1 − P(X = 0) − P(X = 1)',c:'"Más de 1" no tiene tope, así que se usa el complemento.',e:'<b>λ = 2:</b> 1 − 0,1353 − 0,2707 = 0,5940.'}]},
+  {h:'Aproximación de la binomial',f:[
+   {t:'n grande y p chica',m:`${Cb('n','x')} p<sup>x</sup> (1 − p)<sup>n − x</sup> ≈ ${fr('e<sup>−np</sup> · (np)<sup>x</sup>','x!')}, &nbsp; λ = n · p`,c:'Vale cuando n es grande y p es muy chica (eventos raros). Se pasa de dos parámetros (n y p) a uno solo (λ). Si se divide el intervalo en muchísimos pedacitos, cada uno es un Bernoulli con p muy chica, y la suma de todos es una binomial.',e:'<b>Accidentes:</b> n = 400, p = 0,005, λ = 2 → P(X = 1) = 0,2707.'}]}],
+ l7v5:[
+  {h:'Fórmula',f:[
+   {t:'Función de probabilidad',m:'P(X = x) = p · (1 − p)<sup>x − 1</sup>, &nbsp; x = 1, 2, 3, …',c:'Para que el primer éxito llegue en el intento x, tienen que fallar los x − 1 anteriores, (1 − p)<sup>x − 1</sup>, y acertar el intento x, p. X empieza en 1, no en 0.',s:'Notación: X ~ G(p). Parámetro: p, con 0 &lt; p &lt; 1.'},
+   {t:'Media y varianza',m:`E(X) = ${fr('1','p')} &nbsp;&nbsp;&nbsp;&nbsp; σ<sup>2</sup> = ${fr('1 − p','p<sup>2</sup>')}`,c:'La media es el inverso de p: si el éxito es raro, hay que esperar mucho.',e:'<b>Autos</b> (p = 0,05): E(X) = 20 y σ² = 380.'},
+   {t:'Ejemplo del video',m:'P(X = 10) = 0,05 · 0,95<sup>9</sup> = 0,0315',c:'Son nueve autos sin falla y el décimo con falla.'}]}],
+ l8v1:[
+  {h:'Variables continuas',f:[
+   {t:'Un valor exacto tiene probabilidad 0',m:'P(X = a) = 0',c:'En una variable continua solo tienen probabilidad los intervalos. Por eso da lo mismo escribir &lt; o ≤.'},
+   {t:'Probabilidad = área bajo la densidad',m:`P(a &lt; X &lt; b) = ${INT('a','b')} f(x) dx`,c:'La probabilidad de un intervalo es el área bajo la función de densidad entre a y b. En la práctica no se integra: se usa la tabla.'}]},
+  {h:'Distribución normal',f:[
+   {t:'Función de densidad',m:`f(x) = ${fr('1','σ √<span class="ov">2π</span>')} · e<sup>−(x − μ)² / (2σ²)</sup>, &nbsp; −∞ &lt; x &lt; ∞`,c:'Solo depende de μ y σ (con σ &gt; 0). π ≈ 3,1416 y e ≈ 2,71828 son constantes.',s:'μ: media · σ²: varianza · σ: desvío estándar · Notación: X ~ N(μ, σ²).'},
+   {t:'Centro y forma',m:'media = mediana = moda = μ',c:'Es simétrica respecto de μ y tiene un solo pico (unimodal), así que las tres medidas de centro coinciden en el máximo de la curva.'},
+   {t:'Puntos de inflexión',m:'x = μ − σ &nbsp; y &nbsp; x = μ + σ',c:'Entre μ − σ y μ + σ la curva es cóncava hacia abajo; afuera, cóncava hacia arriba. Las colas se acercan al eje x sin tocarlo nunca.'},
+   {t:'Área total',m:`${INT('−∞','∞')} f(x) dx = 1`,c:'El área total bajo la curva es 1, como la suma de probabilidades en el caso discreto.'},
+   {t:'Regla empírica',m:'P(μ − σ &lt; X &lt; μ + σ) = 0,683<br>P(μ − 2σ &lt; X &lt; μ + 2σ) = 0,954<br>P(μ − 3σ &lt; X &lt; μ + 3σ) = 0,997',c:'Casi todos los valores caen a menos de 3 desvíos de la media, así que en la práctica casi no aparecen valores fuera de μ ± 3σ.'}]},
+  {h:'Teorema Central del Límite',f:[
+   {t:'La media muestral es aproximadamente normal',m:`${Xbar} ≈ N(μ, σ<sup>2</sup>/n) &nbsp; para n grande`,c:'Con una muestra suficientemente grande, la media muestral se distribuye aproximadamente normal, sea cual sea la distribución de la población. El video lo enuncia sin la varianza; σ²/n es lo que se ve en la animación. También permite aproximar la binomial, la Poisson y la hipergeométrica por la normal.'}]},
+  {h:'Estandarización',f:[
+   {t:'Pasar a la normal estándar',m:`Z = ${fr('X − μ','σ')} ~ N(0, 1)`,c:'Restar μ centra la curva en 0 y dividir por σ la deja con desvío 1. Así cualquier normal se lleva a la estándar, que es la que está en la tabla.'},
+   {t:'Regla empírica en Z',m:'P(−1 &lt; Z &lt; 1) = 0,683 &nbsp; P(−2 &lt; Z &lt; 2) = 0,954 &nbsp; P(−3 &lt; Z &lt; 3) = 0,997',c:'Es la misma regla, escrita en desvíos.'},
+   {t:'Acumulada: directo de la tabla',m:'P(Z ≤ z) = Φ(z)',c:'La tabla da el área a la izquierda de z.'},
+   {t:'Mayor que: complemento',m:'P(Z &gt; z) = 1 − P(Z ≤ z)',c:'El área a la derecha es lo que falta para llegar a 1.'},
+   {t:'Entre dos valores: resta',m:'P(z<sub>1</sub> &lt; Z &lt; z<sub>2</sub>) = P(Z ≤ z<sub>2</sub>) − P(Z ≤ z<sub>1</sub>)',c:'Al área hasta z₂ se le saca el área hasta z₁.'},
+   {t:'Ejemplo del video',m:`P(14 &lt; X &lt; 17) = P(${fr('14 − 12','3')} &lt; Z &lt; ${fr('17 − 12','3')}) = P(0,67 &lt; Z &lt; 1,67)`,c:'X ~ N(12, 9), entonces σ = 3. Con la tabla da 0,2039 y el valor exacto es 0,2047. El video usa 0,66 y 1,66 y obtiene 0,2061.'}]}],
+ l8v2:[
+  {h:'Cálculo directo',f:[
+   {t:'Área a la derecha',m:'P(Z &gt; 1,84) = 1 − P(Z ≤ 1,84) = 1 − 0,9671 = 0,0329',c:'Las tablas dan el área a la izquierda, así que para la derecha se usa el complemento.'},
+   {t:'Área entre dos valores',m:'P(−1,97 &lt; Z &lt; 0,86) = 0,8051 − 0,0244 = 0,7807',c:'Se resta el área acumulada hasta el extremo izquierdo.'},
+   {t:'Simetría',m:'P(Z &lt; −z) = P(Z &gt; z) = 1 − P(Z ≤ z)',c:'La campana es simétrica: el área a la izquierda de −2 es igual al área a la derecha de 2. En los cojinetes se usa para sumar dos colas iguales.',e:'<b>Cojinetes:</b> P(Z &lt; −2) + P(Z &gt; 2) = 2 · 0,0228 = 0,0456.'},
+   {t:'Estandarizar en una aplicación',m:`P(X &lt; 2,3) = P(Z &lt; ${fr('2,3 − 3','0,5')}) = P(Z &lt; −1,4) = 0,0808`,c:'Baterías con μ = 3 años y σ = 0,5 años.'}]},
+  {h:'Problema inverso',f:[
+   {t:'Despejar x',m:`z = ${fr('x − μ','σ')} &nbsp;&nbsp; ⇒ &nbsp;&nbsp; x = μ + z · σ`,c:'Primero se busca en la tabla el z que corresponde al área; después se vuelve a la escala original.',e:'μ = 40, σ = 6, área izquierda 0,45 → z = −0,13 → x = 39,22.'},
+   {t:'Si el área dada es a la derecha',m:'P(X &gt; x) = α &nbsp;&nbsp; ⇒ &nbsp;&nbsp; P(X ≤ x) = 1 − α',c:'La tabla trabaja con el área a la izquierda, así que primero se pasa al complemento.',e:'<b>Pesos:</b> 5 % superior → se busca 0,95 → z = 1,645 → x = 60,5 + 1,645 · 7,1 ≈ 72,18 (con 1,64 da 72,14).'},
+   {t:'Encontrar k en Z',m:'P(k &lt; Z &lt; −0,18) = 0,4197 &nbsp; ⇒ &nbsp; P(Z ≤ k) = 0,4286 − 0,4197 = 0,0089',c:'Se despeja el área a la izquierda de k y se busca en la tabla al revés.',e:'k = −2,37.'}]}]
+};
+
+const PRE={
+ l7v1:[
+  {t:'Variable aleatoria',d:'Es una regla que le asigna un número a cada resultado de un experimento al azar.',e:'Tirar 2 monedas, X = cantidad de caras: puede valer 0, 1 o 2.'},
+  {t:'Discreta o continua',d:'Discreta: toma valores que se pueden contar (0, 1, 2, …). Continua: puede tomar cualquier valor de un intervalo, con todos los decimales que quieras.',e:'Cantidad de hijos: discreta. Estatura: continua.'},
+  {t:'Probabilidad',d:'Es un número entre 0 y 1 que mide qué tan posible es algo: 0 es imposible y 1 es seguro. Las probabilidades de todos los resultados posibles suman 1.',e:'Moneda: P(cara) = 0,5 y P(cruz) = 0,5, que suman 1.'},
+  {t:'Sumatoria (Σ)',d:'Es una forma corta de escribir una suma larga. "Σ de i = 1 a k de xᵢ" significa x₁ + x₂ + … + xₖ.',e:'Σ de i = 1 a 3 de i = 1 + 2 + 3 = 6.'},
+  {t:'Eventos independientes',d:'Dos eventos son independientes si que ocurra uno no cambia la probabilidad del otro. Entonces la probabilidad de que ocurran los dos es el producto de sus probabilidades.',e:'Dos monedas: P(cara y cara) = 0,5 · 0,5 = 0,25.'},
+  {t:'Media y varianza',d:'La media es el valor promedio que se espera a la larga. La varianza mide cuánto se alejan los valores de la media: es el promedio de las distancias al cuadrado.',e:'Notas 4 y 6: la media es 5 y la varianza es ((4 − 5)² + (6 − 5)²) / 2 = 1.'}],
+ l7v2:[
+  {t:'Bernoulli (video anterior)',d:'Es un ensayo con dos resultados: éxito con probabilidad p y fracaso con probabilidad 1 − p. La binomial es repetir esto n veces.'},
+  {t:'Factorial (n!)',d:'Es multiplicar todos los números enteros desde n hasta 1. Por convención, 0! = 1.',e:'4! = 4 · 3 · 2 · 1 = 24.'},
+  {t:'Número combinatorio C(n, x)',d:'Cuenta de cuántas formas se pueden elegir x elementos de un grupo de n, sin importar el orden. Se calcula con n! / (x! · (n − x)!).',e:'Elegir 2 de 4 personas: C(4, 2) = 24 / (2 · 2) = 6 formas.'},
+  {t:'Potencias',d:'pˣ es multiplicar p por sí mismo x veces. Cualquier número elevado a 0 da 1.',e:'0,3³ = 0,3 · 0,3 · 0,3 = 0,027 · 0,7⁰ = 1.'},
+  {t:'Complemento',d:'La probabilidad de que algo NO pase es 1 menos la probabilidad de que pase. Es el truco para resolver "al menos uno".',e:'P(al menos una cara en 3 tiradas) = 1 − P(ninguna) = 1 − 0,5³ = 0,875.'},
+  {t:'Traducir palabras a desigualdades',d:'"Al menos k" es X ≥ k. "Como máximo k" es X ≤ k. "Más de k" es X > k, o sea X ≥ k + 1. "Menos de k" es X < k, o sea X ≤ k − 1.',e:'"Más de dos" de 4 personas: X = 3 o X = 4.'}],
+ l7v3:[
+  {t:'Probabilidad clásica (Laplace)',d:'Si todos los resultados son igual de probables, la probabilidad es casos favorables dividido casos posibles.',e:'Sacar un as de un mazo de 40 cartas: 4 / 40 = 0,1.'},
+  {t:'Número combinatorio',d:'C(n, x) = formas de elegir x elementos de n sin importar el orden. En la hipergeométrica sirve para contar muestras.',e:'Comisiones de 3 personas entre 20: C(20, 3) = 1140.'},
+  {t:'Regla de la multiplicación',d:'Si una elección se hace en dos pasos, la cantidad total de formas es el producto de las formas de cada paso.',e:'Elegir 2 de 5 venezolanos y 1 de 15 otros: 10 · 15 = 150 formas.'},
+  {t:'Con reposición y sin reposición',d:'Con reposición, lo que sacás vuelve a la urna y las probabilidades no cambian. Sin reposición, no vuelve, y cada extracción cambia lo que queda.',e:'Urna con 2 rojas y 8 blancas: si sacás una roja y no la devolvés, la próxima es roja con 1/9, no con 2/10.'},
+  {t:'Binomial (video 2)',d:'Hay que conocerla para compararla con la hipergeométrica y para usarla como aproximación cuando la población es grande.'}],
+ l7v4:[
+  {t:'El número e y la exponencial',d:'e ≈ 2,71828 es una constante, como π. e^(−λ) se calcula con la tecla eˣ de la calculadora.',e:'e^(−2) ≈ 0,1353.'},
+  {t:'Factorial',d:'x! aparece abajo en la fórmula de Poisson. Recordá que 0! = 1.',e:'3! = 6 · 5! = 120.'},
+  {t:'Promedios y regla de tres',d:'Si en una unidad ocurren en promedio λ eventos, en t unidades ocurren λ · t. Es lo que se usa al cambiar el intervalo.',e:'7 accidentes en 35 días → 0,2 por día → 1,4 en una semana.'},
+  {t:'Sumar y complementar probabilidades',d:'"Como máximo" se resuelve sumando desde 0. "Más de" casi siempre se resuelve con el complemento, porque la Poisson no tiene un valor máximo.',e:'P(X > 1) = 1 − P(0) − P(1).'},
+  {t:'Binomial (video 2)',d:'Hace falta para entender la aproximación de la binomial por Poisson cuando n es grande y p es chica.'}],
+ l7v5:[
+  {t:'Bernoulli e independencia',d:'Cada intento tiene la misma probabilidad de éxito p y no depende de lo que pasó antes.'},
+  {t:'Potencias',d:'(1 − p)^(x − 1) es la probabilidad de fallar x − 1 veces seguidas: se multiplica (1 − p) por sí mismo x − 1 veces.',e:'0,95⁹ ≈ 0,63: hay un 63 % de chances de que los primeros 9 autos estén bien.'},
+  {t:'Esperanza como promedio a la larga',d:'E(X) = 20 no quiere decir que siempre hagan falta 20 intentos. Quiere decir que si repetís la búsqueda muchas veces, el promedio de intentos da cerca de 20.'}],
+ l8v1:[
+  {t:'Función y gráfica',d:'Una función asigna a cada x un valor f(x). Su gráfica es la curva que forman los puntos (x, f(x)).'},
+  {t:'Área bajo una curva',d:'La integral de a a b de f(x) es el área entre la curva y el eje x en ese tramo. Para la normal no hace falta calcularla a mano: se usa la tabla.'},
+  {t:'Media, varianza y desvío',d:'El desvío estándar σ es la raíz cuadrada de la varianza y está en las mismas unidades que X. Da una idea del "ancho" típico de los datos.',e:'Si σ² = 9, entonces σ = 3.'},
+  {t:'Discreta frente a continua',d:'En una discreta se suman probabilidades de valores. En una continua se calculan áreas, y un valor exacto tiene probabilidad 0.'},
+  {t:'Simetría',d:'Una curva simétrica respecto de μ es igual a la izquierda y a la derecha. El área a cada lado de μ es 0,5.'},
+  {t:'Exponencial y raíz',d:'e^(algo) y √ aparecen en la fórmula de la densidad, pero en los ejercicios casi nunca se usa la fórmula: se estandariza y se usa la tabla.'}],
+ l8v2:[
+  {t:'Tabla de la normal estándar',d:'Da Φ(z) = P(Z ≤ z), el área a la izquierda de z. Se busca la fila con el entero y el primer decimal de z, y la columna con el segundo decimal.',e:'Φ(1,84): fila 1,8 y columna 0,04 → 0,9671.'},
+  {t:'Estandarizar (video 1)',d:'z = (x − μ)/σ dice a cuántos desvíos de la media está x. Si es negativo, x está por debajo de la media.',e:'x = 2,3, μ = 3, σ = 0,5 → z = −1,4.'},
+  {t:'Complemento y simetría',d:'El área total es 1: el área a la derecha es 1 menos el área a la izquierda. Por simetría, el área a la izquierda de −z es igual al área a la derecha de z.'},
+  {t:'Despejar una ecuación',d:'Si z = (x − μ)/σ, se multiplica por σ y se suma μ en los dos lados: x = μ + z · σ.',e:'z = 1,08, μ = 40, σ = 6 → x = 40 + 6,48 = 46,48.'},
+  {t:'Porcentajes y probabilidades',d:'Un porcentaje es una probabilidad multiplicada por 100. "El 14 % a la derecha" quiere decir P(X > x) = 0,14.'}]
+};
+
+function renderExtras(){
+  for(const el of $$('[data-intro]')){ const k=el.dataset.intro, d=INTRO[k];
+    el.innerHTML=`<div class="txt"><h3>De qué se trata</h3>${d.p.map(x=>`<p>${x}</p>`).join('')}</div>
+      <aside><h4>En este video</h4><ul>${d.l.map(x=>`<li>${x}</li>`).join('')}</ul></aside>`; }
+  for(const el of $$('[data-forms]')){ const k=el.dataset.forms, gs=FORMS[k];
+    el.innerHTML=`<div class="exs-h"><h3>Ecuaciones del video</h3><span class="sub">Cada fórmula con lo que significa y cuándo se usa.</span></div>`+
+      gs.map(g=>`<div class="fgroup"><h4>${g.h}</h4><div class="fgrid">${g.f.map(f=>`<div class="fcard"><div class="ft">${f.t}</div>
+        <div class="fbox"><div class="math${f.code?' code':''}">${f.m}</div></div><p class="fc">${f.c}</p>${f.s?`<p class="fs">${f.s}</p>`:''}${f.e?`<p class="fe">${f.e}</p>`:''}</div>`).join('')}</div></div>`).join(''); }
+  for(const el of $$('[data-pre]')){ const k=el.dataset.pre, ps=PRE[k];
+    el.innerHTML=`<div class="exs-h"><h3>Requisitos previos</h3><span class="sub">Lo que conviene tener claro antes de este video, explicado simple.</span></div>
+      <div class="pre-grid">${ps.map(x=>`<div class="pcard"><h4>${x.t}</h4><p>${x.d}</p>${x.e?`<p class="pe">${x.e}</p>`:''}</div>`).join('')}</div>`; }
+  for(const p of $$('.panel')){ const ph=$('.ph',p); const j=document.createElement('div'); j.className='jump';
+    const items=[['Introducción','.intro'],['Ecuaciones','.forms'],['Animaciones','.sec-h'],['Ejercicios','.exs'],['Requisitos previos','.pre']];
+    j.innerHTML=items.map(([l,s])=>`<button type="button" data-s="${s}">${l}</button>`).join('');
+    j.addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(!b) return; const t=$(b.dataset.s,p); if(t) t.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'}); });
+    ph.appendChild(j); }
+}
+
+// ================================================================ routing
+const tabs=$$('.tab'), panels=$$('.panel');
+function show(id){ if(!panels.some(p=>p.dataset.panel===id)) id='l7v1'; active=id;
+  panels.forEach(p=>p.hidden=p.dataset.panel!==id); tabs.forEach(t=>{ if(t.dataset.go===id) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current'); });
+  demos.forEach(d=>d.dirty=true); const t=tabs.find(t=>t.dataset.go===id); if(t) t.scrollIntoView({block:'nearest',inline:'nearest'}); fitForms(); }
+// a formula that does not fit in its card takes the full row
+function fitForms(){ const p=panels.find(x=>x.dataset.panel===active); if(!p) return;
+  $$('.fcard',p).forEach(c=>c.classList.remove('wide'));
+  $$('.fcard',p).forEach(c=>{ const m=$('.math',c), b=$('.fbox',c); if(m.scrollWidth>b.clientWidth-26) c.classList.add('wide'); }); }
+let fitT=0; window.addEventListener('resize',()=>{ clearTimeout(fitT); fitT=setTimeout(fitForms,150); });
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>fitForms());
+tabs.forEach(t=>t.addEventListener('click',()=>{ if(location.hash!=='#'+t.dataset.go) location.hash=t.dataset.go; else show(t.dataset.go); window.scrollTo({top:0}); }));
+window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+
+// ================================================================ boot
+renderEx();
+renderExtras();
+readTheme();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',readTheme);
+new MutationObserver(readTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+const ro=new ResizeObserver(()=>demos.forEach(d=>d.dirty=true)); $$('canvas').forEach(c=>ro.observe(c));
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>demos.forEach(d=>d.dirty=true));
+show(location.hash.slice(1)||'l7v1');
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
