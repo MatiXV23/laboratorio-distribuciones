@@ -172,6 +172,77 @@ table.seq tr.cur td{background:var(--tint-hit)}
 .math.code{font-family:var(--f-mono);font-size:14px;line-height:1.6}
 .intro,.forms,.sec-h,.exs,.pre,.card{scroll-margin-top:72px}
 .fcard.wide{grid-column:1/-1}
+/* repartidos */
+.tab.rep-t{border-style:dashed}
+.rep{display:grid;gap:16px}
+.rep-bar{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.idx{display:flex;flex-wrap:wrap;gap:4px}
+.idx button{font:500 12px/1 var(--f-mono);min-width:34px;padding:7px 6px;border-radius:7px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.idx button:hover{border-color:var(--accent)}
+.rx{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:grid;gap:14px;min-width:0;scroll-margin-top:72px}
+.rx-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mtag{font:500 11px/1 var(--f-mono);padding:4px 8px;border-radius:999px;background:var(--tint);color:var(--accent)}
+.plan{display:grid;gap:6px;border-left:3px solid var(--accent);padding:2px 0 2px 14px;max-width:86ch}
+.plan p{font-size:14px}
+.plan .f,.rx li .f{display:block;font-family:var(--f-mono);font-size:13px;background:var(--tint);border-radius:6px;padding:6px 10px;margin-top:4px;overflow-x:auto;white-space:pre}
+.rx-body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:880px){.rx-body{grid-template-columns:minmax(0,1fr)}}
+.cv.rxc{height:260px}
+@media (max-width:560px){.cv.rxc{height:230px}}
+.rx-read{font-family:var(--f-mono);font-size:12px;color:var(--muted);min-height:1.5em;overflow-wrap:anywhere}
+.rx-side{display:grid;gap:12px;min-width:0}
+.parts{display:flex;flex-wrap:wrap;gap:6px}
+.pbody{display:grid;gap:8px}
+.pq{font-weight:600;cursor:pointer}
+.pq .pl{font-family:var(--f-mono);color:var(--hit)}
+.rx ol{margin:0;padding-left:22px;display:grid;gap:8px}
+.rx li{padding-left:4px;font-size:14px}
+.rx li.res{font-weight:600}
+.rx li.res .f{background:var(--tint-hit)}
+.hoja{font-size:12.5px;border-radius:8px;padding:7px 10px;background:var(--tint)}
+.hoja.bad{background:var(--tint-hit)}
+.hoja span{color:var(--muted)}
+.pbody>.btn,.pin>.btn{justify-self:start}
+.rv{display:none}
+.practice .pbody:not(.shown) .rv{display:inline-block;justify-self:start}
+.practice .pbody:not(.shown) .pin{filter:blur(7px);opacity:.55;user-select:none;pointer-events:none}
+.pin{display:grid;gap:8px;transition:filter .25s}
+/* guía */
+.guide{scroll-margin-top:72px}
+.gcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:12px;margin-top:10px}
+.gq{display:grid;gap:8px;max-width:80ch}
+.gq.done{color:var(--muted);font-size:13.5px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.gans{font:600 12px/1 var(--f-mono);color:var(--accent);white-space:nowrap}
+.gres{display:grid;gap:8px;border-top:1px dashed var(--line);padding-top:12px}
+.gres h4{font-size:20px}
+.glinks{font-size:13px}
+.gx{font:500 12px/1 var(--f-mono);min-width:28px;padding:5px 6px;margin:2px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.gx:hover{border-color:var(--accent)}
+.fgroup h4 .nt{text-transform:none}
+.src{justify-self:start;font:500 10.5px/1 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;padding:4px 7px;border-radius:999px}
+.src.prof{background:var(--ink);color:var(--bg)}
+.src.add{border:1px solid var(--line);color:var(--muted)}
+/* tablas */
+.tablas{display:grid;gap:16px;scroll-margin-top:72px}
+.tablas .card{scroll-margin-top:72px}
+.tablas .card-h{position:relative}
+.tback{justify-self:start}
+.zt-wrap{max-height:460px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+table.zt{border-collapse:separate;border-spacing:0;font-family:var(--f-mono);font-size:12px;font-variant-numeric:tabular-nums;width:max-content;min-width:100%}
+table.zt th,table.zt td{padding:5px 8px;text-align:right;border-bottom:1px solid var(--grid)}
+table.zt thead th{position:sticky;top:0;background:var(--surface);color:var(--muted);font-weight:500;border-bottom:1px solid var(--line);z-index:1}
+table.zt tbody th{position:sticky;left:0;background:var(--surface);color:var(--muted);font-weight:500;border-right:1px solid var(--line)}
+table.zt thead th.corner{left:0;z-index:2}
+table.zt td{cursor:pointer}
+table.zt td:hover{background:var(--tint)}
+table.zt td.blank{cursor:default}
+table.zt .cross{background:var(--tint)}
+table.zt th.cross{color:var(--accent)}
+table.zt td.on{background:var(--hit);color:#fff;font-weight:600}
+.tb-read{font-family:var(--f-mono);font-size:12.5px;background:var(--tint);border-radius:8px;padding:8px 10px;overflow-wrap:anywhere}
+@keyframes flashc{from{box-shadow:0 0 0 3px var(--hit)}to{box-shadow:0 0 0 3px transparent}}
+.card.flash{animation:flashc 1.6s ease-out}
+@media (prefers-reduced-motion: reduce){.card.flash{animation:none}}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}}
 </style>
@@ -185,10 +256,14 @@ table.seq tr.cur td{background:var(--tint-hit)}
         <button class="tab" data-go="l7v3"><b>V3</b>Hipergeométrica</button>
         <button class="tab" data-go="l7v4"><b>V4</b>Poisson</button>
         <button class="tab" data-go="l7v5"><b>V5</b>Geométrica</button>
+        <button class="tab rep-t" data-go="l7ej"><b>R</b>Repartido</button>
+        <button class="tab rep-t" data-go="l7fo"><b>F</b>Fórmulas</button>
       </div>
       <div class="tgroup"><span class="gl">L8 · Continuas</span>
         <button class="tab" data-go="l8v1"><b>V1</b>Normal</button>
         <button class="tab" data-go="l8v2"><b>V2</b>Ejercicios</button>
+        <button class="tab rep-t" data-go="l8ej"><b>R</b>Repartido</button>
+        <button class="tab rep-t" data-go="l8fo"><b>F</b>Fórmulas y tablas</button>
       </div>
     </div>
   </nav>
@@ -649,6 +724,89 @@ table.seq tr.cur td{background:var(--tint-hit)}
     <div class="exs" data-exs="l8v2"></div>
     <section class="pre" data-pre="l8v2"></section>
   </section>
+
+  <!-- ======================= L7 · repartido ======================= -->
+  <section class="panel" data-panel="l7ej" id="l7ej" data-nojump hidden>
+    <header class="ph">
+      <p class="eyebrow">Lección 7 · Repartido de ejercicios</p>
+      <h2>Ejercicios propuestos, resueltos</h2>
+      <p class="lede">Los 9 ejercicios del repartido de la L7. Cada uno tiene el planteo (qué variable y qué modelo, y por qué), los pasos de cada parte y un gráfico que se anima al elegir la parte. En los discretos podés simular muestras para comprobar el resultado.</p>
+    </header>
+    <div class="rep" data-rep="l7"></div>
+  </section>
+
+  <!-- ======================= L7 · fórmulas ======================= -->
+  <section class="panel" data-panel="l7fo" id="l7fo" data-nojump hidden>
+    <header class="ph">
+      <p class="eyebrow">Lección 7 · Hoja de fórmulas</p>
+      <h2>Fórmulas de las distribuciones discretas</h2>
+      <p class="lede">Las fórmulas de la hoja del profe, marcadas como tales, más las que hacen falta para el repartido (marcadas como agregadas). Arriba, una guía para decidir qué modelo usar.</p>
+    </header>
+    <section class="guide" data-guide="l7fo"></section>
+    <section class="forms" data-forms="l7fo"></section>
+  </section>
+
+  <!-- ======================= L8 · repartido ======================= -->
+  <section class="panel" data-panel="l8ej" id="l8ej" data-nojump hidden>
+    <header class="ph">
+      <p class="eyebrow">Lección 8 · Repartido de ejercicios</p>
+      <h2>Ejercicios propuestos, resueltos</h2>
+      <p class="lede">Los 43 ejercicios del repartido de distribuciones de probabilidad. Junto a cada resultado aparece lo que dice la hoja de resultados del profe; cuando no coincide, se explica por qué. El botón «Ver en la tabla» abre la tabla del curso en la celda que se usa.</p>
+    </header>
+    <div class="rep" data-rep="l8"></div>
+  </section>
+
+  <!-- ======================= L8 · fórmulas y tablas ======================= -->
+  <section class="panel" data-panel="l8fo" id="l8fo" data-nojump hidden>
+    <header class="ph">
+      <p class="eyebrow">Lección 8 · Hoja de fórmulas y tablas</p>
+      <h2>Normal, aproximaciones y tablas</h2>
+      <p class="lede">Las fórmulas para la normal y la aproximación de la binomial (con corrección por continuidad), un resumen de las discretas y las tres tablas del curso: binomial acumulada, Poisson acumulada y normal estándar.</p>
+    </header>
+    <section class="guide" data-guide="l8fo"></section>
+    <section class="forms" data-forms="l8fo"></section>
+    <div id="tablas" class="tablas">
+      <div class="exs-h"><h3>Tablas del curso</h3><span class="sub">Mismos valores y formato que el apéndice (punto decimal, sin el 0 inicial). Tocá una celda para ver qué significa.</span></div>
+
+      <article class="card" id="tb-bin">
+        <div class="card-h"><h3>Tabla A.1 · Distribución binomial acumulada</h3>
+          <p>B(x; n, p) = P(X ≤ x). Elegí n; las filas son x y las columnas, p.</p>
+          <button class="btn ghost tback" data-a="tback" hidden>← Volver</button></div>
+        <div class="row" style="align-items:center"><span class="sub">n =</span><div class="seg" id="tb-bn"><button data-v="5">5</button><button data-v="10">10</button><button data-v="15">15</button><button data-v="20">20</button><button data-v="25">25</button></div></div>
+        <p class="tb-read" id="tb-bin-r"></p>
+        <div class="tbl-wrap zt-wrap"><table class="zt" id="tb-bin-t"></table></div>
+      </article>
+
+      <article class="card" id="tb-poi">
+        <div class="card-h"><h3>Tabla A.2 · Distribución acumulada de Poisson</h3>
+          <p>F(x; μ) = P(X ≤ x), donde μ es el λ del intervalo. Después del primer 1.000 la columna queda en blanco, como en el libro.</p>
+          <button class="btn ghost tback" data-a="tback" hidden>← Volver</button></div>
+        <div class="row" style="align-items:center"><span class="sub">μ</span><div class="seg" id="tb-pg"><button data-v="0">de .1 a 1.0</button><button data-v="1">de 2 a 20</button></div></div>
+        <p class="tb-read" id="tb-poi-r"></p>
+        <div class="tbl-wrap zt-wrap"><table class="zt" id="tb-poi-t"></table></div>
+      </article>
+
+      <article class="card" id="tb-nor">
+        <div class="card-h"><h3>Tabla A.3 · Áreas de la curva normal estándar</h3>
+          <p>Φ(z) = P(Z ≤ z), el área a la izquierda de z. Escribí un z para leer el área, o un área para buscar el z (problema inverso).</p>
+          <button class="btn ghost tback" data-a="tback" hidden>← Volver</button></div>
+        <div class="demo">
+          <div class="stage">
+            <canvas class="cv" id="tb-nor-cv" role="img" aria-label="Área a la izquierda de z bajo la normal estándar"></canvas>
+            <p class="tb-read" id="tb-nor-r"></p>
+          </div>
+          <div class="side">
+            <div class="row">
+              <div class="field" style="flex:1;min-width:110px"><label for="tb-z">Buscar z</label><input class="num" type="text" inputmode="decimal" id="tb-z" placeholder="ej. 1,84"></div>
+              <div class="field" style="flex:1;min-width:110px"><label for="tb-a">Buscar área</label><input class="num" type="text" inputmode="decimal" id="tb-a" placeholder="ej. 0,95"></div>
+            </div>
+            <div class="seg" id="tb-ng"><button data-v="0">z negativos</button><button data-v="1">z positivos</button></div>
+          </div>
+        </div>
+        <div class="tbl-wrap zt-wrap"><table class="zt" id="tb-nor-t"></table></div>
+      </article>
+    </div>
+  </section>
   </main>
 </div>
 
@@ -669,7 +827,7 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
 
 // math
-const LF=[0]; for(let i=1;i<=3000;i++) LF[i]=LF[i-1]+Math.log(i);
+const LF=[0]; for(let i=1;i<=10000;i++) LF[i]=LF[i-1]+Math.log(i);
 const lC=(n,k)=>LF[n]-LF[k]-LF[n-k];
 const binom=(n,p,k)=> k<0||k>n?0 : p<=0?(k===0?1:0) : p>=1?(k===n?1:0) : Math.exp(lC(n,k)+k*Math.log(p)+(n-k)*Math.log1p(-p));
 const pois=(l,k)=> k<0?0:Math.exp(-l+k*Math.log(l)-LF[k]);
@@ -1515,23 +1673,974 @@ const PRE={
   {t:'Porcentajes y probabilidades',d:'Un porcentaje es una probabilidad multiplicada por 100. "El 14 % a la derecha" quiere decir P(X > x) = 0,14.'}]
 };
 
+// ================================================================ hojas de fórmulas de los repartidos
+// src: 'prof' = está en la hoja del profe · 'add' = agregado para resolver el repartido
+const FORMS_H={l7fo:['Hoja de fórmulas · distribuciones discretas','Las de la hoja del profe, y agregadas las que hacen falta para el repartido.'],l8fo:['Hoja de fórmulas · normal y aproximaciones','Todo lo necesario para el repartido de la L8. Abajo están las tablas del curso, interactivas.']};
+const F_DISC=[
+ {h:'Distribución uniforme discreta',f:[
+  {src:'prof',t:'Función de probabilidad',m:`P(X = x) = ${fr('1','k')}, &nbsp; x = x<sub>1</sub>, x<sub>2</sub>, …, x<sub>k</sub>`,c:'Todos los valores son igual de probables.',e:'<b>L8 ej. 30:</b> placas del 1 al 10 → P(X = x) = 1/10.'},
+  {src:'prof',t:'Media y varianza',m:`E(X) = μ = ${fr('1','k')} ${SUM('i = 1','k')} x<sub>i</sub> &nbsp;&nbsp; V(X) = σ<sup>2</sup> = ${fr('1','k')} ${SUM('i = 1','k')} (x<sub>i</sub> − μ)<sup>2</sup>`,c:'La media es el promedio común de los valores y la varianza, el promedio de las distancias al cuadrado.'},
+  {src:'add',t:'Atajo para los valores 1, 2, …, k',m:`μ = ${fr('k + 1','2')} &nbsp;&nbsp; σ<sup>2</sup> = ${fr('k<sup>2</sup> − 1','12')}`,c:'Sale de aplicar las fórmulas de arriba cuando los valores son 1, 2, …, k.',e:'<b>Ruleta de 25:</b> μ = 13 y σ² = 52.'}]},
+ {h:'Bernoulli',f:[
+  {src:'prof',t:'Función de probabilidad',m:'P(X = x) = p<sup>x</sup> (1 − p)<sup>1 − x</sup>, &nbsp; x = 0, 1',c:'Un solo ensayo: vale 1 (éxito) con probabilidad p y 0 (fracaso) con 1 − p.'},
+  {src:'prof',t:'Media y varianza',m:'E(X) = μ = p &nbsp;&nbsp;&nbsp; V(X) = σ<sup>2</sup> = p(1 − p)',c:'Es la pieza con la que se arman la binomial y la geométrica.'}]},
+ {h:'Binomial · <span class="nt">X ~ B(n; p)</span>',f:[
+  {src:'prof',t:'Función de probabilidad',m:`P(X = x) = ${Cb('n','x')} p<sup>x</sup> (1 − p)<sup>n − x</sup>, &nbsp; x = 0, 1, 2, …, n`,c:'Cuenta los éxitos en n ensayos independientes con la misma p. Sirve cuando la población es grande o se repone lo que se saca.',s:'C(n, x) = n! / (x! (n − x)!)'},
+  {src:'prof',t:'Media y varianza',m:'E(X) = μ = np &nbsp;&nbsp;&nbsp; V(X) = σ<sup>2</sup> = npq = np(1 − p)',c:'"¿Cuántos se espera?" se responde con la media.',e:'<b>L7 ej. 1:</b> 20 · 0,1 = 2 defectuosas.'},
+  {src:'add',t:'Complemento',m:'P(X ≥ k) = 1 − P(X ≤ k − 1) &nbsp;&nbsp; P(X ≥ 1) = 1 − (1 − p)<sup>n</sup>',c:'Cuando "al menos" obliga a sumar muchos términos, se resta lo que falta.'},
+  {src:'add',t:'Cambiar éxito por fracaso',m:'Y = n − X ~ B(n; 1 − p) &nbsp;&nbsp; P(X ≤ k) = P(Y ≥ n − k)',c:'Si el enunciado cuenta "los que no", conviene definir la variable al revés.',e:'<b>L8 ej. 6:</b> asisten ≤ 15 de 20 ⇔ faltan ≥ 5.'}]},
+ {h:'Hipergeométrica · <span class="nt">X ~ H(N; M; n)</span>',f:[
+  {src:'prof',t:'Función de probabilidad',m:`P(X = x) = ${fr(`${Cb('M','x')} ${Cb('N − M','n − x')}`,Cb('N','n'))}, &nbsp; x = 0, 1, …, mín(n, M)`,c:'Muestreo sin reposición de una población finita: casos favorables sobre casos posibles.',s:'N: población · M: con la característica · n: muestra.'},
+  {src:'prof',t:'Media y varianza',m:`E(X) = n ${fr('M','N')} = np &nbsp;&nbsp; V(X) = (${fr('N − n','N − 1')}) n ${fr('M','N')} (1 − ${fr('M','N')}) = (${fr('N − n','N − 1')}) np(1 − p)`,c:'Con p = M/N, la media es la de la binomial y la varianza se multiplica por el factor de corrección.',e:'<b>L7 ej. 3:</b> E(X) = 0,375 y V(X) ≈ 0,3113.'},
+  {src:'add',t:'Cuándo se puede usar la binomial',m:`n &lt; 0,05 N &nbsp; ⇒ &nbsp; H(N; M; n) ≈ B(n; ${fr('M','N')})`,c:'Si la muestra es menos del 5 % de la población, sacar sin devolver casi no cambia las proporciones.'}]},
+ {h:'Poisson · <span class="nt">X ~ P(λ)</span>',f:[
+  {src:'prof',t:'Función de probabilidad',m:`P(X = x) = ${fr('e<sup>−λ</sup> λ<sup>x</sup>','x!')}, &nbsp; x = 0, 1, 2, … &nbsp; λ &gt; 0`,c:'Cuenta ocurrencias en un intervalo de tiempo o espacio. No tiene un máximo.'},
+  {src:'prof',t:'Media y varianza',m:'E(X) = μ = λ &nbsp;&nbsp;&nbsp; V(X) = σ<sup>2</sup> = λ',c:'Media y varianza son iguales.'},
+  {src:'add',t:'Cambio de intervalo',m:'λ<sub>nuevo</sub> = (promedio por unidad) · (largo del intervalo)',c:'Antes de usar la fórmula hay que calcular el λ del intervalo que pide cada parte.',e:'<b>L7 ej. 2:</b> 0,5 por minuto → λ = 1,5 en 3 min y 2,5 en 5 min.'},
+  {src:'add',t:'Aproximación de la binomial',m:`n grande, p chica &nbsp; ⇒ &nbsp; B(n; p) ≈ P(λ = np)`,c:'Para eventos raros: se cambian dos parámetros por uno y se puede usar la tabla A.2.',e:'<b>L7 ej. 5:</b> 8000 · 0,001 = 8.'}]},
+ {h:'Geométrica',f:[
+  {src:'prof',t:'Función de probabilidad',m:'P(X = x) = p(1 − p)<sup>x − 1</sup>, &nbsp; x = 1, 2, 3, … &nbsp; 0 &lt; p &lt; 1',c:'X es el número del intento en que aparece el primer éxito: x − 1 fracasos y después un éxito.'},
+  {src:'prof',t:'Media y varianza',m:`E(X) = μ = ${fr('1','p')} &nbsp;&nbsp;&nbsp; V(X) = σ<sup>2</sup> = ${fr('1 − p','p<sup>2</sup>')}`,c:'Si el éxito es raro, hay que esperar muchos intentos.'},
+  {src:'add',t:'Acumulada',m:'P(X ≤ x) = 1 − (1 − p)<sup>x</sup> &nbsp;&nbsp; P(X &gt; x) = (1 − p)<sup>x</sup>',c:'No llegar al éxito en x intentos es fallar los x.',e:'<b>L7 ej. 4:</b> antes del 4.º intento → 1 − 0,3³ = 0,973.'}]},
+ {h:'Traducir el enunciado',f:[
+  {src:'add',t:'Palabras → desigualdades (variables discretas)',m:'"a lo sumo / como máximo / no más de k" → X ≤ k<br>"al menos / como mínimo / por lo menos k" → X ≥ k<br>"más de k" → X ≥ k + 1 &nbsp;&nbsp; "menos de k" → X ≤ k − 1<br>"entre a y b" → a ≤ X ≤ b',c:'En las discretas importa si el extremo entra o no. En la normal (continua) da lo mismo &lt; que ≤.'}]}
+];
+const F_NORM=[
+ {h:'Normal · <span class="nt">X ~ N(μ; σ²)</span>',f:[
+  {src:'add',t:'Estandarizar',m:`Z = ${fr('X − μ','σ')} ~ N(0, 1)`,c:'Cualquier normal se lleva a la estándar, que es la de la tabla A.3. Ojo: N(100; 225) da la varianza, así que σ = 15.'},
+  {src:'add',t:'Las tres áreas básicas',m:'P(Z ≤ z) = Φ(z) &nbsp;&nbsp; P(Z &gt; z) = 1 − Φ(z)<br>P(z<sub>1</sub> &lt; Z &lt; z<sub>2</sub>) = Φ(z<sub>2</sub>) − Φ(z<sub>1</sub>)',c:'La tabla da el área a la izquierda. Todo lo demás se arma con complementos y restas.'},
+  {src:'add',t:'Simetría',m:'Φ(−z) = 1 − Φ(z) &nbsp;&nbsp; P(−z &lt; Z &lt; z) = 2Φ(z) − 1',c:'La campana es simétrica respecto de 0.'},
+  {src:'add',t:'Problema inverso',m:'x = μ + z · σ',c:'Se pasa el área dada a "área a la izquierda", se busca z en el cuerpo de la tabla y se despeja x.',e:'<b>L7 ej. 9:</b> 12 % arriba → 0,88 → z ≈ 1,175 → x = 82,2.'},
+  {src:'add',t:'Intervalo centrado en la media',m:'P(μ − d ≤ X ≤ μ + d) = 1 − α &nbsp; ⇒ &nbsp; Φ(d/σ) = 1 − α/2',c:'Deja α/2 en cada cola.',e:'<b>L7 ej. 7:</b> 95 % → d/0,2 = 1,96 → d = 0,392.'}]},
+ {h:'Valores de z que más se usan',f:[
+  {src:'add',t:'Una cola',m:'Φ(1,28) ≈ 0,90 &nbsp; Φ(1,645) = 0,95 &nbsp; Φ(2,33) ≈ 0,99 &nbsp; Φ(0,675) ≈ 0,75',c:'Para "el 10 %, 5 % o 1 % más alto" y para los cuartiles (±0,675).'},
+  {src:'add',t:'Dos colas (área central)',m:'90 % → ±1,645 &nbsp;&nbsp; 95 % → ±1,96 &nbsp;&nbsp; 99 % → ±2,575',c:'Son los z de P(|Z| &lt; k).'},
+  {src:'add',t:'Regla empírica',m:'±1σ → 68,3 % &nbsp;&nbsp; ±2σ → 95,4 % &nbsp;&nbsp; ±3σ → 99,7 %',c:'Sirve para controlar si un resultado tiene sentido.'}]},
+ {h:'Aproximación normal de la binomial',f:[
+  {src:'add',t:'Cuándo y con qué parámetros',m:'np ≥ 5 y n(1 − p) ≥ 5 &nbsp; ⇒ &nbsp; X ≈ Y ~ N(μ = np; σ<sup>2</sup> = npq)',c:'Para n grande y p no muy extrema. Si np &lt; 5, conviene Poisson.',e:'<b>L8 ej. 28:</b> n = 100, p = 0,1 → μ = 10, σ = 3.'},
+  {src:'add',t:'Corrección por continuidad',m:'P(X ≤ k) ≈ P(Y &lt; k + 0,5) &nbsp;&nbsp; P(X ≥ k) ≈ P(Y &gt; k − 0,5)<br>P(X &lt; k) ≈ P(Y &lt; k − 0,5) &nbsp;&nbsp; P(X &gt; k) ≈ P(Y &gt; k + 0,5)<br>P(a ≤ X ≤ b) ≈ P(a − 0,5 &lt; Y &lt; b + 0,5) &nbsp;&nbsp; P(X = k) ≈ P(k − 0,5 &lt; Y &lt; k + 0,5)',c:'Cada entero k de la binomial es una barra que va de k − 0,5 a k + 0,5. Hay que incluir o dejar afuera la barra entera.'}]},
+ {h:'Cómo leer las tablas del curso',f:[
+  {src:'add',t:'Tabla A.1 · binomial acumulada',m:'B(x; n, p) = P(X ≤ x) &nbsp;&nbsp; P(X = x) = B(x) − B(x − 1) &nbsp;&nbsp; P(X ≥ x) = 1 − B(x − 1)',c:'Hay tablas para n = 5, 10, 15, 20 y 25 y algunos valores de p. Para otros n o p se usa la fórmula.'},
+  {src:'add',t:'Tabla A.2 · Poisson acumulada',m:'F(x; μ) = P(X ≤ x)',c:'μ es el λ del intervalo. Las mismas restas que en la binomial.'},
+  {src:'add',t:'Tabla A.3 · normal estándar',m:'Φ(z) = P(Z ≤ z)',c:'Fila: entero y primer decimal de z. Columna: segundo decimal. Hay una página para z negativos y otra para positivos.',e:'Φ(1,84): fila 1.8, columna .04 → 0,9671.'}]}
+];
+Object.assign(FORMS,{l7fo:F_DISC.concat([F_NORM[0]]),l8fo:F_NORM.concat(F_DISC)});
+
 function renderExtras(){
   for(const el of $$('[data-intro]')){ const k=el.dataset.intro, d=INTRO[k];
     el.innerHTML=`<div class="txt"><h3>De qué se trata</h3>${d.p.map(x=>`<p>${x}</p>`).join('')}</div>
       <aside><h4>En este video</h4><ul>${d.l.map(x=>`<li>${x}</li>`).join('')}</ul></aside>`; }
   for(const el of $$('[data-forms]')){ const k=el.dataset.forms, gs=FORMS[k];
-    el.innerHTML=`<div class="exs-h"><h3>Ecuaciones del video</h3><span class="sub">Cada fórmula con lo que significa y cuándo se usa.</span></div>`+
-      gs.map(g=>`<div class="fgroup"><h4>${g.h}</h4><div class="fgrid">${g.f.map(f=>`<div class="fcard"><div class="ft">${f.t}</div>
+    const H=FORMS_H[k]||['Ecuaciones del video','Cada fórmula con lo que significa y cuándo se usa.'];
+    el.innerHTML=`<div class="exs-h"><h3>${H[0]}</h3><span class="sub">${H[1]}</span></div>`+
+      gs.map(g=>`<div class="fgroup"><h4>${g.h}</h4><div class="fgrid">${g.f.map(f=>`<div class="fcard">${f.src?`<span class="src ${f.src}">${f.src==='prof'?'Hoja del profe':'Agregado'}</span>`:''}<div class="ft">${f.t}</div>
         <div class="fbox"><div class="math${f.code?' code':''}">${f.m}</div></div><p class="fc">${f.c}</p>${f.s?`<p class="fs">${f.s}</p>`:''}${f.e?`<p class="fe">${f.e}</p>`:''}</div>`).join('')}</div></div>`).join(''); }
   for(const el of $$('[data-pre]')){ const k=el.dataset.pre, ps=PRE[k];
     el.innerHTML=`<div class="exs-h"><h3>Requisitos previos</h3><span class="sub">Lo que conviene tener claro antes de este video, explicado simple.</span></div>
       <div class="pre-grid">${ps.map(x=>`<div class="pcard"><h4>${x.t}</h4><p>${x.d}</p>${x.e?`<p class="pe">${x.e}</p>`:''}</div>`).join('')}</div>`; }
-  for(const p of $$('.panel')){ const ph=$('.ph',p); const j=document.createElement('div'); j.className='jump';
+  for(const p of $$('.panel')){ if(p.hasAttribute('data-nojump')) continue; const ph=$('.ph',p); const j=document.createElement('div'); j.className='jump';
     const items=[['Introducción','.intro'],['Ecuaciones','.forms'],['Animaciones','.sec-h'],['Ejercicios','.exs'],['Requisitos previos','.pre']];
     j.innerHTML=items.map(([l,s])=>`<button type="button" data-s="${s}">${l}</button>`).join('');
     j.addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(!b) return; const t=$(b.dataset.s,p); if(t) t.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'}); });
     ph.appendChild(j); }
 }
+
+// ================================================================ repartidos: datos
+// d: distribución ['bin',n,p] ['poi',λ] ['hyp',N,M,n] ['geo',p] ['uni',a,b] ['nor',μ,σ] ['bn',n,p] (binomial + aproximación normal)
+// parte: l etiqueta · q pregunta · r región [[a,b],…] · st pasos [texto, fórmula] · res resultado · v valor para control
+//        h hoja de resultados · hk 1 coincide, 2 diferencia de redondeo, 0 no coincide · hn nota · tb celda de tabla · mean marca la media
+const I_=Infinity;
+const REP={
+ l7:[
+  {t:'Partes defectuosas de una máquina',m:['bin'],d:['bin',20,0.1],
+   q:'El 10 % de las partes que produce una máquina automática es defectuoso. Se toma al azar una muestra de 20 partes. Definir la variable y calcular la probabilidad de que en la muestra haya: a) dos defectuosas; b) un máximo de tres; c) 18 como mínimo; d) entre dos y cinco; e) mínimo tres. f) ¿Cuántas defectuosas se espera encontrar?',
+   plan:[['Cada parte es un ensayo de Bernoulli: defectuosa (éxito) con p = 0,1. Son n = 20 partes, y como la máquina produce muchísimas, sacar 20 no cambia la proporción: los ensayos son independientes y todos tienen la misma p.','X = número de partes defectuosas en la muestra de 20'],
+    ['Modelo y fórmula.','X ~ B(20; 0,1)    P(X = x) = C(20, x) · 0,1ˣ · 0,9²⁰⁻ˣ,  x = 0, 1, …, 20']],
+   parts:[
+    {l:'a',q:'Dos defectuosas',r:[[2,2]],v:0.2852,tb:['bin',20,0.1,2],st:[
+     ['Aplicar la fórmula con x = 2.','P(X = 2) = C(20, 2) · 0,1² · 0,9¹⁸ = 190 · 0,01 · 0,15009'],
+     ['Con la tabla A.1 (n = 20, p = 0,10) se restan dos acumuladas, porque la tabla da P(X ≤ x).','P(X = 2) = B(2) − B(1) = 0,677 − 0,392 = 0,285']],res:'P(X = 2) ≈ 0,2852'},
+    {l:'b',q:'Un máximo de tres',r:[[0,3]],v:0.8670,tb:['bin',20,0.1,3],st:[
+     ['"Un máximo de tres" es X ≤ 3: se suman los casos 0, 1, 2 y 3.','P(X ≤ 3) = P(0) + P(1) + P(2) + P(3)'],
+     ['Cada término con la fórmula.','= 0,1216 + 0,2702 + 0,2852 + 0,1901'],
+     ['Con la tabla A.1 se lee directo, sin sumar.','B(3; 20; 0,10) = 0,867']],res:'P(X ≤ 3) ≈ 0,8670'},
+    {l:'c',q:'18 como mínimo',r:[[18,20]],v:0,st:[
+     ['"Como mínimo 18" es X ≥ 18: los casos 18, 19 y 20.','P(X ≥ 18) = P(18) + P(19) + P(20)'],
+     ['Son números minúsculos: harían falta casi todas defectuosas cuando solo el 10 % lo es.','P(18) = 190 · 0,1¹⁸ · 0,9² = 1,539 × 10⁻¹⁶\nP(19) = 20 · 0,1¹⁹ · 0,9 = 1,8 × 10⁻¹⁸    P(20) = 0,1²⁰ = 10⁻²⁰']],res:'P(X ≥ 18) ≈ 1,56 × 10⁻¹⁶ ≈ 0 (prácticamente imposible)'},
+    {l:'d',q:'Entre dos y cinco',r:[[2,5]],v:0.5970,tb:['bin',20,0.1,5],st:[
+     ['Se toma "entre dos y cinco" incluyendo los extremos: 2 ≤ X ≤ 5.','P(2 ≤ X ≤ 5) = P(2) + P(3) + P(4) + P(5)'],
+     ['Con la fórmula.','= 0,2852 + 0,1901 + 0,0898 + 0,0319'],
+     ['Con la tabla: acumulada hasta 5 menos acumulada hasta 1 (así quedan 2, 3, 4 y 5).','B(5) − B(1) = 0,989 − 0,392 = 0,597'],
+     ['Si el profe lo pide sin los extremos (3 ≤ X ≤ 4), da otro valor.','P(3 ≤ X ≤ 4) = 0,1901 + 0,0898 = 0,2799']],res:'P(2 ≤ X ≤ 5) ≈ 0,5970'},
+    {l:'e',q:'Mínimo tres',r:[[3,20]],v:0.3231,tb:['bin',20,0.1,2],st:[
+     ['"Mínimo tres" es X ≥ 3. Sumar de 3 a 20 es larguísimo: se usa el complemento.','P(X ≥ 3) = 1 − P(X ≤ 2) = 1 − [P(0) + P(1) + P(2)]'],
+     ['La parte chica.','P(X ≤ 2) = 0,1216 + 0,2702 + 0,2852 = 0,6769'],
+     ['Con la tabla.','1 − B(2) = 1 − 0,677 = 0,323']],res:'P(X ≥ 3) ≈ 0,3231'},
+    {l:'f',q:'¿Cuántas se espera encontrar?',mean:1,st:[
+     ['La cantidad esperada es la media (esperanza) de la binomial.','E(X) = n · p = 20 · 0,1 = 2'],
+     ['De paso, la varianza y el desvío.','Var(X) = n · p · q = 20 · 0,1 · 0,9 = 1,8    σ ≈ 1,34']],res:'Se esperan 2 partes defectuosas'}]},
+
+  {t:'Llamadas a una central telefónica',m:['poi'],d:['poi',0.5],
+   q:'Llegan en promedio 0,5 llamadas por minuto a una central telefónica. Hallar la probabilidad de que: a) en un minuto no lleguen llamadas; b) en un minuto lleguen más de tres; c) en tres minutos lleguen menos de cinco; d) en cinco minutos lleguen más de dos. e) ¿Cuántas llamadas se espera que lleguen en cinco minutos?',
+   plan:[['Se cuentan llamadas en un intervalo de tiempo y no hay un número fijo de ensayos: es Poisson. λ es el promedio en el intervalo que pide cada parte, así que cambia de una parte a otra.','X = llamadas en t minutos ~ P(λ = 0,5 · t)'],
+    ['Fórmula.','P(X = x) = e^(−λ) · λˣ / x!,  x = 0, 1, 2, …']],
+   parts:[
+    {l:'a',q:'Ninguna llamada en un minuto',r:[[0,0]],v:0.6065,tb:['poi',0.5,0],st:[
+     ['Intervalo de 1 minuto: λ = 0,5.','P(X = 0) = e^(−0,5) · 0,5⁰ / 0! = e^(−0,5)'],
+     ['Con la tabla A.2, columna μ = 0,5, fila x = 0.','F(0; 0,5) = 0,607']],res:'P(X = 0) ≈ 0,6065'},
+    {l:'b',q:'Más de tres en un minuto',r:[[4,I_]],v:0.0018,tb:['poi',0.5,3],st:[
+     ['"Más de tres" es X ≥ 4 y no tiene tope: se usa el complemento.','P(X > 3) = 1 − P(X ≤ 3)'],
+     ['Sumar de 0 a 3 con λ = 0,5.','P(X ≤ 3) = 0,60653 + 0,30327 + 0,07582 + 0,01264 = 0,99825'],
+     ['Con la tabla.','1 − F(3; 0,5) = 1 − 0,998 = 0,002']],res:'P(X > 3) ≈ 0,0018'},
+    {l:'c',q:'Menos de cinco en tres minutos',d:['poi',1.5],r:[[0,4]],v:0.9814,st:[
+     ['Cambia el intervalo: en 3 minutos el promedio es el triple.','λ = 3 · 0,5 = 1,5    Y ~ P(1,5)'],
+     ['"Menos de cinco" es Y ≤ 4.','P(Y ≤ 4) = e^(−1,5) · (1 + 1,5 + 1,5²/2! + 1,5³/3! + 1,5⁴/4!)'],
+     ['Los términos (la tabla no tiene la columna 1,5, así que se usa la fórmula).','= 0,2231 + 0,3347 + 0,2510 + 0,1255 + 0,0471']],res:'P(Y ≤ 4) ≈ 0,9814'},
+    {l:'d',q:'Más de dos en cinco minutos',d:['poi',2.5],r:[[3,I_]],v:0.4562,st:[
+     ['En 5 minutos: λ = 5 · 0,5 = 2,5.','W ~ P(2,5)'],
+     ['"Más de dos" es W ≥ 3: complemento.','P(W > 2) = 1 − [P(0) + P(1) + P(2)]'],
+     ['Los tres términos.','= 1 − (0,0821 + 0,2052 + 0,2565) = 1 − 0,5438']],res:'P(W > 2) ≈ 0,4562'},
+    {l:'e',q:'¿Cuántas se esperan en cinco minutos?',d:['poi',2.5],mean:1,st:[
+     ['En la Poisson la media es el λ del intervalo.','E(W) = λ = 5 · 0,5 = 2,5']],res:'Se esperan 2,5 llamadas en 5 minutos'}]},
+
+  {t:'Muestreo de lotes de componentes',m:['hyp'],d:['hyp',40,3,5],
+   q:'Lotes de 40 componentes se consideran aceptables si no tienen más de tres defectuosos. Para muestrear se eligen 5 componentes al azar y se rechaza el lote si aparece un defectuoso. a) ¿Probabilidad de encontrar exactamente 1 defectuoso en la muestra, si el lote tiene 3? b) Media y varianza de la variable.',
+   plan:[['Se sacan 5 componentes de un lote de 40 sin devolverlos. La muestra es el 12,5 % del lote (más del 5 %), así que cada extracción cambia lo que queda: es hipergeométrica, no binomial.','N = 40    M = 3 defectuosos    n = 5'],
+    ['Variable y fórmula.','X = defectuosos en la muestra ~ H(40; 3; 5)\nP(X = x) = C(3, x) · C(37, 5 − x) / C(40, 5),  x = 0, 1, 2, 3']],
+   parts:[
+    {l:'a',q:'Exactamente 1 defectuoso',r:[[1,1]],v:0.3011,st:[
+     ['Exactamente 1: se elige 1 de los 3 defectuosos y 4 de los 37 buenos.','C(3, 1) = 3    C(37, 4) = 66.045    C(40, 5) = 658.008'],
+     ['Casos favorables sobre casos posibles.','P(X = 1) = 3 · 66.045 / 658.008 = 198.135 / 658.008'],
+     ['Dato extra: con 3 defectuosos el lote es aceptable, pero se rechaza si aparece al menos uno.','P(rechazar) = P(X ≥ 1) = 1 − P(X = 0) = 1 − 0,6624 = 0,3376']],res:'P(X = 1) ≈ 0,3011'},
+    {l:'b',q:'Media y varianza',mean:1,st:[
+     ['Media: n por la proporción de defectuosos del lote.','E(X) = n · M/N = 5 · 3/40 = 0,375'],
+     ['Varianza: la de la binomial multiplicada por el factor de corrección (N − n)/(N − 1).','Var(X) = (35/39) · 5 · (3/40) · (37/40) = 0,8974 · 0,3469'],
+     ['El factor es menor que 1: sacar sin devolver hace variar menos a X que en una binomial.','σ = √0,3113 ≈ 0,558']],res:'E(X) = 0,375    Var(X) ≈ 0,3113'}]},
+
+  {t:'Examen escrito para piloto',m:['geo'],d:['geo',0.7],
+   q:'La probabilidad de que un estudiante para piloto apruebe el examen escrito es 0,7. Encontrar la probabilidad de que apruebe: a) en el tercer intento; b) antes del cuarto intento.',
+   plan:[['Se rinde el examen hasta aprobar. Cada intento aprueba con p = 0,7, independiente de los anteriores. Interesa en qué intento llega el primer éxito.','X = número del intento en que aprueba ~ G(0,7)\nP(X = x) = 0,7 · 0,3^(x − 1),  x = 1, 2, 3, …']],
+   parts:[
+    {l:'a',q:'En el tercer intento',r:[[3,3]],v:0.063,st:[
+     ['Aprobar en el tercero es reprobar el 1.º, reprobar el 2.º y aprobar el 3.º.','P(X = 3) = 0,3 · 0,3 · 0,7 = 0,3² · 0,7']],res:'P(X = 3) = 0,063'},
+    {l:'b',q:'Antes del cuarto intento',r:[[1,3]],v:0.973,st:[
+     ['"Antes del cuarto" es aprobar en el 1.º, 2.º o 3.º intento: X ≤ 3.','P(X ≤ 3) = 0,7 + 0,3 · 0,7 + 0,3² · 0,7 = 0,7 + 0,21 + 0,063'],
+     ['Atajo: no aprobar en 3 intentos es reprobar los tres.','P(X ≤ 3) = 1 − 0,3³ = 1 − 0,027']],res:'P(X ≤ 3) = 0,973'}]},
+
+  {t:'Burbujas en piezas de vidrio',m:['poi','apx'],d:['poi',8],
+   q:'En promedio 1 de cada 1000 artículos de vidrio tiene una o más burbujas. ¿Cuál es la probabilidad de que una muestra aleatoria de 8000 tenga menos de 7 artículos con burbujas?',
+   plan:[['En rigor X = artículos con burbujas entre 8000 es binomial B(8000; 0,001). Con n tan grande y p tan chica, la cuenta binomial es pesada y la Poisson con λ = n · p da prácticamente lo mismo.','λ = n · p = 8000 · 0,001 = 8    X ≈ P(8)']],
+   parts:[
+    {l:'a',q:'Menos de 7 con burbujas',r:[[0,6]],v:0.3134,tb:['poi',8,6],st:[
+     ['"Menos de 7" es X ≤ 6.','P(X ≤ 6) = e^(−8) · (1 + 8 + 8²/2! + 8³/3! + 8⁴/4! + 8⁵/5! + 8⁶/6!)'],
+     ['Los términos.','= 0,0003 + 0,0027 + 0,0107 + 0,0286 + 0,0573 + 0,0916 + 0,1221'],
+     ['Con la tabla A.2, columna μ = 8.','F(6; 8) = 0,313']],res:'P(X ≤ 6) ≈ 0,3134  (la binomial exacta da 0,3133)'}]},
+
+  {t:'Duración de bombillos',m:['nor'],d:['nor',800,40],
+   q:'La duración de unos bombillos es normal con media 800 horas y desviación estándar 40 horas. Encontrar la probabilidad de que un bombillo dure entre 778 y 834 horas.',
+   plan:[['La duración es continua y el enunciado dice que es normal. Se estandariza para usar la tabla.','X ~ N(800; 40²)    Z = (X − 800) / 40']],
+   parts:[
+    {l:'a',q:'Entre 778 y 834 horas',r:[[778,834]],v:0.5111,tb:['nor',0.85],st:[
+     ['Estandarizar los dos extremos.','z₁ = (778 − 800)/40 = −0,55    z₂ = (834 − 800)/40 = 0,85'],
+     ['Área entre dos valores: se restan las acumuladas de la tabla A.3.','P(778 < X < 834) = Φ(0,85) − Φ(−0,55) = 0,8023 − 0,2912']],res:'≈ 0,5111'}]},
+
+  {t:'Especificación 1,50 ± d',m:['nor'],d:['nor',1.5,0.2],
+   q:'Se rechazan los componentes cuya medida no está dentro de 1,50 ± d. La medida es normal con media 1,50 y desviación estándar 0,2. Determinar d para que las especificaciones cubran el 95 % de las mediciones.',
+   plan:[['Es un problema inverso: se conoce el área (0,95) y se busca el límite. El intervalo está centrado en la media, así que deja la misma área en cada cola.','X ~ N(1,50; 0,2²)    P(1,50 − d ≤ X ≤ 1,50 + d) = 0,95']],
+   parts:[
+    {l:'a',q:'Valor de d',r:[[1.108,1.892]],sym:1,v:0.95,tb:['nor',1.96],st:[
+     ['Si el centro tiene 0,95, quedan 0,05 afuera: 0,025 en cada cola.','P(X > 1,50 + d) = 0,025'],
+     ['Estandarizando, d/0,2 es el z que deja 0,975 a la izquierda.','Φ(d/0,2) = 0,975'],
+     ['Buscar 0,9750 dentro de la tabla (al revés).','d/0,2 = 1,96'],
+     ['Despejar d.','d = 1,96 · 0,2 = 0,392']],res:'d = 0,392: se aceptan medidas entre 1,108 y 1,892'}]},
+
+  {t:'Resistencias que superan 43 ohms',m:['nor'],d:['nor',40,2],
+   q:'Una máquina fabrica resistencias con media 40 ohms y desviación estándar 2 ohms, con distribución normal. ¿Qué porcentaje de resistencias supera los 43 ohms?',
+   plan:[['Variable continua normal: se estandariza.','X ~ N(40; 2²)    Z = (X − 40) / 2']],
+   parts:[
+    {l:'a',q:'Más de 43 ohms',r:[[43,I_]],v:0.0668,tb:['nor',1.5],st:[
+     ['Estandarizar 43.','z = (43 − 40)/2 = 1,5'],
+     ['La tabla da el área a la izquierda; a la derecha es el complemento.','P(X > 43) = 1 − Φ(1,50) = 1 − 0,9332'],
+     ['Como la medición es continua, da lo mismo > que ≥.','']],res:'0,0668 → el 6,68 % de las resistencias'}]},
+
+  {t:'Corte entre A y B',m:['nor'],d:['nor',74,7],
+   q:'La calificación promedio de un examen es 74 y la desviación estándar es 7. Si el 12 % de la clase obtiene A y las notas siguen una distribución normal, ¿cuál es la A más baja posible y la B más alta posible?',
+   plan:[['Problema inverso: se conoce el área (el 12 % de arriba) y se busca la nota que la separa del resto.','X ~ N(74; 7²)']],
+   parts:[
+    {l:'a',q:'Nota de corte',r:[[82.225,I_]],v:0.12,tb:['nor',1.17],st:[
+     ['El 12 % más alto tiene A: se busca x con 12 % a la derecha, o sea 88 % a la izquierda.','P(X ≥ x) = 0,12  ⇒  P(X ≤ x) = 0,88'],
+     ['Buscar 0,88 en la tabla: queda entre Φ(1,17) = 0,8790 y Φ(1,18) = 0,8810.','z ≈ 1,175'],
+     ['Volver a la escala de las notas.','x = μ + z · σ = 74 + 1,175 · 7 = 82,2'],
+     ['Las notas son números enteros: 83 ya está dentro del 12 % superior y 82 todavía no.','A más baja = 83    B más alta = 82']],res:'Corte en 82,2: la A más baja es 83 y la B más alta es 82'}]}
+ ],
+
+ l8:[
+  {t:'Nacimientos de varones',m:['bin'],d:['bin',5,0.52],
+   q:'En cierta población, el 52 % de los nacimientos registrados son de varones. Si se toman cinco registros (población grande), calcular la probabilidad de que: a) dos correspondan a varones; b) menos de tres sean varones.',
+   plan:[['Cada registro es varón (éxito) con p = 0,52. La población es grande, así que tomar 5 registros no cambia la proporción: ensayos independientes con la misma p.','X = número de registros de varones entre 5 ~ B(5; 0,52)'],
+    ['p = 0,52 no está en la tabla A.1, así que se usa la fórmula.','P(X = x) = C(5, x) · 0,52ˣ · 0,48⁵⁻ˣ']],
+   parts:[
+    {l:'a',q:'Dos varones',r:[[2,2]],v:0.2990,h:'0,299',hk:1,st:[
+     ['Fórmula con x = 2.','P(X = 2) = C(5, 2) · 0,52² · 0,48³ = 10 · 0,2704 · 0,110592']],res:'P(X = 2) ≈ 0,2990'},
+    {l:'b',q:'Menos de tres varones',r:[[0,2]],v:0.4625,h:'0,463',hk:1,st:[
+     ['"Menos de tres" es X ≤ 2.','P(X ≤ 2) = P(0) + P(1) + P(2)'],
+     ['Cada término.','P(0) = 0,48⁵ = 0,0255    P(1) = 5 · 0,52 · 0,48⁴ = 0,1380    P(2) = 0,2990']],res:'P(X ≤ 2) ≈ 0,4625'}]},
+
+  {t:'Cuentas condonadas en una clínica',m:['bin'],d:['bin',10,0.3],
+   q:'El 30 % de los pacientes de una clínica no paga sus cuentas. Se toma una muestra de 10 pacientes. Hallar la probabilidad de que: a) todas las cuentas tengan que ser condonadas; b) al menos dos; c) a lo sumo tres. d) ¿Cuántas se espera condonar?',
+   plan:[['Cada paciente es un ensayo: no paga (éxito, la cuenta se condona) con p = 0,3.','X = cuentas condonadas entre 10 ~ B(10; 0,3)']],
+   parts:[
+    {l:'a',q:'Todas condonadas',r:[[10,10]],v:0,st:[
+     ['"Todas" es X = 10: los 10 pacientes no pagan.','P(X = 10) = 0,3¹⁰']],res:'≈ 0,0000059 (5,9 × 10⁻⁶)'},
+    {l:'b',q:'Al menos dos',r:[[2,10]],v:0.8507,tb:['bin',10,0.3,1],st:[
+     ['"Al menos dos" es X ≥ 2: complemento.','P(X ≥ 2) = 1 − P(0) − P(1) = 1 − 0,0282 − 0,1211'],
+     ['Con la tabla A.1 (n = 10, p = 0,30).','1 − B(1) = 1 − 0,149 = 0,851']],res:'P(X ≥ 2) ≈ 0,8507'},
+    {l:'c',q:'A lo sumo tres',r:[[0,3]],v:0.6496,tb:['bin',10,0.3,3],st:[
+     ['"A lo sumo tres" es X ≤ 3.','P(X ≤ 3) = 0,0282 + 0,1211 + 0,2335 + 0,2668'],
+     ['Con la tabla.','B(3; 10; 0,30) = 0,650']],res:'P(X ≤ 3) ≈ 0,6496'},
+    {l:'d',q:'¿Cuántas se espera condonar?',mean:1,st:[
+     ['Media de la binomial.','E(X) = n · p = 10 · 0,3 = 3']],res:'Se espera condonar 3 cuentas'}]},
+
+  {t:'Clientes en la ventanilla de un banco',m:['poi'],d:['poi',1],
+   q:'Llega en promedio una persona por minuto a la ventanilla de un banco. Hallar la probabilidad de que en un minuto dado: a) no aparezcan clientes; b) haya tres o más; c) haya tres o menos.',
+   plan:[['Se cuentan llegadas en un minuto: Poisson con λ = 1 por minuto.','X ~ P(1)    P(X = x) = e^(−1) · 1ˣ / x! = e^(−1) / x!']],
+   parts:[
+    {l:'a',q:'Ningún cliente',r:[[0,0]],v:0.3679,h:'0,368',hk:1,tb:['poi',1,0],st:[
+     ['x = 0.','P(X = 0) = e^(−1)']],res:'≈ 0,3679'},
+    {l:'b',q:'Tres o más',r:[[3,I_]],v:0.0803,h:'0,08',hk:1,tb:['poi',1,2],st:[
+     ['"Tres o más" no tiene tope: complemento.','P(X ≥ 3) = 1 − [P(0) + P(1) + P(2)] = 1 − (0,3679 + 0,3679 + 0,1839)'],
+     ['Con la tabla A.2 (μ = 1,0).','1 − F(2; 1) = 1 − 0,920 = 0,080']],res:'≈ 0,0803'},
+    {l:'c',q:'Tres o menos',r:[[0,3]],v:0.9810,h:'0,98',hk:1,tb:['poi',1,3],st:[
+     ['"Tres o menos" es X ≤ 3.','P(X ≤ 3) = 0,3679 + 0,3679 + 0,1839 + 0,0613'],
+     ['Con la tabla.','F(3; 1) = 0,981']],res:'≈ 0,9810'}]},
+
+  {t:'Accidentes de asegurados',m:['poi','apx'],d:['poi',10],
+   q:'Solo el 0,1 % de la población sufre cierto tipo de accidente cada año. Si se eligen al azar 10.000 asegurados, ¿cuál es la probabilidad de que no más de cinco tengan un accidente de este tipo el próximo año?',
+   plan:[['En rigor es B(10.000; 0,001): n enorme y p muy chica (evento raro). Se aproxima con Poisson.','λ = n · p = 10.000 · 0,001 = 10    X ≈ P(10)']],
+   parts:[
+    {l:'a',q:'No más de cinco',r:[[0,5]],v:0.0671,tb:['poi',10,5],st:[
+     ['"No más de cinco" es X ≤ 5.','P(X ≤ 5) = e^(−10) · (1 + 10 + 10²/2! + 10³/3! + 10⁴/4! + 10⁵/5!)'],
+     ['El paréntesis.','1 + 10 + 50 + 166,67 + 416,67 + 833,33 = 1477,67'],
+     ['Multiplicar.','P(X ≤ 5) = 0,0000454 · 1477,67'],
+     ['Con la tabla A.2 (μ = 10).','F(5; 10) = 0,067']],res:'P(X ≤ 5) ≈ 0,0671  (la binomial exacta da 0,0670)'}]},
+
+  {t:'Baterías defectuosas en una caja',m:['hyp'],d:['hyp',30,5,6],
+   q:'Una caja tiene 30 baterías para radio, de las cuales cinco son defectuosas. Se eligen seis al azar. Hallar la probabilidad de que: a) dos sean defectuosas; b) ninguna sea defectuosa; c) menos de tres sean defectuosas.',
+   plan:[['Se sacan 6 baterías de 30 sin reponer (el 20 % de la caja): hipergeométrica.','X = defectuosas en la muestra ~ H(30; 5; 6)'],
+    ['Casos posibles: todas las muestras de 6 baterías.','C(30, 6) = 593.775']],
+   parts:[
+    {l:'a',q:'Dos defectuosas',r:[[2,2]],v:0.2130,h:'C(5,2)·C(25,4) / C(30,6)',hk:1,st:[
+     ['2 defectuosas de 5 y 4 buenas de 25.','P(X = 2) = C(5, 2) · C(25, 4) / C(30, 6) = 10 · 12.650 / 593.775']],res:'P(X = 2) ≈ 0,2130'},
+    {l:'b',q:'Ninguna defectuosa',r:[[0,0]],v:0.2983,h:'C(25,6) / C(30,6)',hk:1,st:[
+     ['Las 6 salen de las 25 buenas.','P(X = 0) = C(25, 6) / C(30, 6) = 177.100 / 593.775']],res:'P(X = 0) ≈ 0,2983'},
+    {l:'c',q:'Menos de tres defectuosas',r:[[0,2]],v:0.9587,h:'[C(25,6) + C(5,1)·C(25,5) + C(5,2)·C(25,4)] / C(30,6)',hk:1,st:[
+     ['"Menos de tres" es X ≤ 2: se suman 0, 1 y 2.','P(X = 1) = C(5, 1) · C(25, 5) / C(30, 6) = 5 · 53.130 / 593.775 = 0,4474'],
+     ['Sumar los casos favorables.','P(X ≤ 2) = (177.100 + 265.650 + 126.500) / 593.775 = 569.250 / 593.775']],res:'P(X ≤ 2) ≈ 0,9587'}]},
+
+  {t:'Reservaciones de un restaurante',m:['bin'],d:['bin',20,0.9],
+   q:'El 10 % de las personas que reservan una mesa no asisten. El restaurante acepta 20 reservaciones pero solo tiene 15 mesas. ¿Cuál es la probabilidad de que a todas las personas que asistan se les asigne mesa?',
+   plan:[['Cada reservación asiste con probabilidad 0,9, independiente de las demás.','X = reservaciones que asisten ~ B(20; 0,9)'],
+    ['Alcanzan las mesas si asisten como máximo 15.','Se pide P(X ≤ 15)']],
+   parts:[
+    {l:'a',q:'Que alcancen las mesas',r:[[0,15]],v:0.0432,tb:['bin',20,0.9,15],st:[
+     ['Con la tabla A.1 (n = 20, p = 0,90).','B(15; 20; 0,90) = 0,043'],
+     ['Otra forma: Y = los que no asisten ~ B(20; 0,1). X ≤ 15 equivale a Y ≥ 5.','P(Y ≥ 5) = 1 − P(Y ≤ 4) = 1 − 0,957 = 0,043'],
+     ['Interpretación: con 20 reservas para 15 mesas, casi siempre va a faltar lugar.','']],res:'≈ 0,0432'}]},
+
+  {t:'Animales en una autopista',m:['poi'],d:['poi',1],
+   q:'En una autopista hay en promedio 10 animales vagabundos muertos por kilómetro. Hallar la probabilidad de que en 100 metros: a) haya dos o más; b) no haya ninguno; c) haya menos de tres. d) ¿Cuántos se espera encontrar en 500 metros?',
+   plan:[['Se cuentan animales en un tramo de autopista (espacio): Poisson. El promedio es por km y 100 m es la décima parte.','λ(100 m) = 10 · 0,1 = 1    X ~ P(1)']],
+   parts:[
+    {l:'a',q:'Dos o más',r:[[2,I_]],v:0.2642,h:'0,2643',hk:1,tb:['poi',1,1],st:[
+     ['"Dos o más": complemento.','P(X ≥ 2) = 1 − P(0) − P(1) = 1 − 0,3679 − 0,3679'],
+     ['Con la tabla A.2.','1 − F(1; 1) = 1 − 0,736 = 0,264']],res:'≈ 0,2642'},
+    {l:'b',q:'Ninguno',r:[[0,0]],v:0.3679,h:'0,368',hk:1,tb:['poi',1,0],st:[
+     ['x = 0.','P(X = 0) = e^(−1)']],res:'≈ 0,3679'},
+    {l:'c',q:'Menos de tres',r:[[0,2]],v:0.9197,h:'0,92',hk:1,tb:['poi',1,2],st:[
+     ['"Menos de tres" es X ≤ 2.','P(X ≤ 2) = 0,3679 + 0,3679 + 0,1839'],
+     ['Con la tabla.','F(2; 1) = 0,920']],res:'≈ 0,9197'},
+    {l:'d',q:'Esperados en 500 m',d:['poi',5],mean:1,h:'5',hk:1,st:[
+     ['En 500 m el promedio es la mitad del de un km.','E(Y) = λ(500 m) = 10 · 0,5 = 5']],res:'5 animales'}]},
+
+  {t:'Media y varianza de tornillos defectuosos',m:['bin'],d:['bin',100,0.1],
+   q:'El 10 % de los tornillos que produce una máquina son defectuosos. Hallar la media y la varianza de X = número de tornillos defectuosos en una muestra de 100.',
+   plan:[['Cada tornillo es defectuoso con p = 0,1 de forma independiente.','X ~ B(100; 0,1)']],
+   parts:[
+    {l:'a',q:'Media y varianza',mean:1,h:'Media = 10, Varianza = 9',hk:1,st:[
+     ['Media.','E(X) = n · p = 100 · 0,1 = 10'],
+     ['Varianza.','Var(X) = n · p · (1 − p) = 100 · 0,1 · 0,9 = 9'],
+     ['El desvío es la raíz de la varianza.','σ = √9 = 3']],res:'Media 10 y varianza 9'}]},
+
+  {t:'Urna sin reemplazo',m:['hyp'],d:['hyp',10,6,4],
+   q:'Una urna tiene cuatro bolas rojas y seis negras. Se extraen cuatro sin reemplazo. Sea X = número de bolas negras en la muestra. Hallar: a) la probabilidad de que haya a lo más una roja; b) la probabilidad de que no haya ninguna negra.',
+   plan:[['Sin reemplazo de una urna chica: hipergeométrica. El "éxito" es la bola negra.','N = 10    M = 6 negras    n = 4    X ~ H(10; 6; 4)'],
+    ['Casos posibles.','C(10, 4) = 210']],
+   parts:[
+    {l:'a',q:'A lo más una roja',r:[[3,4]],v:0.4524,st:[
+     ['A lo más una roja entre 4 bolas significa 3 o 4 negras.','P(X ≥ 3) = P(X = 3) + P(X = 4)'],
+     ['Contar.','P(3) = C(6, 3) · C(4, 1) / 210 = 20 · 4 / 210 = 80/210\nP(4) = C(6, 4) · C(4, 0) / 210 = 15/210']],res:'95/210 ≈ 0,4524'},
+    {l:'b',q:'Ninguna negra',r:[[0,0]],v:0.0048,st:[
+     ['Ninguna negra: las 4 son las 4 rojas.','P(X = 0) = C(6, 0) · C(4, 4) / 210 = 1/210']],res:'≈ 0,0048'}]},
+
+  {t:'La misma urna con reemplazo',m:['bin'],d:['bin',4,0.6],
+   q:'Resolver el ejercicio anterior suponiendo que el muestreo se hace con reemplazo.',
+   plan:[['Con reemplazo la urna no cambia: cada extracción es negra con p = 6/10 = 0,6, independiente de las otras.','X = negras en 4 extracciones ~ B(4; 0,6)']],
+   parts:[
+    {l:'a',q:'A lo más una roja',r:[[3,4]],v:0.4752,h:'0,4752',hk:1,st:[
+     ['Igual que antes: 3 o 4 negras.','P(3) = C(4, 3) · 0,6³ · 0,4 = 0,3456    P(4) = 0,6⁴ = 0,1296'],
+     ['Comparación: sin reemplazo daba 0,4524.','']],res:'0,4752'},
+    {l:'b',q:'Ninguna negra',r:[[0,0]],v:0.0256,h:'0,0256',hk:1,st:[
+     ['Las 4 rojas.','P(X = 0) = 0,4⁴'],
+     ['Sin reemplazo daba 0,0048: devolver las bolas hace posible repetir rojas.','']],res:'0,0256'}]},
+
+  {t:'Niñas en una escuela',m:['bin'],d:['bin',50,0.1],
+   q:'En cierta escuela, exactamente el 10 % de los estudiantes son niñas. Se toma al azar una muestra de 50 estudiantes. Usando la distribución más conveniente, calcular la probabilidad de que la muestra tenga: a) solo niñas; b) solo una niña; c) menos de tres niñas; d) más de tres niñas.',
+   plan:[['No se conoce cuántos estudiantes tiene la escuela, así que no se puede usar la hipergeométrica. Se supone una escuela grande: cada estudiante es niña con p = 0,1, independiente.','X = niñas en la muestra de 50 ~ B(50; 0,1)']],
+   w:'La hoja de resultados pone estos valores bajo el ejercicio 12. Corresponden a la binomial de este ejercicio.',
+   parts:[
+    {l:'a',q:'Solo niñas',r:[[50,50]],v:0,h:'(0,1)⁵⁰',hk:1,st:[
+     ['"Solo niñas" es que las 50 sean niñas.','P(X = 50) = 0,1⁵⁰']],res:'= 10⁻⁵⁰ ≈ 0'},
+    {l:'b',q:'Solo una niña',r:[[1,1]],v:0.0286,h:'0,0286',hk:1,st:[
+     ['Exactamente una.','P(X = 1) = 50 · 0,1 · 0,9⁴⁹']],res:'≈ 0,0286'},
+    {l:'c',q:'Menos de tres',r:[[0,2]],v:0.1117,h:'0,1157',hk:0,hn:'La suma da 0,0052 + 0,0286 + 0,0779 = 0,1117; el 0,1157 de la hoja parece una errata.',st:[
+     ['"Menos de tres" es X ≤ 2.','P(0) = 0,9⁵⁰ = 0,0052    P(1) = 0,0286    P(2) = C(50, 2) · 0,1² · 0,9⁴⁸ = 0,0779']],res:'≈ 0,1117'},
+    {l:'d',q:'Más de tres',r:[[4,50]],v:0.7497,h:'0,75',hk:1,st:[
+     ['"Más de tres" es X ≥ 4: complemento.','P(X > 3) = 1 − P(X ≤ 3) = 1 − (0,1117 + 0,1386)'],
+     ['P(3) se calcula igual.','P(3) = C(50, 3) · 0,1³ · 0,9⁴⁷ = 0,1386']],res:'≈ 0,7497'}]},
+
+  {t:'Niñas: aproximación por Poisson',m:['poi','apx'],d:['poi',5],
+   q:'Resolver el problema anterior usando una aproximación a la binomial.',
+   plan:[['La aproximación de la binomial para n grande y p chica es la Poisson con λ = n · p.','λ = 50 · 0,1 = 5    X ≈ P(5)'],
+    ['Con p = 0,1 la aproximación es aceptable pero no muy fina. Conviene comparar con la binomial exacta del ejercicio 11.','']],
+   w:'La hoja de resultados lista bajo el 12 los valores de la binomial exacta (los del ejercicio 11). Con Poisson los números cambian un poco.',
+   parts:[
+    {l:'a',q:'Solo niñas',r:[[50,50]],v:0,st:[
+     ['','P(X = 50) = e^(−5) · 5⁵⁰ / 50!']],res:'≈ 2 × 10⁻³² ≈ 0  (binomial: 10⁻⁵⁰)'},
+    {l:'b',q:'Solo una niña',r:[[1,1]],v:0.0337,st:[
+     ['','P(X = 1) = e^(−5) · 5 = 0,00674 · 5']],res:'≈ 0,0337  (binomial: 0,0286)'},
+    {l:'c',q:'Menos de tres',r:[[0,2]],v:0.1247,tb:['poi',5,2],st:[
+     ['X ≤ 2.','P(X ≤ 2) = e^(−5) · (1 + 5 + 5²/2) = 0,00674 · 18,5'],
+     ['Con la tabla A.2 (μ = 5).','F(2; 5) = 0,125']],res:'≈ 0,1247  (binomial: 0,1117)'},
+    {l:'d',q:'Más de tres',r:[[4,I_]],v:0.7350,tb:['poi',5,3],st:[
+     ['Complemento.','P(X > 3) = 1 − F(3; 5) = 1 − 0,265']],res:'≈ 0,7350  (binomial: 0,7497)'}]},
+
+  {t:'Áreas bajo la normal estándar',m:['nor'],d:['nor',0,1],
+   q:'Dada una distribución normal estándar, encontrar el área bajo la curva: a) a la izquierda de z = 1,52; b) a la derecha de z = −0,9; c) entre 1,8 y 2,7; d) a la izquierda de z = −1,93; e) a la derecha de z = 1,28; f) entre −0,5 y 1,84.',
+   plan:[['La tabla A.3 da Φ(z) = P(Z ≤ z), el área a la izquierda. Todo lo demás se arma con complementos y restas.','Derecha: 1 − Φ(z)    Entre: Φ(z₂) − Φ(z₁)']],
+   parts:[
+    {l:'a',q:'Izquierda de 1,52',r:[[-I_,1.52]],v:0.9357,h:'0,9357',hk:1,tb:['nor',1.52],st:[
+     ['Área a la izquierda: directo de la tabla (fila 1,5, columna 0,02).','P(Z < 1,52) = Φ(1,52)']],res:'0,9357'},
+    {l:'b',q:'Derecha de −0,9',r:[[-0.9,I_]],v:0.8159,h:'0,8159',hk:1,tb:['nor',-0.9],st:[
+     ['Derecha = complemento.','P(Z > −0,9) = 1 − Φ(−0,90) = 1 − 0,1841'],
+     ['Por simetría también es Φ(0,90).','Φ(0,90) = 0,8159']],res:'0,8159'},
+    {l:'c',q:'Entre 1,8 y 2,7',r:[[1.8,2.7]],v:0.0324,h:'0,0324',hk:1,tb:['nor',2.7],st:[
+     ['Entre: resta de acumuladas.','Φ(2,70) − Φ(1,80) = 0,9965 − 0,9641']],res:'0,0324'},
+    {l:'d',q:'Izquierda de −1,93',r:[[-I_,-1.93]],v:0.0268,h:'0,0268',hk:1,tb:['nor',-1.93],st:[
+     ['Directo de la tabla de z negativos.','P(Z < −1,93) = Φ(−1,93)']],res:'0,0268'},
+    {l:'e',q:'Derecha de 1,28',r:[[1.28,I_]],v:0.1003,h:'0,1003',hk:1,tb:['nor',1.28],st:[
+     ['Complemento.','1 − Φ(1,28) = 1 − 0,8997']],res:'0,1003'},
+    {l:'f',q:'Entre −0,5 y 1,84',r:[[-0.5,1.84]],v:0.6586,h:'0,6586',hk:1,tb:['nor',1.84],st:[
+     ['Resta de acumuladas.','Φ(1,84) − Φ(−0,50) = 0,9671 − 0,3085']],res:'0,6586'}]},
+
+  {t:'Encontrar z a partir del área',m:['nor'],d:['nor',0,1],
+   q:'Encontrar el valor de z si el área bajo la curva normal estándar: a) a la derecha es 0,3510; b) a la izquierda es 0,1234; c) entre 0 y z, con z > 0, es 0,4838; d) entre −z y z, con z > 0, es 0,95.',
+   plan:[['Son problemas inversos: se pasa todo a "área a la izquierda" y se busca ese número dentro del cuerpo de la tabla. El z sale de la fila y la columna.','Φ(z) = área a la izquierda  ⇒  z = Φ⁻¹(área)']],
+   parts:[
+    {l:'a',q:'Derecha 0,3510',r:[[0.38,I_]],v:0.352,tb:['nor',0.38],st:[
+     ['Pasar a área a la izquierda.','Φ(z) = 1 − 0,3510 = 0,6490'],
+     ['Buscar 0,6490: el más cercano es Φ(0,38) = 0,6480 (0,39 da 0,6517).','z ≈ 0,38']],res:'z ≈ 0,38  (exacto 0,383)'},
+    {l:'b',q:'Izquierda 0,1234',r:[[-I_,-1.16]],v:0.123,tb:['nor',-1.16],st:[
+     ['Ya es área a la izquierda y es menor que 0,5, así que z es negativo.','Φ(z) = 0,1234'],
+     ['El más cercano en la tabla es Φ(−1,16) = 0,1230.','z ≈ −1,16']],res:'z ≈ −1,16'},
+    {l:'c',q:'Entre 0 y z: 0,4838',r:[[0,2.14]],v:0.4838,tb:['nor',2.14],st:[
+     ['A la izquierda de 0 hay 0,5. Entonces el área a la izquierda de z es 0,5 + 0,4838.','Φ(z) = 0,9838'],
+     ['En la tabla aparece exacto.','Φ(2,14) = 0,9838']],res:'z = 2,14'},
+    {l:'d',q:'Entre −z y z: 0,95',r:[[-1.96,1.96]],sym:1,v:0.95,tb:['nor',1.96],st:[
+     ['Por simetría quedan 0,025 en cada cola.','Φ(z) = 0,95 + 0,025 = 0,975'],
+     ['En la tabla.','Φ(1,96) = 0,9750']],res:'z = 1,96'}]},
+
+  {t:'Valores de k en la normal estándar',m:['nor'],d:['nor',0,1],
+   q:'Si Z es normal estándar, hallar k tal que: a) P(Z ≤ k) = 0,80; b) P(Z ≥ k) = 0,05; c) P(Z ≤ k) = 0,90; d) P(|Z| < k) = 0,95; e) P(|Z| > k) = 0,01.',
+   plan:[['Igual que el ejercicio 14: llevar a área a la izquierda y leer la tabla al revés. Cuando el área cae entre dos valores, se toma el más cercano o el punto medio.','']],
+   parts:[
+    {l:'a',q:'P(Z ≤ k) = 0,80',r:[[-I_,0.8416]],v:0.8,h:'−0,845',hk:0,hn:'El signo no puede ser negativo: con k < 0 el área a la izquierda sería menor que 0,5. El valor es 0,84 (0,8416 interpolando); 0,845 sale de promediar 0,84 y 0,85.',tb:['nor',0.84],st:[
+     ['Área a la izquierda 0,80: está entre Φ(0,84) = 0,7995 y Φ(0,85) = 0,8023.','k ≈ 0,84  (interpolando, 0,8416)']],res:'k ≈ 0,84'},
+    {l:'b',q:'P(Z ≥ k) = 0,05',r:[[1.645,I_]],v:0.05,h:'1,645',hk:1,tb:['nor',1.64],st:[
+     ['Pasar a la izquierda.','Φ(k) = 1 − 0,05 = 0,95'],
+     ['0,95 queda justo entre Φ(1,64) = 0,9495 y Φ(1,65) = 0,9505.','k = 1,645']],res:'k = 1,645'},
+    {l:'c',q:'P(Z ≤ k) = 0,90',r:[[-I_,1.2816]],v:0.9,h:'1,285',hk:2,hn:'La hoja usa el punto medio 1,285; en la tabla 0,9000 está más cerca de Φ(1,28) = 0,8997.',tb:['nor',1.28],st:[
+     ['Φ(1,28) = 0,8997 y Φ(1,29) = 0,9015: el más cercano es 1,28.','k ≈ 1,28  (interpolando, 1,2816)']],res:'k ≈ 1,28'},
+    {l:'d',q:'P(|Z| < k) = 0,95',r:[[-1.96,1.96]],sym:1,v:0.95,h:'1,96',hk:1,tb:['nor',1.96],st:[
+     ['|Z| < k es −k < Z < k: el 95 % central deja 0,025 en cada cola.','Φ(k) = 0,975'],
+     ['En la tabla.','k = 1,96']],res:'k = 1,96'},
+    {l:'e',q:'P(|Z| > k) = 0,01',r:[[-I_,-2.575],[2.575,I_]],v:0.01,h:'2,575',hk:1,tb:['nor',2.57],st:[
+     ['|Z| > k son las dos colas: 0,005 en cada una.','Φ(k) = 1 − 0,005 = 0,995'],
+     ['Entre Φ(2,57) = 0,9949 y Φ(2,58) = 0,9951.','k = 2,575']],res:'k = 2,575'}]},
+
+  {t:'Probabilidades con X ~ N(100; 225)',m:['nor'],d:['nor',100,15],
+   q:'Sea X ~ N(100; 225). Hallar: a) P(X ≤ 92,5); b) P(X > 76); c) P(X < 107,5); d) P(X > 124); e) P(77,5 ≤ X ≤ 100); f) P(91 < X ≤ 127).',
+   plan:[['Ojo: en N(100; 225) el segundo número es la varianza. El desvío es su raíz.','μ = 100    σ² = 225    σ = √225 = 15    Z = (X − 100)/15']],
+   parts:[
+    {l:'a',q:'P(X ≤ 92,5)',r:[[-I_,92.5]],v:0.3085,tb:['nor',-0.5],st:[['','z = (92,5 − 100)/15 = −0,5    P = Φ(−0,50)']],res:'0,3085'},
+    {l:'b',q:'P(X > 76)',r:[[76,I_]],v:0.9452,tb:['nor',-1.6],st:[['','z = (76 − 100)/15 = −1,6    P = 1 − Φ(−1,60) = 1 − 0,0548']],res:'0,9452'},
+    {l:'c',q:'P(X < 107,5)',r:[[-I_,107.5]],v:0.6915,tb:['nor',0.5],st:[['','z = (107,5 − 100)/15 = 0,5    P = Φ(0,50)']],res:'0,6915'},
+    {l:'d',q:'P(X > 124)',r:[[124,I_]],v:0.0548,tb:['nor',1.6],st:[['','z = (124 − 100)/15 = 1,6    P = 1 − Φ(1,60) = 1 − 0,9452']],res:'0,0548'},
+    {l:'e',q:'P(77,5 ≤ X ≤ 100)',r:[[77.5,100]],v:0.4332,tb:['nor',-1.5],st:[
+     ['','z₁ = (77,5 − 100)/15 = −1,5    z₂ = (100 − 100)/15 = 0'],
+     ['Hasta la media hay 0,5.','P = Φ(0) − Φ(−1,50) = 0,5 − 0,0668']],res:'0,4332'},
+    {l:'f',q:'P(91 < X ≤ 127)',r:[[91,127]],v:0.6898,tb:['nor',1.8],st:[
+     ['','z₁ = (91 − 100)/15 = −0,6    z₂ = (127 − 100)/15 = 1,8'],
+     ['','P = Φ(1,80) − Φ(−0,60) = 0,9641 − 0,2743']],res:'0,6898'}]},
+
+  {t:'Valores de x para X ~ N(100; 225)',m:['nor'],d:['nor',100,15],
+   q:'Para la variable del ejercicio 16, hallar x tal que: a) P(X ≤ x) = 0,75; b) P(X > x) = 0,10; c) P(−x ≤ X ≤ x) = 0,90; d) P(X ≤ x) = 0,05.',
+   plan:[['Problemas inversos: se busca z en la tabla y se vuelve a la escala de X.','x = μ + z · σ = 100 + 15 · z']],
+   parts:[
+    {l:'a',q:'P(X ≤ x) = 0,75',r:[[-I_,110.12]],v:0.75,h:'110,13',hk:1,tb:['nor',0.67],st:[
+     ['0,75 queda entre Φ(0,67) = 0,7486 y Φ(0,68) = 0,7517.','z ≈ 0,675'],
+     ['Volver a X.','x = 100 + 0,675 · 15 = 110,13']],res:'x ≈ 110,13'},
+    {l:'b',q:'P(X > x) = 0,10',r:[[119.22,I_]],v:0.1,h:'119,28',hk:2,hn:'La hoja usa z = 1,285. Con z = 1,28 (o el exacto 1,2816) da 119,2.',tb:['nor',1.28],st:[
+     ['Pasar a la izquierda.','P(X ≤ x) = 0,90  ⇒  z ≈ 1,28'],
+     ['Volver a X.','x = 100 + 1,28 · 15 = 119,2']],res:'x ≈ 119,2'},
+    {l:'c',q:'P(−x ≤ X ≤ x) = 0,90',r:[[75.33,124.67]],sym:1,v:0.9,h:'124,68',hk:1,tb:['nor',1.64],st:[
+     ['Al pie de la letra, −x queda a más de 6 desvíos bajo la media, así que P(X < −x) ≈ 0 y quedaría P(X ≤ x) = 0,90, o sea x ≈ 119,2.',''],
+     ['La hoja lo interpreta como un intervalo centrado en la media con el 90 %: 5 % en cada cola.','P(100 − d ≤ X ≤ 100 + d) = 0,90  ⇒  Φ(z) = 0,95  ⇒  z = 1,645'],
+     ['Extremos del intervalo.','100 ± 1,645 · 15 = 100 ± 24,68  →  75,33 y 124,68']],res:'Extremo superior x ≈ 124,68 (el inferior es 75,33)'},
+    {l:'d',q:'P(X ≤ x) = 0,05',r:[[-I_,75.33]],v:0.05,h:'75,33',hk:1,tb:['nor',-1.64],st:[
+     ['Por simetría, el z que deja 0,05 a la izquierda es −1,645.','z = −1,645'],
+     ['Volver a X.','x = 100 − 1,645 · 15 = 75,33']],res:'x ≈ 75,33'}]},
+
+  {t:'De z a la nota real',m:['nor'],d:['nor',75,6],
+   q:'En un test con puntuación media 75 y desviación estándar 6, tres estudiantes A, B y C tienen puntuaciones z de 1,8, 0,5 y −0,8. Hallar sus notas.',
+   plan:[['z dice a cuántos desvíos de la media está la nota. Se despeja x de la fórmula de estandarización.','z = (x − μ)/σ  ⇒  x = μ + z · σ = 75 + 6z']],
+   parts:[
+    {l:'A',q:'Estudiante A (z = 1,8)',r:[[-I_,85.8]],v:0.9641,st:[
+     ['','x = 75 + 1,8 · 6 = 75 + 10,8'],
+     ['El área sombreada es la proporción que sacó menos que A.','Φ(1,8) = 0,9641: A supera al 96 % de la clase']],res:'A sacó 85,8'},
+    {l:'B',q:'Estudiante B (z = 0,5)',r:[[-I_,78]],v:0.6915,st:[
+     ['','x = 75 + 0,5 · 6 = 75 + 3']],res:'B sacó 78'},
+    {l:'C',q:'Estudiante C (z = −0,8)',r:[[-I_,70.2]],v:0.2119,st:[
+     ['z negativo: está por debajo de la media.','x = 75 − 0,8 · 6 = 75 − 4,8']],res:'C sacó 70,2'}]},
+
+  {t:'Sacos de harina',m:['nor'],d:['nor',25,0.5],
+   q:'El peso de un saco de harina es normal con media 25 y desviación estándar 0,5. Si se toma un saco al azar, ¿cuál es la probabilidad de que: a) pese a lo sumo 24,2875; b) pese por lo menos 26,0025?',
+   plan:[['Normal: se estandariza.','X ~ N(25; 0,5²)    Z = (X − 25)/0,5']],
+   parts:[
+    {l:'a',q:'A lo sumo 24,2875',r:[[-I_,24.2875]],v:0.0771,h:'0,0764',hk:2,hn:'La hoja redondea z = −1,425 a −1,43. Con −1,42 da 0,0778; el valor exacto, 0,0771, queda en el medio.',tb:['nor',-1.43],st:[
+     ['','z = (24,2875 − 25)/0,5 = −1,425'],
+     ['−1,425 está justo entre dos columnas: Φ(−1,43) = 0,0764 y Φ(−1,42) = 0,0778.','P ≈ 0,0771 (promedio)']],res:'≈ 0,077'},
+    {l:'b',q:'Por lo menos 26,0025',r:[[26.0025,I_]],v:0.0225,h:'0,0228',hk:2,hn:'La hoja redondea z = 2,005 a 2,00.',tb:['nor',2],st:[
+     ['','z = (26,0025 − 25)/0,5 = 2,005'],
+     ['Complemento, redondeando z a 2,00.','1 − Φ(2,00) = 1 − 0,9772 = 0,0228']],res:'≈ 0,0228  (exacto 0,0225)'}]},
+
+  {t:'Anillos de pistón',m:['nor'],d:['nor',10,0.03],
+   q:'El diámetro interno de un anillo de pistón es normal con media 10 cm y desviación estándar 0,03 cm. a) ¿Probabilidad de que el diámetro esté entre 9,97 y 10,03? b) ¿Qué proporción supera 10,075 cm?',
+   plan:[['Normal con σ chico: los valores están en desvíos redondos.','X ~ N(10; 0,03²)']],
+   parts:[
+    {l:'a',q:'Entre 9,97 y 10,03',r:[[9.97,10.03]],sym:1,v:0.6827,tb:['nor',1],st:[
+     ['Los extremos están a un desvío de la media.','z₁ = (9,97 − 10)/0,03 = −1    z₂ = 1'],
+     ['Es la regla empírica del 68 %.','Φ(1) − Φ(−1) = 0,8413 − 0,1587']],res:'0,6826 (≈ 68 %)'},
+    {l:'b',q:'Más de 10,075',r:[[10.075,I_]],v:0.0062,tb:['nor',2.5],st:[
+     ['','z = (10,075 − 10)/0,03 = 2,5'],
+     ['Complemento.','1 − Φ(2,50) = 1 − 0,9938']],res:'0,0062 → el 0,62 % de los anillos'}]},
+
+  {t:'Máquina de refrescos',m:['nor'],d:['nor',200,15],
+   q:'Una máquina sirve en promedio 200 ml por vaso, con distribución normal y desviación estándar 15 ml. a) ¿Qué fracción de los vasos tendrá más de 224 ml? b) ¿Probabilidad de que un vaso tenga entre 191 y 209 ml? c) ¿Cuántos vasos se derramarán en los próximos 1000 si los vasos son de 230 ml? d) ¿Bajo qué valor está el 25 % más chico?',
+   plan:[['Normal con μ = 200 y σ = 15.','X ~ N(200; 15²)    Z = (X − 200)/15']],
+   parts:[
+    {l:'a',q:'Más de 224 ml',r:[[224,I_]],v:0.0548,h:'0,0548',hk:1,tb:['nor',1.6],st:[
+     ['','z = (224 − 200)/15 = 1,6    P = 1 − Φ(1,60) = 1 − 0,9452']],res:'0,0548'},
+    {l:'b',q:'Entre 191 y 209 ml',r:[[191,209]],sym:1,v:0.4515,h:'0,4514',hk:1,tb:['nor',0.6],st:[
+     ['Intervalo simétrico.','z = ±(209 − 200)/15 = ±0,6'],
+     ['','Φ(0,60) − Φ(−0,60) = 0,7257 − 0,2743']],res:'0,4514'},
+    {l:'c',q:'Vasos derramados (de 1000)',r:[[230,I_]],v:0.0228,h:'23',hk:1,tb:['nor',2],st:[
+     ['Se derrama si sirve más de 230 ml.','z = (230 − 200)/15 = 2    P = 1 − 0,9772 = 0,0228'],
+     ['Cantidad esperada en 1000 vasos.','1000 · 0,0228 = 22,8']],res:'≈ 23 vasos'},
+    {l:'d',q:'Límite del 25 % más chico',r:[[-I_,189.88]],v:0.25,tb:['nor',-0.67],st:[
+     ['Se busca x con 0,25 a la izquierda: entre Φ(−0,68) = 0,2483 y Φ(−0,67) = 0,2514.','z ≈ −0,675'],
+     ['Volver a X.','x = 200 − 0,675 · 15 = 189,9']],res:'x ≈ 189,9 ml'}]},
+
+  {t:'Garantía de baterías',m:['nor'],d:['nor',38,2],
+   q:'La vida útil de una batería es normal con μ = 38 meses y σ = 2 meses. Si la compañía no quiere reemplazar más del 5 % de las baterías, ¿qué garantía debe ofrecer?',
+   plan:[['Se reemplazan las que duran menos que la garantía g. Hay que lograr que eso pase como mucho el 5 % de las veces: problema inverso con la cola izquierda.','P(X < g) ≤ 0,05']],
+   parts:[
+    {l:'a',q:'Tiempo de garantía',r:[[-I_,34.71]],v:0.05,tb:['nor',-1.64],st:[
+     ['El z que deja 0,05 a la izquierda.','z = −1,645'],
+     ['Volver a meses.','g = 38 − 1,645 · 2 = 34,71'],
+     ['En meses enteros conviene redondear hacia abajo: con 34 se reemplaza el 2,28 % y con 35 el 6,68 %, que pasa el límite.','P(X < 34) = Φ(−2) = 0,0228    P(X < 35) = Φ(−1,5) = 0,0668']],res:'Garantía de 34,7 meses como máximo (34 meses si se ofrece en meses enteros)'}]},
+
+  {t:'Cociente intelectual',m:['nor'],d:['nor',106,16],
+   q:'El cociente intelectual de los estudiantes de una escuela tiene media 106 y varianza 256, con distribución normal. Hallar la proporción con cociente: a) igual o menor que 98; b) igual o menor que 130; c) igual o mayor que 127; d) entre 94 y 118.',
+   plan:[['Dan la varianza: el desvío es su raíz.','σ = √256 = 16    Z = (X − 106)/16']],
+   parts:[
+    {l:'a',q:'≤ 98',r:[[-I_,98]],v:0.3085,h:'0,3085',hk:1,tb:['nor',-0.5],st:[['','z = (98 − 106)/16 = −0,5    Φ(−0,50) = 0,3085']],res:'0,3085'},
+    {l:'b',q:'≤ 130',r:[[-I_,130]],v:0.9332,h:'0,9452',hk:0,hn:'0,9452 es Φ(1,60). Con σ = 16 el z es 24/16 = 1,5, que da 0,9332.',tb:['nor',1.5],st:[['','z = (130 − 106)/16 = 1,5    Φ(1,50) = 0,9332']],res:'0,9332'},
+    {l:'c',q:'≥ 127',r:[[127,I_]],v:0.0951,h:'0,0951',hk:1,tb:['nor',1.31],st:[
+     ['','z = (127 − 106)/16 = 1,3125 ≈ 1,31'],
+     ['Complemento.','1 − Φ(1,31) = 1 − 0,9049']],res:'0,0951'},
+    {l:'d',q:'Entre 94 y 118',r:[[94,118]],sym:1,v:0.5468,h:'0,4649',hk:0,hn:'No coincide: con z = ±0,75 la tabla da 0,7734 − 0,2266 = 0,5468.',tb:['nor',0.75],st:[
+     ['Intervalo simétrico alrededor de 106.','z = ±12/16 = ±0,75'],
+     ['','Φ(0,75) − Φ(−0,75) = 0,7734 − 0,2266']],res:'0,5468'}]},
+
+  {t:'Largo del pan de centeno',m:['nor'],d:['nor',30,2],
+   q:'Las piezas de pan de centeno miden en promedio 30 cm con desviación estándar 2 cm, con distribución normal. ¿Qué porcentaje de las piezas mide: a) más de 31,7 cm; b) entre 29,3 y 33,5 cm; c) menos de 25,5 cm?',
+   plan:[['Normal: se estandariza y el resultado se pasa a porcentaje.','X ~ N(30; 2²)    Z = (X − 30)/2']],
+   parts:[
+    {l:'a',q:'Más de 31,7 cm',r:[[31.7,I_]],v:0.1977,tb:['nor',0.85],st:[['','z = (31,7 − 30)/2 = 0,85    1 − Φ(0,85) = 1 − 0,8023']],res:'0,1977 → 19,77 %'},
+    {l:'b',q:'Entre 29,3 y 33,5 cm',r:[[29.3,33.5]],v:0.5967,tb:['nor',1.75],st:[
+     ['','z₁ = (29,3 − 30)/2 = −0,35    z₂ = (33,5 − 30)/2 = 1,75'],
+     ['','Φ(1,75) − Φ(−0,35) = 0,9599 − 0,3632']],res:'0,5967 → 59,67 %'},
+    {l:'c',q:'Menos de 25,5 cm',r:[[-I_,25.5]],v:0.0122,tb:['nor',-2.25],st:[['','z = (25,5 − 30)/2 = −2,25    Φ(−2,25) = 0,0122']],res:'0,0122 → 1,22 %'}]},
+
+  {t:'Sobregiros en cuentas corrientes',m:['bin','apx'],d:['bn',100,0.8],
+   q:'El 80 % de los clientes de un banco recurre a sobregiros al menos una vez al año. Si se eligen 100 cuentas al azar, hallar la probabilidad de que hayan recurrido a sobregiros: a) entre 10 y 15; b) más de ocho; c) menos de cinco.',
+   plan:[['X = cuentas con sobregiro entre 100 ~ B(100; 0,8). Como np = 80 y n(1 − p) = 20 son mayores que 5, se aproxima con la normal.','μ = n · p = 80    σ = √(n · p · q) = √16 = 4'],
+    ['Corrección por continuidad: cada entero k de la binomial ocupa la franja de k − 0,5 a k + 0,5 bajo la normal.','P(a ≤ X ≤ b) ≈ P(a − 0,5 < Y < b + 0,5),  Y ~ N(80; 4²)']],
+   w:'La hoja de resultados (0,2247; 50 %; 0,1357) no corresponde al 80 % del enunciado: coincide con p = 0,08 y sin corrección por continuidad. Probablemente el enunciado debía decir 8 %. Las partes «8 %» lo resuelven así.',
+   parts:[
+    {l:'a',q:'Entre 10 y 15 (80 %)',r:[[10,15]],v:0,h:'0,2247',hk:0,hn:'Ver la nota del ejercicio: es el resultado con p = 0,08.',st:[
+     ['Con corrección: P(10 ≤ X ≤ 15) ≈ P(9,5 < Y < 15,5).','z₁ = (9,5 − 80)/4 = −17,6    z₂ = (15,5 − 80)/4 = −16,1'],
+     ['Los dos z están muchísimo más a la izquierda que el final de la tabla (−3,4).','']],res:'≈ 0: con el 80 % es prácticamente imposible que solo 10 a 15 usen sobregiro'},
+    {l:'b',q:'Más de ocho (80 %)',r:[[9,100]],v:1,h:'50 %',hk:0,hn:'Ver la nota del ejercicio.',st:[
+     ['P(X > 8) = P(X ≥ 9) ≈ P(Y > 8,5).','z = (8,5 − 80)/4 = −17,9']],res:'≈ 1'},
+    {l:'c',q:'Menos de cinco (80 %)',r:[[0,4]],v:0,h:'0,1357',hk:0,hn:'Ver la nota del ejercicio.',st:[
+     ['P(X < 5) = P(X ≤ 4) ≈ P(Y < 4,5).','z = (4,5 − 80)/4 = −18,9']],res:'≈ 0'},
+    {l:'a·8%',q:'Entre 10 y 15 (si fuera 8 %)',d:['bn',100,0.08],r:[[10,15]],v:0.2873,h:'0,2247',hk:2,hn:'La hoja no usa corrección por continuidad: z = (10 − 8)/2,713 = 0,74 y (15 − 8)/2,713 = 2,58 → 0,9951 − 0,7704 = 0,2247.',tb:['nor',0.55],st:[
+     ['Con p = 0,08: μ = 8 y σ = √(100 · 0,08 · 0,92) = √7,36 = 2,713. np = 8 ≥ 5, se puede aproximar.',''],
+     ['Con corrección: P(9,5 < Y < 15,5).','z₁ = (9,5 − 8)/2,713 = 0,55    z₂ = (15,5 − 8)/2,713 = 2,76'],
+     ['','Φ(2,76) − Φ(0,55) = 0,9971 − 0,7088']],res:'≈ 0,288  (binomial exacta 0,272)'},
+    {l:'b·8%',q:'Más de ocho (si fuera 8 %)',d:['bn',100,0.08],r:[[9,100]],v:0.4269,h:'50 %',hk:2,hn:'Sin corrección: z = (8 − 8)/2,713 = 0 → 0,5.',tb:['nor',0.18],st:[
+     ['P(X ≥ 9) ≈ P(Y > 8,5).','z = (8,5 − 8)/2,713 = 0,18    1 − Φ(0,18) = 1 − 0,5714']],res:'≈ 0,4286  (binomial exacta 0,4074)'},
+    {l:'c·8%',q:'Menos de cinco (si fuera 8 %)',d:['bn',100,0.08],r:[[0,4]],v:0.0985,h:'0,1357',hk:2,hn:'Sin corrección: z = (5 − 8)/2,713 = −1,11 ≈ −1,10 → 0,1357.',tb:['nor',-1.29],st:[
+     ['P(X ≤ 4) ≈ P(Y < 4,5).','z = (4,5 − 8)/2,713 = −1,29    Φ(−1,29) = 0,0985']],res:'≈ 0,0985  (binomial exacta 0,0903)'}]},
+
+  {t:'Analgésico que alivia al 2 %',m:['bin','apx'],d:['bin',100,0.02],
+   q:'Solo el 2 % de quienes toman un analgésico consigue alivio. Se les da a 100 personas con dolor de cabeza. Hallar la probabilidad de que no consigan alivio: a) menos de cinco; b) más de 10.',
+   plan:[['El enunciado se puede leer de dos formas. Al pie de la letra cuenta a los que NO consiguen alivio: Y ~ B(100; 0,98). Es más probable que quiera contar a los que SÍ lo consiguen: X ~ B(100; 0,02). Se resuelven las dos.','X = consiguen alivio    Y = 100 − X = no lo consiguen'],
+    ['Para X, np = 2 es menor que 5: la normal no aproxima bien. Con n grande y p chica corresponde Poisson.','λ = n · p = 100 · 0,02 = 2']],
+   parts:[
+    {l:'a',q:'Menos de cinco consiguen alivio',r:[[0,4]],v:0.9492,tb:['poi',2,4],st:[
+     ['X ≤ 4 con Poisson (λ = 2).','P(X ≤ 4) ≈ e^(−2) · (1 + 2 + 2 + 4/3 + 2/3) = 0,1353 · 7 = 0,9473'],
+     ['Con la tabla A.2.','F(4; 2) = 0,947'],
+     ['La binomial exacta da casi lo mismo.','P(X ≤ 4) = 0,9492']],res:'≈ 0,947 (Poisson) · 0,9492 (binomial)'},
+    {l:'b',q:'Más de 10 consiguen alivio',r:[[11,100]],v:0,tb:['poi',2,10],st:[
+     ['X ≥ 11 con λ = 2: complemento.','1 − F(10; 2) = 1 − 1,000'],
+     ['Con la binomial exacta.','P(X ≥ 11) = 0,0000056']],res:'≈ 0'},
+    {l:'a·lit',q:'Menos de cinco NO consiguen alivio',d:['bin',100,0.98],vx:'Y',r:[[0,4]],v:0,st:[
+     ['Y ~ B(100; 0,98): se esperan 98 sin alivio. Que sean menos de 5 exige que al menos 96 se alivien.','P(Y < 5) = P(X ≥ 96)']],res:'≈ 0 (del orden de 10⁻¹⁵⁷)'},
+    {l:'b·lit',q:'Más de 10 NO consiguen alivio',d:['bin',100,0.98],vx:'Y',r:[[11,100]],v:1,st:[
+     ['Y > 10 es lo mismo que X < 90: casi seguro.','P(Y > 10) = 1 − P(Y ≤ 10)']],res:'≈ 1'}]},
+
+  {t:'Cincos en 36 tiradas de un dado',m:['bin','apx'],d:['bn',36,1/6],
+   q:'Un dado se lanza 36 veces. Hallar la probabilidad de que la cantidad de veces que sale el cinco sea: a) entre 8 y 12; b) menor de 10; c) mayor de 15.',
+   plan:[['X = cantidad de cincos ~ B(36; 1/6). np = 6 y n(1 − p) = 30 son ≥ 5: se aproxima con la normal.','μ = 36 · 1/6 = 6    σ = √(36 · 1/6 · 5/6) = √5 = 2,236'],
+    ['Corrección por continuidad en cada extremo.','']],
+   parts:[
+    {l:'a',q:'Entre 8 y 12',r:[[8,12]],v:0.2493,h:'0,2496',hk:1,tb:['nor',0.67],st:[
+     ['P(8 ≤ X ≤ 12) ≈ P(7,5 < Y < 12,5).','z₁ = (7,5 − 6)/2,236 = 0,67    z₂ = (12,5 − 6)/2,236 = 2,91'],
+     ['','Φ(2,91) − Φ(0,67) = 0,9982 − 0,7486']],res:'≈ 0,2496  (binomial exacta 0,2386)'},
+    {l:'b',q:'Menor de 10',r:[[0,9]],v:0.9412,h:'0,9778',hk:0,hn:'La hoja calcula P(X ≤ 10) con 10,5 (z = 2,01). "Menor de 10" no incluye al 10, así que se corta en 9,5.',tb:['nor',1.57],st:[
+     ['"Menor de 10" es X ≤ 9 ≈ P(Y < 9,5).','z = (9,5 − 6)/2,236 = 1,57'],
+     ['','Φ(1,57) = 0,9418']],res:'≈ 0,9418  (binomial exacta 0,9348)'},
+    {l:'c',q:'Mayor de 15',r:[[16,36]],v:0,h:'0',hk:1,st:[
+     ['X ≥ 16 ≈ P(Y > 15,5).','z = (15,5 − 6)/2,236 = 4,25'],
+     ['z = 4,25 está fuera de la tabla: el área a la derecha es prácticamente 0.','']],res:'≈ 0'}]},
+
+  {t:'Unidades defectuosas (aproximación normal)',m:['bin','apx'],d:['bn',100,0.1],
+   q:'El 10 % de las unidades producidas son defectuosas. X = defectuosas en una muestra de 100. Hallar aproximadamente: a) P(X ≤ 13); b) P(X ≥ 8); c) P(7 ≤ X ≤ 16); d) P(5 ≤ X ≤ 10).',
+   plan:[['X ~ B(100; 0,1). np = 10 y n(1 − p) = 90 son ≥ 5: normal con corrección por continuidad.','μ = 10    σ = √(100 · 0,1 · 0,9) = 3']],
+   parts:[
+    {l:'a',q:'P(X ≤ 13)',r:[[0,13]],v:0.8783,tb:['nor',1.17],st:[
+     ['≈ P(Y < 13,5).','z = (13,5 − 10)/3 = 1,17    Φ(1,17) = 0,8790']],res:'≈ 0,8790  (binomial exacta 0,8761)'},
+    {l:'b',q:'P(X ≥ 8)',r:[[8,100]],v:0.7977,tb:['nor',-0.83],st:[
+     ['≈ P(Y > 7,5).','z = (7,5 − 10)/3 = −0,83    1 − Φ(−0,83) = 1 − 0,2033']],res:'≈ 0,7967  (binomial exacta 0,7939)'},
+    {l:'c',q:'P(7 ≤ X ≤ 16)',r:[[7,16]],v:0.8632,tb:['nor',2.17],st:[
+     ['≈ P(6,5 < Y < 16,5).','z₁ = (6,5 − 10)/3 = −1,17    z₂ = (16,5 − 10)/3 = 2,17'],
+     ['','Φ(2,17) − Φ(−1,17) = 0,9850 − 0,1210']],res:'≈ 0,8640  (binomial exacta 0,8622)'},
+    {l:'d',q:'P(5 ≤ X ≤ 10)',r:[[5,10]],v:0.5328,tb:['nor',0.17],st:[
+     ['≈ P(4,5 < Y < 10,5).','z₁ = (4,5 − 10)/3 = −1,83    z₂ = (10,5 − 10)/3 = 0,17'],
+     ['','Φ(0,17) − Φ(−1,83) = 0,5675 − 0,0336']],res:'≈ 0,5339  (binomial exacta 0,5594)'}]},
+
+  {t:'Llamadas con cargo diferido',m:['bin','apx'],d:['bn',400,0.2],
+   q:'El 20 % de las llamadas que llegan a una central son con cargo diferido. Si llegan 400 llamadas, ¿cuál es la probabilidad de que: a) a lo más 100 sean de cargo diferido; b) por lo menos 70 lo sean?',
+   plan:[['X ~ B(400; 0,2). np = 80 y n(1 − p) = 320: normal.','μ = 80    σ = √(400 · 0,2 · 0,8) = √64 = 8']],
+   parts:[
+    {l:'a',q:'A lo más 100',r:[[0,100]],v:0.9948,h:'0,9938',hk:2,hn:'La hoja no usa corrección: z = (100 − 80)/8 = 2,5 → 0,9938.',tb:['nor',2.56],st:[
+     ['P(X ≤ 100) ≈ P(Y < 100,5).','z = (100,5 − 80)/8 = 2,56    Φ(2,56) = 0,9948']],res:'≈ 0,9948  (binomial exacta 0,9938)'},
+    {l:'b',q:'Por lo menos 70',r:[[70,400]],v:0.9053,h:'0,1056',hk:0,hn:'0,1056 es Φ(−1,25) = P(X ≤ 70) sin corrección, el área del otro lado. "Por lo menos 70" es X ≥ 70.',tb:['nor',-1.31],st:[
+     ['P(X ≥ 70) ≈ P(Y > 69,5).','z = (69,5 − 80)/8 = −1,31'],
+     ['Complemento.','1 − Φ(−1,31) = 1 − 0,0951']],res:'≈ 0,9049  (binomial exacta 0,9070)'}]},
+
+  {t:'Placas numeradas del 1 al 10',m:['uni'],d:['uni',1,10],
+   q:'Se elige a un empleado de un grupo de 10 sacando al azar una placa de una caja con placas numeradas del 1 al 10. Encontrar la distribución de X = número de la placa. ¿Cuál es la probabilidad de que salga un número menor a 4?',
+   plan:[['Todas las placas tienen la misma chance de salir: uniforme discreta con k = 10 valores.','']],
+   parts:[
+    {l:'a',q:'Distribución de X',mean:1,st:[
+     ['Cada valor tiene probabilidad 1/k.','P(X = x) = 1/10,  x = 1, 2, …, 10'],
+     ['De paso, la media.','E(X) = (1 + 2 + … + 10)/10 = 5,5']],res:'f(x) = 1/10 para x = 1, …, 10'},
+    {l:'b',q:'Menor a 4',r:[[1,3]],v:0.3,st:[
+     ['X < 4 son las placas 1, 2 y 3.','P(X < 4) = 3 · 1/10']],res:'0,3'}]},
+
+  {t:'Ruleta de 25 sectores',m:['uni'],d:['uni',1,25],
+   q:'Una ruleta se divide en 25 sectores de igual área numerados del 1 al 25. Encontrar una fórmula para la distribución de X = número que sale al girarla.',
+   plan:[['Sectores de igual área: todos los números son igual de probables.','']],
+   parts:[
+    {l:'a',q:'Distribución de X',mean:1,st:[
+     ['Uniforme discreta con k = 25.','P(X = x) = 1/25,  x = 1, 2, …, 25'],
+     ['Media y varianza (con la fórmula de la uniforme en 1, …, k).','E(X) = (1 + 25)/2 = 13    Var(X) = (25² − 1)/12 = 52']],res:'f(x) = 1/25 para x = 1, …, 25'}]},
+
+  {t:'Robos por estupefacientes',m:['bin'],d:['bin',5,0.75],
+   q:'El 75 % de los robos de una zona se deben a la necesidad de dinero para comprar estupefacientes. De los próximos 5 asaltos, hallar la probabilidad de que: a) exactamente 2 se deban a eso; b) cuando mucho 3.',
+   plan:[['Cada asalto es un ensayo con p = 0,75.','X ~ B(5; 0,75)']],
+   parts:[
+    {l:'a',q:'Exactamente 2',r:[[2,2]],v:0.0879,st:[
+     ['','P(X = 2) = C(5, 2) · 0,75² · 0,25³ = 10 · 0,5625 · 0,015625']],res:'≈ 0,0879'},
+    {l:'b',q:'Cuando mucho 3',r:[[0,3]],v:0.3672,tb:['bin',5,0.75,3],st:[
+     ['X ≤ 3: más corto por complemento.','P(X ≤ 3) = 1 − P(4) − P(5) = 1 − 0,3955 − 0,2373'],
+     ['Con la tabla A.1 (n = 5, p = 0,75).','B(3; 5; 0,75) = 0,367']],res:'≈ 0,3672'}]},
+
+  {t:'Duraznos con mosca del Mediterráneo',m:['bin'],d:['bin',4,2/3],
+   q:'2/3 de la cosecha de duraznos está contaminada. Al inspeccionar 4 duraznos, hallar la probabilidad de que: a) los 4 estén contaminados; b) entre 1 y 3 estén contaminados.',
+   plan:[['Cada durazno está contaminado con p = 2/3.','X ~ B(4; 2/3)']],
+   parts:[
+    {l:'a',q:'Los 4 contaminados',r:[[4,4]],v:0.1975,st:[
+     ['','P(X = 4) = (2/3)⁴ = 16/81']],res:'≈ 0,1975'},
+    {l:'b',q:'Entre 1 y 3',r:[[1,3]],v:0.7901,st:[
+     ['Todo menos los extremos 0 y 4.','P(1 ≤ X ≤ 3) = 1 − P(0) − P(4) = 1 − 1/81 − 16/81']],res:'64/81 ≈ 0,7901'}]},
+
+  {t:'Vacaciones después de 15 años',m:['bin'],d:['bin',15,1/3],
+   q:'1/3 de las compañías da 3 semanas de vacaciones después de 15 años de servicio. Entre 15 compañías elegidas al azar, hallar la probabilidad de que las que dan 3 semanas sean: a) entre 2 y 5; b) menos de 3.',
+   plan:[['El enunciado tiene una palabra perdida ("le dan a sus empleados 3 semanas de vacaciones"). Cada compañía cumple con p = 1/3.','X ~ B(15; 1/3)'],
+    ['p = 1/3 no está en la tabla (tiene 0,30): se usa la fórmula.','']],
+   parts:[
+    {l:'a',q:'Entre 2 y 5',r:[[2,5]],v:0.5990,st:[
+     ['','P(2) = 0,0599    P(3) = 0,1299    P(4) = 0,1948    P(5) = 0,2143']],res:'≈ 0,5990'},
+    {l:'b',q:'Menos de 3',r:[[0,2]],v:0.0794,st:[
+     ['X ≤ 2.','P(0) = (2/3)¹⁵ = 0,0023    P(1) = 0,0171    P(2) = 0,0599']],res:'≈ 0,0794'}]},
+
+  {t:'Adictos al Valium',m:['bin'],d:['bin',8,0.6],
+   q:'El 60 % de los adictos al Valium empezó a tomarlo por problemas psicológicos. De los próximos 8 entrevistados, hallar la probabilidad de que: a) exactamente 3 hayan empezado por problemas psicológicos; b) al menos 5 hayan empezado por motivos que no fueron psicológicos.',
+   plan:[['X = empezaron por problemas psicológicos ~ B(8; 0,6).','']],
+   parts:[
+    {l:'a',q:'Exactamente 3 psicológicos',r:[[3,3]],v:0.1239,st:[
+     ['','P(X = 3) = C(8, 3) · 0,6³ · 0,4⁵ = 56 · 0,216 · 0,01024']],res:'≈ 0,1239'},
+    {l:'b',q:'Al menos 5 no psicológicos',d:['bin',8,0.4],vx:'Y',r:[[5,8]],v:0.1737,st:[
+     ['Conviene cambiar de variable: Y = motivos no psicológicos ~ B(8; 0,4).','P(Y ≥ 5) = P(5) + P(6) + P(7) + P(8)'],
+     ['','= 0,1239 + 0,0413 + 0,0079 + 0,0007']],res:'≈ 0,1737'}]},
+
+  {t:'Neumáticos dañados',m:['bin'],d:['bin',15,0.25],
+   q:'El 25 % de los camiones termina la prueba con los neumáticos dañados. De los próximos 15 camiones, hallar la probabilidad de que: a) de 3 a 6 tengan ponchaduras; b) menos de 4; c) más de 5.',
+   plan:[['X ~ B(15; 0,25). n = 15 y p = 0,25 están en la tabla A.1: se resuelve con acumuladas.','']],
+   parts:[
+    {l:'a',q:'De 3 a 6',r:[[3,6]],v:0.7073,tb:['bin',15,0.25,6],st:[
+     ['Acumulada hasta 6 menos acumulada hasta 2.','B(6) − B(2) = 0,943 − 0,236']],res:'≈ 0,707'},
+    {l:'b',q:'Menos de 4',r:[[0,3]],v:0.4613,tb:['bin',15,0.25,3],st:[
+     ['X ≤ 3.','B(3; 15; 0,25) = 0,461']],res:'≈ 0,461'},
+    {l:'c',q:'Más de 5',r:[[6,15]],v:0.1484,tb:['bin',15,0.25,5],st:[
+     ['X ≥ 6: complemento.','1 − B(5) = 1 − 0,852']],res:'≈ 0,148'}]},
+
+  {t:'Encuesta a estudiantes',m:['bin'],d:['bin',12,0.7],
+   q:'El 70 % de los estudiantes del último año desaprueba cierta medida. Si se eligen 12 al azar, hallar la probabilidad de que el número que la desaprueba sea: a) entre 7 y 9; b) cuando mucho 5; c) no menos de 8.',
+   plan:[['X ~ B(12; 0,7). n = 12 no está en la tabla: se usa la fórmula.','P(X = x) = C(12, x) · 0,7ˣ · 0,3¹²⁻ˣ']],
+   parts:[
+    {l:'a',q:'Entre 7 y 9',r:[[7,9]],v:0.6293,st:[
+     ['','P(7) = 0,1585    P(8) = 0,2311    P(9) = 0,2397']],res:'≈ 0,6293'},
+    {l:'b',q:'Cuando mucho 5',r:[[0,5]],v:0.0386,st:[
+     ['X ≤ 5. Los términos de 0 a 4 son muy chicos; el mayor es P(5).','P(5) = 0,0291    P(4) = 0,0078    P(0) + … + P(3) = 0,0017']],res:'≈ 0,0386'},
+    {l:'c',q:'No menos de 8',r:[[8,12]],v:0.7237,st:[
+     ['X ≥ 8.','0,2311 + 0,2397 + 0,1678 + 0,0712 + 0,0138']],res:'≈ 0,7237'}]},
+
+  {t:'Operación de corazón',m:['bin'],d:['bin',7,0.9],
+   q:'La probabilidad de que un paciente se recupere de una operación de corazón es 0,9. ¿Probabilidad de que exactamente 5 de los próximos 7 sobrevivan?',
+   plan:[['X = pacientes que se recuperan ~ B(7; 0,9).','']],
+   parts:[
+    {l:'a',q:'Exactamente 5',r:[[5,5]],v:0.1240,st:[
+     ['','P(X = 5) = C(7, 5) · 0,9⁵ · 0,1² = 21 · 0,59049 · 0,01']],res:'≈ 0,1240'}]},
+
+  {t:'Matrículas de otro estado',m:['bin'],d:['bin',9,0.25],vx:'Y',
+   q:'El 75 % de los vehículos que pasan por un punto de control tienen matrícula del estado. ¿Probabilidad de que más de 4 de los siguientes 9 no sean del estado?',
+   plan:[['Se cuentan los que NO son del estado, así que el éxito es "de otro estado" con p = 0,25.','Y ~ B(9; 0,25)']],
+   parts:[
+    {l:'a',q:'Más de 4 de otro estado',r:[[5,9]],v:0.0489,st:[
+     ['Y ≥ 5.','P(5) = 0,0389    P(6) = 0,0087    P(7) = 0,0012    P(8) + P(9) ≈ 0,0001']],res:'≈ 0,0489'}]},
+
+  {t:'Opinión sobre tranquilizantes',m:['bin'],d:['bin',5,0.7],
+   q:'El 70 % piensa que los tranquilizantes solo encubren el problema. ¿Probabilidad de que al menos 3 de los siguientes 5 sujetos opinen lo mismo?',
+   plan:[['X ~ B(5; 0,7).','']],
+   parts:[
+    {l:'a',q:'Al menos 3',r:[[3,5]],v:0.8369,tb:['bin',5,0.7,2],st:[
+     ['','P(3) = 0,3087    P(4) = 0,3601    P(5) = 0,1681'],
+     ['Con la tabla A.1: complemento.','1 − B(2; 5; 0,70) = 1 − 0,163 = 0,837']],res:'≈ 0,8369'}]},
+
+  {t:'Teléfonos blancos',m:['bin'],d:['bin',20,0.2],
+   q:'El 20 % prefiere un teléfono blanco. ¿Probabilidad de que más de la mitad de los siguientes 20 teléfonos instalados sean blancos?',
+   plan:[['X ~ B(20; 0,2). Más de la mitad de 20 es X ≥ 11.','']],
+   parts:[
+    {l:'a',q:'Más de la mitad',r:[[11,20]],v:0.0006,tb:['bin',20,0.2,10],st:[
+     ['Complemento con la tabla A.1.','1 − B(10; 20; 0,20) = 1 − 0,999 = 0,001'],
+     ['Con la fórmula, más preciso.','P(X ≥ 11) = 0,00056']],res:'≈ 0,0006 (casi imposible)'}]},
+
+  {t:'Ratones y suero',m:['bin'],d:['bin',5,0.6],vx:'Y',
+   q:'El 40 % de los ratones inyectados con un suero quedan protegidos. Si se inyectan 5, hallar la probabilidad de que: a) ninguno contraiga la enfermedad; b) menos de 2 la contraigan; c) más de 3 la contraigan.',
+   plan:[['Las preguntas cuentan a los que se enferman: no protegidos, con p = 1 − 0,4 = 0,6.','Y = ratones que contraen la enfermedad ~ B(5; 0,6)']],
+   parts:[
+    {l:'a',q:'Ninguno',r:[[0,0]],v:0.0102,tb:['bin',5,0.6,0],st:[
+     ['','P(Y = 0) = 0,4⁵ = 0,01024']],res:'≈ 0,0102'},
+    {l:'b',q:'Menos de 2',r:[[0,1]],v:0.0870,tb:['bin',5,0.6,1],st:[
+     ['Y ≤ 1.','0,01024 + 5 · 0,6 · 0,4⁴ = 0,01024 + 0,0768'],
+     ['Con la tabla.','B(1; 5; 0,60) = 0,087']],res:'≈ 0,0870'},
+    {l:'c',q:'Más de 3',r:[[4,5]],v:0.3370,tb:['bin',5,0.6,3],st:[
+     ['Y ≥ 4.','P(4) = 5 · 0,6⁴ · 0,4 = 0,2592    P(5) = 0,6⁵ = 0,0778'],
+     ['Con la tabla.','1 − B(3) = 1 − 0,663 = 0,337']],res:'≈ 0,3370'}]},
+
+  {t:'¿Avión de 4 motores o de 2?',m:['bin'],d:['bin',4,0.6],
+   q:'Los motores de un avión fallan de forma independiente con probabilidad 0,4. El vuelo es seguro si funciona al menos la mitad de los motores. ¿Qué avión tiene más probabilidad de terminar el vuelo: uno de 4 motores o uno de 2?',
+   plan:[['Cada motor funciona con p = 1 − 0,4 = 0,6. Se cuenta cuántos funcionan.','X = motores que funcionan ~ B(n; 0,6)']],
+   parts:[
+    {l:'4 mot.',q:'Avión de 4 motores',r:[[2,4]],v:0.8208,st:[
+     ['Necesita al menos 2 de 4.','P(X ≥ 2) = 1 − P(0) − P(1) = 1 − 0,4⁴ − 4 · 0,6 · 0,4³ = 1 − 0,0256 − 0,1536']],res:'0,8208'},
+    {l:'2 mot.',q:'Avión de 2 motores',d:['bin',2,0.6],r:[[1,2]],v:0.84,st:[
+     ['Necesita al menos 1 de 2.','P(X ≥ 1) = 1 − 0,4² = 1 − 0,16'],
+     ['Comparación.','0,84 > 0,8208']],res:'0,84: el de 2 motores es (un poco) más seguro'}]}
+ ]
+};
+
+// ================================================================ repartidos: motor
+const MODEL={bin:'Binomial',poi:'Poisson',hyp:'Hipergeométrica',geo:'Geométrica',uni:'Uniforme',nor:'Normal',apx:'Aproximaciones'};
+const numS=v=>{ for(const q of [3,6]){ const a=v*q; if(Math.abs(a-Math.round(a))<1e-9&&Math.abs(v-Math.round(v))>1e-9&&Math.abs(v*10-Math.round(v*10))>1e-9) return `${Math.round(a)}/${q}`; } return xl(v); };
+const fmtN=v=>xl(+(+v).toFixed(4)).replace('-','−');
+function dInfo(d){ const [k,a,b,c]=d;
+  if(k==='bin'||k==='bn') return {k,disc:true,pmf:x=>binom(a,b,x),min:0,max:a,mu:a*b,sd:Math.sqrt(a*b*(1-b)),name:`B(${a}; ${numS(b)})`,samp:()=>rBinom(a,b)};
+  if(k==='poi') return {k,disc:true,pmf:x=>pois(a,x),min:0,max:Infinity,mu:a,sd:Math.sqrt(a),name:`P(${numS(a)})`,samp:()=>rPois(a)};
+  if(k==='hyp'){ const p=b/a; return {k,disc:true,pmf:x=>hyper(a,b,c,x),min:Math.max(0,c-(a-b)),max:Math.min(c,b),mu:c*p,sd:Math.sqrt((a-c)/(a-1)*c*p*(1-p)),name:`H(${a}; ${b}; ${c})`,samp:()=>rHyper(a,b,c)}; }
+  if(k==='geo') return {k,disc:true,pmf:x=>geom(a,x),min:1,max:Infinity,mu:1/a,sd:Math.sqrt(1-a)/a,name:`G(${numS(a)})`,samp:()=>rGeom(a)};
+  if(k==='uni'){ const m=b-a+1; return {k,disc:true,pmf:x=>x>=a&&x<=b?1/m:0,min:a,max:b,mu:(a+b)/2,sd:Math.sqrt((m*m-1)/12),name:`U{${a}, …, ${b}}`,samp:()=>a+Math.floor(Math.random()*m)}; }
+  return {k:'nor',disc:false,mu:a,sd:b,name:a===0&&b===1?'N(0, 1)':`N(${fmtN(a)}; ${fmtN(b)}²)`};
+}
+function cdfD(I,x){ if(x<I.min) return 0; if(x>=I.max) return 1; let s=0; for(let k=I.min;k<=x;k++) s+=I.pmf(k); return Math.min(1,s); }
+// probabilidad exacta de la región (para 'bn' es la binomial exacta)
+function regP(I,r){ let s=0; for(const [a,b] of r){ if(I.disc){ const lo=Math.max(a,I.min); s+=cdfD(I,Math.min(b,I.max))-cdfD(I,lo-1); } else s+=Phi((b-I.mu)/I.sd)-Phi((a-I.mu)/I.sd); } return s; }
+// aproximación normal con corrección por continuidad
+const ccB=(I,a,b)=>[a<=I.min?-Infinity:a-0.5, b>=I.max?Infinity:b+0.5];
+function regN(I,r){ let s=0; for(const [a,b] of r){ const [A,B]=ccB(I,a,b); s+=Phi((B-I.mu)/I.sd)-Phi((A-I.mu)/I.sd); } return s; }
+function dwin(I,r){ const fm=isFinite(I.max)?I.max:null; let lo,hi;
+  if(fm!==null&&fm-I.min<=40){ lo=I.min; hi=fm; }
+  else { lo=Math.max(I.min,Math.floor(I.mu-4.5*I.sd)); hi=Math.ceil(I.mu+4.5*I.sd)+1; if(fm!==null) hi=Math.min(hi,fm); if(hi-lo<6){ hi=lo+6; if(fm!==null) hi=Math.min(hi,fm); } }
+  for(const [a,b] of r||[]) for(const v of [a,b]){ if(!isFinite(v)) continue; const nlo=Math.min(lo,Math.max(I.min,v)), nhi=Math.max(hi,fm!==null?Math.min(fm,v+1):v+1); if(nhi-nlo<=100){ lo=nlo; hi=nhi; } }
+  return [lo,hi]; }
+function evTxt(I,r,vx){ if(!r||!r.length) return ''; const disc=I.disc;
+  if(r.length>1) return `P(${vx} ≤ ${fmtN(r[0][1])} o ${vx} ≥ ${fmtN(r[1][0])})`;
+  const [a,b]=r[0]; const A=isFinite(a)&&!(disc&&a<=I.min), B=isFinite(b)&&!(disc&&b>=I.max);
+  if(disc&&a===b) return `P(${vx} = ${a})`;
+  if(!A&&B) return `P(${vx} ≤ ${fmtN(b)})`; if(A&&!B) return `P(${vx} ≥ ${fmtN(a)})`; if(A&&B) return `P(${fmtN(a)} ≤ ${vx} ≤ ${fmtN(b)})`; return `P(cualquier valor)`; }
+const fmtPr=p=> p>0&&p<0.00005?`${p.toExponential(1).replace('.',',').replace('e-',' × 10^−')}`: p<1&&p>0.99995?'≈ 1,0000':fmt(p);
+
+function drawRx(s){ const P=prep(s.cv); if(!P) return; const {c,w,h}=P;
+  const ex=s.ex, part=ex.parts[s.pi], d=part.d||ex.d, I=dInfo(d), r=part.r||[], vx=part.vx||ex.vx||'X', e=ease(Math.min(1,s.f));
+  c.font='11.5px '+FM; c.fillStyle=T.muted; c.textAlign='left'; c.textBaseline='top';
+  c.fillText(`${vx} ~ ${I.name}`,0,0);
+  let shown=0, read='';
+  if(I.disc&&I.k!=='bn'){
+    const [lo,hi]=dwin(I,r), ks=[]; for(let k=lo;k<=hi;k++) ks.push(k);
+    const inR=k=>r.some(([a,b])=>k>=a&&k<=b), hks=ks.filter(inR), nRev=Math.round(hks.length*e), rev=new Set(hks.slice(0,nRev));
+    const box={x:0,y:22,w,h:h-22};
+    bars(c,box,{min:lo,max:hi,theo:ks.map(k=>I.pmf(k)),fillTheo:true,hi:k=>rev.has(k),cmp:s.simN?ks.map(k=>(s.sim[k]||0)/s.simN):null,xTitle:vx,labW:hi-lo>40?30:24});
+    for(const k of rev) shown+=I.pmf(k);
+    if(part.mean){ const L=box.x+40, R=box.x+box.w-6, bw=(R-L)/(hi-lo+1), X=L+(I.mu-lo+0.5)*bw; c.save(); c.strokeStyle=T.hit; c.lineWidth=1.5; c.setLineDash([4,4]); c.beginPath(); c.moveTo(X+.5,box.y+10); c.lineTo(X+.5,box.y+box.h-22); c.stroke(); c.restore();
+      c.fillStyle=T.hit; c.font='11px '+FM; c.textAlign=X>w-80?'right':'left'; c.fillText(`μ = ${fmtSmart(I.mu)}`,X+(X>w-80?-5:5),box.y+12); }
+    if(r.length){ const tot=regP(I,r); if(e>=1) shown=tot; read=`${evTxt(I,r,vx)} = ${fmtPr(tot)}`;
+      if(!hks.length) read+=' · la región queda fuera del gráfico';
+      if(s.simN){ let n=0; for(const k in s.sim) if(inR(+k)) n+=s.sim[k]; read+=` · simulado con ${fmtInt(s.simN)} muestras: ${fmt(n/s.simN)}`; } }
+    else read=`E(${vx}) = ${fmtSmart(I.mu)}    Var(${vx}) = ${fmtSmart(I.sd*I.sd)}`;
+  } else if(I.k==='bn'){
+    const [lo,hi]=dwin(I,r); let ym=npdf(0,0,I.sd); for(let k=lo;k<=hi;k++) ym=Math.max(ym,I.pmf(k));
+    const ax=axes(c,{x:0,y:16,w,h:h-16},lo-0.5,hi+0.5,ym*1.2,{top:30,noY:true});
+    const cut=ax.xmin+(ax.xmax-ax.xmin)*e;
+    for(let k=lo;k<=hi;k++){ const x0=ax.X(k-0.5), x1=ax.X(k+0.5), y=ax.Y(I.pmf(k)), on=r.some(([a,b])=>k>=a&&k<=b)&&k+0.5<=cut+1e-9;
+      c.fillStyle=on?T.hit:T.accent; c.globalAlpha=on?0.6:0.28; c.fillRect(x0+0.5,y,Math.max(1,x1-x0-1),ax.B-y); c.globalAlpha=1; }
+    const fN=x=>npdf(x,I.mu,I.sd);
+    for(const [a,b] of r){ const [A,B]=ccB(I,a,b); shade(c,ax,fN,A,Math.min(B,cut),T.ink,0.13); }
+    plot(c,ax,fN,T.ink,2);
+    let i=0; for(const [a,b] of r){ for(const v of ccB(I,a,b)) if(isFinite(v)&&v>ax.xmin&&v<ax.xmax){ lineLab(c,ax,v,T.ink,fmtN(v),i++); } }
+    for(const [a,b] of r){ const [A,B]=ccB(I,a,b); const B2=Math.min(B,cut); if(B2>A) shown+=Phi((B2-I.mu)/I.sd)-Phi((A-I.mu)/I.sd); }
+    const pn=regN(I,r), pb=regP(I,r); if(e>=1) shown=pn;
+    read=`Normal con corrección: ${fmtPr(pn)} · binomial exacta: ${fmtPr(pb)}`;
+  } else {
+    const std=I.mu===0&&I.sd===1, lo=I.mu-(std?3.6:4)*I.sd, hi=I.mu+(std?3.6:4)*I.sd;
+    const ax=axes(c,{x:0,y:16,w,h:h-16},lo,hi,npdf(0,0,I.sd)*1.25,{top:30,noY:true}); const f=x=>npdf(x,I.mu,I.sd);
+    const cut=lo+(hi-lo)*e, half=4.2*I.sd*e;
+    const seg=(a,b)=> part.sym?[Math.max(a,I.mu-half),Math.min(b,I.mu+half)]:[a,Math.min(b,cut)];
+    for(const [a,b] of r){ const [A,B]=seg(a,b); shade(c,ax,f,A,B,T.hit,0.45); if(B>A) shown+=Phi((B-I.mu)/I.sd)-Phi((A-I.mu)/I.sd); }
+    plot(c,ax,f,T.ink,2.2);
+    let i=0; const seen=new Set();
+    for(const [a,b] of r) for(const v of [a,b]){ if(!isFinite(v)||seen.has(v)) continue; seen.add(v); const z=(v-I.mu)/I.sd;
+      lineLab(c,ax,v,T.ink,std?`z = ${fmt(v,2)}`:`${fmtN(v)}  (z = ${fmt(z,2)})`,i++); }
+    if(part.mean) lineLab(c,ax,I.mu,T.hit,`μ = ${fmtN(I.mu)}`,i++);
+    const tot=regP(I,r); if(e>=1) shown=tot; read=r.length?`${evTxt(I,r,std?'Z':vx)} = ${fmtPr(tot)}`:'';
+  }
+  const hid=s.art.closest('.practice')&&!$$('.pbody',s.art)[s.pi].classList.contains('shown');
+  if(r.length&&!hid){ c.font='600 13px '+FM; c.fillStyle=T.hit; c.textAlign='right'; c.textBaseline='top'; c.fillText(`${I.k==='nor'?'área':'P'} = ${fmtPr(Math.max(0,shown))}`,w,0); }
+  s.read.textContent=hid?'Modo práctica: el valor aparece al mostrar la resolución.':read;
+}
+function lineLab(c,ax,x,color,label,i){ if(x<ax.xmin||x>ax.xmax) return; const X=ax.X(x);
+  c.save(); c.strokeStyle=color; c.lineWidth=1.3; c.setLineDash([4,4]); c.beginPath(); c.moveTo(X+.5,ax.Tp-4); c.lineTo(X+.5,ax.B); c.stroke(); c.restore();
+  c.font='11px '+FM; c.fillStyle=color; c.textBaseline='top'; const tw=c.measureText(label).width;
+  let tx=X-tw/2; tx=Math.max(ax.L,Math.min(ax.R-tw,tx)); const y=ax.Tp-14+(i%2)*13;
+  c.fillStyle=T.surface; c.globalAlpha=0.85; c.fillRect(tx-2,y-1,tw+4,13); c.globalAlpha=1; c.fillStyle=color; c.textAlign='left'; c.fillText(label,tx,y); }
+
+const hojaH=p=>{ if(!p.h) return ''; const k=p.hk; const ic=k===1?'✓ coincide':k===2?'≈ difiere poco (ver la nota)':'⚠ no coincide';
+  return `<p class="hoja${k===0?' bad':''}"><b>Hoja de resultados:</b> ${esc(p.h)} · ${ic}${p.hn?`<br><span>${esc(p.hn)}</span>`:''}</p>`; };
+const tbName={bin:'A.1',poi:'A.2',nor:'A.3'};
+const RX=[];
+function renderRep(){
+  for(const root of $$('[data-rep]')){ const key=root.dataset.rep, list=REP[key], panel=root.closest('.panel').dataset.panel;
+    const used=[...new Set(list.flatMap(e=>e.m))];
+    root.innerHTML=`<div class="rep-bar">
+      <div class="row" style="align-items:center"><span class="sub" style="margin-right:4px">Filtrar:</span><div class="row flt"><button class="chip" data-f="" aria-pressed="true">Todos (${list.length})</button>${Object.keys(MODEL).filter(k=>used.includes(k)).map(k=>`<button class="chip" data-f="${k}" aria-pressed="false">${MODEL[k]} (${list.filter(e=>e.m.includes(k)).length})</button>`).join('')}</div></div>
+      <div class="idx">${list.map((e,i)=>`<button type="button" data-i="${i}" title="${esc(e.t)}">${i+1}</button>`).join('')}</div>
+      <div class="row" style="align-items:center"><button class="chip prac" aria-pressed="false">Modo práctica: ocultar las soluciones</button><span class="sub">Probá resolver cada parte antes de mirar la resolución.</span></div></div>`+
+      list.map((e,i)=>{ const multi=e.parts.length>1;
+        return `<article class="rx" id="${key}e${i+1}" data-i="${i}">
+        <div class="rx-top"><p class="ex-tag">Ejercicio ${i+1}</p>${e.m.map(m=>`<span class="mtag">${MODEL[m]}</span>`).join('')}</div>
+        <h4>${esc(e.t)}</h4><p class="ex-q">${esc(e.q)}</p>
+        <div class="plan"><p class="eyebrow">Planteo</p>${e.plan.map(([t,f])=>`<p>${esc(t)}</p>${f?`<span class="f">${esc(f).replace(/\n/g,'<br>')}</span>`:''}`).join('')}</div>
+        <div class="rx-body">
+          <div class="stage"><canvas class="cv rxc" role="img" aria-label="Gráfico de la distribución del ejercicio ${i+1}"></canvas><p class="rx-read"></p>
+            <div class="row">${(e.parts.some(p=>dInfo(p.d||e.d).disc&&(p.d||e.d)[0]!=='bn'))?'<button class="btn ghost" data-a="sim">Simular 1000 muestras</button>':''}<button class="btn ghost" data-a="anim">Repetir animación</button></div></div>
+          <div class="rx-side">
+            ${multi?`<div class="row parts">${e.parts.map((p,j)=>`<button class="chip" data-p="${j}" aria-pressed="${j===0}">${esc(p.l)})</button>`).join('')}<button class="chip" data-a="all" aria-pressed="false">Ver todas</button></div>`:''}
+            ${e.parts.map((p,j)=>`<div class="pbody" data-p="${j}" ${j?'hidden':''}>
+              <p class="pq">${multi?`<span class="pl">${esc(p.l)})</span> `:''}${esc(p.q)}</p>
+              <button class="btn ghost rv" data-a="rv">Mostrar resolución</button>
+              <div class="pin"><ol>${p.st.map(([t,f])=>`<li>${esc(t)}${f?`<span class="f">${esc(f).replace(/\n/g,'<br>')}</span>`:''}</li>`).join('')}<li class="res">Resultado<span class="f">${esc(p.res)}</span></li></ol>
+              ${hojaH(p)}${p.tb?`<button class="btn ghost" data-a="tb" data-p="${j}">Ver en la tabla ${tbName[p.tb[0]]}</button>`:''}</div></div>`).join('')}
+          </div></div>
+        ${e.w?`<p class="note">${esc(e.w)}</p>`:''}
+      </article>`; }).join('');
+    $$('article.rx',root).forEach(art=>{ const i=+art.dataset.i, ex=list[i];
+      const s=demo(panel,{ex,pi:0,f:1,cv:$('canvas',art),read:$('.rx-read',art),sim:{},simN:0,simGoal:0,simKey:'',art,all:false,seen:false});
+      s.update=dt=>{ if(s.f<1) s.f=Math.min(1,s.f+dt/(RM?0.05:1.1));
+        if(s.simN<s.simGoal){ const I=dInfo(ex.parts[s.pi].d||ex.d); const m=Math.min(RM?1000:40,s.simGoal-s.simN); for(let j=0;j<m;j++){ const x=I.samp(); s.sim[x]=(s.sim[x]||0)+1; } s.simN+=m; }
+        if(s.f>=1&&s.simN>=s.simGoal) s.running=false; };
+      s.draw=()=>drawRx(s); RX.push(s); });
+    // eventos
+    root.addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(!b) return;
+      if(b.dataset.f!==undefined&&b.closest('.flt')){ $$('.flt .chip',root).forEach(x=>x.setAttribute('aria-pressed',String(x===b))); const f=b.dataset.f;
+        $$('article.rx',root).forEach(a=>{ const ok=!f||list[+a.dataset.i].m.includes(f); a.hidden=!ok; $(`.idx button[data-i="${a.dataset.i}"]`,root).hidden=!ok; }); RX.forEach(s=>s.dirty=true); return; }
+      if(b.closest('.idx')){ const a=$(`#${key}e${+b.dataset.i+1}`); if(a) a.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'}); return; }
+      if(b.classList.contains('prac')){ const on=b.getAttribute('aria-pressed')!=='true'; b.setAttribute('aria-pressed',String(on)); root.classList.toggle('practice',on); $$('.pbody',root).forEach(p=>p.classList.remove('shown')); RX.forEach(x=>x.dirty=true); return; }
+      const art=b.closest('article.rx'); if(!art) return; const s=RX.find(x=>x.art===art); const ex=s.ex;
+      if(b.dataset.p!==undefined&&b.closest('.parts')){ selPart(s,+b.dataset.p); return; }
+      if(b.dataset.a==='all'){ s.all=!s.all; b.setAttribute('aria-pressed',String(s.all)); $$('.pbody',art).forEach((p,j)=>p.hidden=!s.all&&j!==s.pi); return; }
+      if(b.dataset.a==='rv'){ b.closest('.pbody').classList.add('shown'); s.f=0; s.running=true; return; }
+      if(b.dataset.a==='anim'){ s.f=0; s.running=true; return; }
+      if(b.dataset.a==='sim'){ const p=ex.parts[s.pi], I=dInfo(p.d||ex.d); if(!I.disc||I.k==='bn') return; s.simGoal+=1000; s.running=true; return; }
+      if(b.dataset.a==='tb'){ const p=ex.parts[+b.dataset.p]; if(+b.dataset.p!==s.pi) selPart(s,+b.dataset.p); TB.go(p.tb,{panel,id:art.id,label:`ejercicio ${+art.dataset.i+1}`}); return; }
+    });
+    // la parte se elige también al tocar su enunciado en "Ver todas"
+    root.addEventListener('click',ev=>{ const q=ev.target.closest('.pq'); if(!q) return; const art=q.closest('article.rx'), s=RX.find(x=>x.art===art); selPart(s,+q.closest('.pbody').dataset.p); });
+  }
+  function selPart(s,j){ const ex=s.ex; const prev=ex.parts[s.pi]; s.pi=j; const key=JSON.stringify(ex.parts[j].d||ex.d);
+    if(key!==JSON.stringify(prev.d||ex.d)){ s.sim={}; s.simN=0; s.simGoal=0; }
+    $$('.parts .chip[data-p]',s.art).forEach(c=>c.setAttribute('aria-pressed',String(+c.dataset.p===j)));
+    $$('.pbody',s.art).forEach((p,k)=>p.hidden=!s.all&&k!==j);
+    s.f=0; s.running=true; }
+  // al entrar en pantalla por primera vez se anima
+  if('IntersectionObserver' in window){ const io=new IntersectionObserver(es=>es.forEach(en=>{ if(!en.isIntersecting) return; const s=RX.find(x=>x.art===en.target); if(s&&!s.seen){ s.seen=true; s.f=0; s.running=true; } io.unobserve(en.target); }),{threshold:0.35}); RX.forEach(s=>io.observe(s.art)); }
+}
+// control: el valor escrito en cada parte coincide con lo que calcula el gráfico
+function checkRep(){ let bad=0; for(const k in REP) REP[k].forEach((e,i)=>e.parts.forEach(p=>{ if(p.v===undefined||!p.r) return; const I=dInfo(p.d||e.d); const got=I.k==='bn'?regN(I,p.r):regP(I,p.r);
+  if(Math.abs(got-p.v)>0.0025){ bad++; console.warn(`[repartido] ${k} ej ${i+1} ${p.l}: escrito ${p.v}, calculado ${got.toFixed(4)}`); } })); return bad; }
+
+// ================================================================ guía: ¿qué modelo uso?
+const GUIDE={
+ q0:{q:'¿La variable se mide (tiempo, peso, longitud, nota) y el enunciado dice que es normal, o pide áreas con Z?',y:'nor',n:'q1'},
+ q1:{q:'¿Cuenta cuántas veces pasa algo en un intervalo de tiempo o espacio (por minuto, por km), sin un número fijo de ensayos?',y:'poi',n:'q2'},
+ q2:{q:'¿Cuenta los intentos que hacen falta hasta el primer éxito?',y:'geo',n:'q3'},
+ q3:{q:'¿Todos los valores posibles tienen la misma probabilidad (placas del 1 al 10, una ruleta)?',y:'uni',n:'q4'},
+ q4:{q:'Hay n elementos y se cuentan los éxitos. ¿Se sacan sin reposición de una población chica y conocida (dan N y M, y n es el 5 % de N o más)?',y:'hyp',n:'q5'},
+ q5:{q:'Es binomial (n fijo, ensayos independientes, misma p). ¿n es grande y p muy chica (evento raro, n · p chico)?',y:'b2p',n:'q6'},
+ q6:{q:'¿n es grande, con n · p ≥ 5 y n · (1 − p) ≥ 5, y no hay tabla para ese n?',y:'b2n',n:'bin'}
+};
+const GRES={
+ nor:{t:'Normal',m:'Z = (X − μ) / σ    P(X ≤ x) = Φ(z)',d:'Estandarizar y usar la tabla A.3. Si dan el área, buscar z al revés y despejar x = μ + z · σ.',ex:['nor']},
+ poi:{t:'Poisson',m:'P(X = x) = e^(−λ) · λˣ / x!',d:'λ es el promedio del intervalo que pide el problema: si cambia el intervalo, λ cambia en la misma proporción.',ex:['poi']},
+ geo:{t:'Geométrica',m:'P(X = x) = p · (1 − p)^(x − 1)',d:'X empieza en 1. "Antes del intento k" es X ≤ k − 1, y P(X ≤ x) = 1 − (1 − p)ˣ.',ex:['geo']},
+ uni:{t:'Uniforme discreta',m:'P(X = x) = 1/k',d:'Contar cuántos valores cumplen la condición y multiplicar por 1/k.',ex:['uni']},
+ hyp:{t:'Hipergeométrica',m:'P(X = x) = C(M, x) · C(N − M, n − x) / C(N, n)',d:'Casos favorables sobre casos posibles. Si n es menos del 5 % de N, se puede usar la binomial con p = M/N.',ex:['hyp']},
+ b2p:{t:'Binomial aproximada por Poisson',m:'λ = n · p    P(X = x) ≈ e^(−λ) · λˣ / x!',d:'Por ejemplo n = 8000 y p = 0,001 da λ = 8, que está en la tabla A.2.',ex:['apx']},
+ b2n:{t:'Binomial aproximada por la normal',m:'μ = n · p    σ = √(n · p · q)    con corrección ± 0,5',d:'Cada entero k ocupa de k − 0,5 a k + 0,5. Ver la tabla de corrección por continuidad.',ex:['apx']},
+ bin:{t:'Binomial',m:'P(X = x) = C(n, x) · pˣ · (1 − p)ⁿ⁻ˣ',d:'Si n y p están en la tabla A.1 (n = 5, 10, 15, 20, 25), se usan las acumuladas: P(X = x) = B(x) − B(x − 1).',ex:['bin']}
+};
+function renderGuide(){
+  for(const el of $$('[data-guide]')){ let path=['q0'];
+    const exLinks=ms=>{ const out=[]; for(const [k,lab] of [['l7','L7'],['l8','L8']]) { const ns=REP[k].map((e,i)=>e.m.some(m=>ms.includes(m))?i+1:0).filter(Boolean); if(ns.length) out.push(`<span class="sub">${lab}:</span> ${ns.map(n=>`<button type="button" class="gx" data-k="${k}" data-n="${n}">${n}</button>`).join('')}`); } return out.join(' &nbsp; '); };
+    const draw=()=>{ const cur=path[path.length-1], res=GRES[cur];
+      el.innerHTML=`<div class="exs-h"><h3>¿Qué modelo uso?</h3><span class="sub">Contestá las preguntas sobre el enunciado y te dice qué distribución aplicar.</span></div>
+       <div class="gcard">${path.map((id,i)=>{ const g=GUIDE[id]; if(!g) return ''; const nxt=path[i+1]; const ans=nxt?(nxt===g.y?'Sí':'No'):'';
+         return `<div class="gq${nxt?' done':''}"><p>${esc(g.q)}</p>${nxt?`<span class="gans">${ans}</span>`:`<div class="row"><button class="btn" data-g="y">Sí</button><button class="btn ghost" data-g="n">No</button></div>`}</div>`; }).join('')}
+       ${res?`<div class="gres"><p class="eyebrow">Usá</p><h4>${res.t}</h4><div class="fbox"><div class="math code">${esc(res.m)}</div></div><p>${esc(res.d)}</p><p class="glinks">Ejercicios del repartido con este modelo: ${exLinks(res.ex)}</p></div>`:''}
+       ${path.length>1?'<div class="row"><button class="btn ghost" data-g="back">Volver un paso</button><button class="btn ghost" data-g="reset">Empezar de nuevo</button></div>':''}</div>`; };
+    el.addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(!b) return;
+      if(b.classList.contains('gx')){ const id=`${b.dataset.k}e${b.dataset.n}`, pn=b.dataset.k+'ej'; goPanel(pn); requestAnimationFrame(()=>{ const a=document.getElementById(id); if(a) a.scrollIntoView({block:'start'}); }); return; }
+      const g=b.dataset.g; if(!g) return; const cur=path[path.length-1];
+      if(g==='y'||g==='n') path.push(GUIDE[cur][g]); if(g==='back') path.pop(); if(g==='reset') path=['q0']; draw(); });
+    draw(); }
+}
+function goPanel(id){ show(id); try{ history.pushState(null,'','#'+id); }catch(e){} window.scrollTo({top:0}); }
+
+// ================================================================ tablas del curso (A.1, A.2, A.3)
+const TB=(function(){
+  const root=$('#tablas'); if(!root) return {go(){}};
+  const PB=[0.01,0.05,0.10,0.20,0.25,0.30,0.40,0.50,0.60,0.70,0.75,0.80,0.90,0.95,0.99], NB=[5,10,15,20,25];
+  const PG=[[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0],[2,3,4,5,6,7,8,9,10,15,20]];
+  const f3=v=>{ const s=v.toFixed(3); return s[0]==='0'?s.slice(1):s; }, f4=v=>{ const s=v.toFixed(4); return s[0]==='0'?s.slice(1):s; };
+  const pS=p=>p.toFixed(2).replace(/^0/,''), mS=m=>m<1?m.toFixed(1).replace(/^0/,''):m.toFixed(1);
+  const st={n:20,pg:1,ng:1,sel:{bin:null,poi:null,nor:null},back:null};
+  const cdfB=(n,p,x)=>{ let s=0; for(let k=0;k<=x;k++) s+=binom(n,p,k); return s; };
+  const cdfP=(m,x)=>{ let s=0; for(let k=0;k<=x;k++) s+=pois(m,k); return s; };
+  const el=id=>document.getElementById(id);
+  const segB=bindSeg('tb-bn',v=>{ st.n=+v; st.sel.bin=null; renderBin(); }), segP=bindSeg('tb-pg',v=>{ st.pg=+v; st.sel.poi=null; renderPoi(); }), segN=bindSeg('tb-ng',v=>{ st.ng=+v; renderNor(); });
+  function renderBin(){ segB.sel(st.n); const n=st.n;
+    el('tb-bin-t').innerHTML=`<thead><tr><th class="corner">x \\ p</th>${PB.map((p,j)=>`<th data-c="${j}">${pS(p)}</th>`).join('')}</tr></thead><tbody>${[...Array(n).keys()].map(x=>`<tr><th data-r="${x}">${x}</th>${PB.map((p,j)=>`<td data-r="${x}" data-c="${j}">${f3(cdfB(n,p,x))}</td>`).join('')}</tr>`).join('')}</tbody>`;
+    mark('bin'); }
+  function renderPoi(){ segP.sel(st.pg); const ms=PG[st.pg], rows=st.pg?37:7;
+    let body=''; for(let x=0;x<rows;x++){ body+=`<tr><th data-r="${x}">${x}</th>`; ms.forEach((m,j)=>{ const v=cdfP(m,x), prev=x?cdfP(m,x-1):0; const show=!(x>0&&f3(prev)==='1.000'); body+=`<td data-r="${x}" data-c="${j}"${show?'':' class="blank"'}>${show?f3(v):''}</td>`; }); body+='</tr>'; }
+    el('tb-poi-t').innerHTML=`<thead><tr><th class="corner">x \\ μ</th>${ms.map((m,j)=>`<th data-c="${j}">${mS(m)}</th>`).join('')}</tr></thead><tbody>${body}</tbody>`; mark('poi'); }
+  function renderNor(){ segN.sel(st.ng); const neg=!st.ng; const rows=[]; if(neg) for(let r=34;r>=0;r--) rows.push(r); else for(let r=0;r<=34;r++) rows.push(r);
+    el('tb-nor-t').innerHTML=`<thead><tr><th class="corner">z</th>${[...Array(10).keys()].map(c=>`<th data-c="${c}">.0${c}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr><th data-r="${r}">${neg?'−':''}${(r/10).toFixed(1)}</th>${[...Array(10).keys()].map(c=>{ const z=(neg?-1:1)*(r/10+c/100); return `<td data-r="${r}" data-c="${c}">${f4(Phi(z))}</td>`; }).join('')}</tr>`).join('')}</tbody>`; mark('nor'); }
+  function mark(kind){ const t=el(`tb-${kind}-t`), s=st.sel[kind]; $$('td,th',t).forEach(c=>c.classList.remove('on','cross'));
+    if(!s) return; $$('td',t).forEach(c=>{ const R=+c.dataset.r===s.r, C=+c.dataset.c===s.c; if(R&&C) c.classList.add('on'); else if(R||C) c.classList.add('cross'); });
+    $$('th[data-r],th[data-c]',t).forEach(c=>{ if((c.dataset.r!==undefined&&+c.dataset.r===s.r)||(c.dataset.c!==undefined&&+c.dataset.c===s.c)) c.classList.add('cross'); }); }
+  function readBin(){ const s=st.sel.bin; if(!s){ setH('tb-bin-r','Tocá una celda para ver qué significa.'); return; } const n=st.n, p=PB[s.c], x=s.r;
+    setH('tb-bin-r',`<b>B(${x}; ${n}; ${xl(p)}) = P(X ≤ ${x}) = ${f3(cdfB(n,p,x)).replace('.',',')}</b> con X ~ B(${n}; ${xl(p)}).<br>P(X = ${x}) = ${x?`B(${x}) − B(${x-1})`:'B(0)'} = ${fmt(binom(n,p,x))}  ·  P(X ≥ ${x+1}) = 1 − B(${x}) = ${fmt(1-cdfB(n,p,x))}`); }
+  function readPoi(){ const s=st.sel.poi; if(!s){ setH('tb-poi-r','Tocá una celda para ver qué significa.'); return; } const m=PG[st.pg][s.c], x=s.r;
+    setH('tb-poi-r',`<b>F(${x}; ${xl(m)}) = P(X ≤ ${x}) = ${fmt(cdfP(m,x),3)}</b> con X ~ P(${xl(m)}).<br>P(X = ${x}) = ${fmt(pois(m,x))}  ·  P(X ≥ ${x+1}) = 1 − F(${x}) = ${fmt(1-cdfP(m,x))}`); }
+  const nd=demo('l8fo',{z:1.84,f:1}); nd.update=dt=>{ nd.f=Math.min(1,nd.f+dt/(RM?0.05:0.8)); if(nd.f>=1) nd.running=false; };
+  nd.draw=()=>{ const P=prep(el('tb-nor-cv')); if(!P) return; const {c,w,h}=P; const ax=axes(c,{x:0,y:0,w,h},-3.6,3.6,npdf(0)*1.25,{top:22,noY:true});
+    shade(c,ax,npdf,-Infinity,Math.min(nd.z,-3.6+7.2*ease(nd.f)),T.hit,0.45); plot(c,ax,npdf,T.ink,2); lineLab(c,ax,nd.z,T.ink,`z = ${fmt(nd.z,2)}`,0);
+    c.font='600 13px '+FM; c.fillStyle=T.hit; c.textAlign='right'; c.textBaseline='top'; c.fillText(`Φ(${fmt(nd.z,2)}) = ${fmt(Phi(nd.z))}`,w,0); };
+  function readNor(){ const s=st.sel.nor; if(!s){ setH('tb-nor-r','Tocá una celda o escribí un z o un área.'); return; } const z=(st.ng?1:-1)*(s.r/10+s.c/100);
+    setH('tb-nor-r',`<b>Φ(${fmt(z,2)}) = P(Z ≤ ${fmt(z,2)}) = ${fmt(Phi(z))}</b><br>P(Z &gt; ${fmt(z,2)}) = 1 − Φ = ${fmt(1-Phi(z))}${z>0?`  ·  P(−${fmt(z,2)} &lt; Z &lt; ${fmt(z,2)}) = ${fmt(2*Phi(z)-1)}`:''}`);
+    nd.z=z; nd.f=0; nd.running=true; }
+  function selCell(kind,r,c){ st.sel[kind]={r,c}; mark(kind); ({bin:readBin,poi:readPoi,nor:readNor})[kind](); }
+  root.addEventListener('click',ev=>{ const td=ev.target.closest('td'); if(td&&!td.classList.contains('blank')){ const kind=td.closest('table').id.split('-')[1]; selCell(kind,+td.dataset.r,+td.dataset.c); }
+    const bk=ev.target.closest('[data-a="tback"]'); if(bk&&st.back){ const b=st.back; goPanel(b.panel); requestAnimationFrame(()=>{ const a=document.getElementById(b.id); if(a) a.scrollIntoView({block:'start'}); }); } });
+  el('tb-z').addEventListener('input',e=>{ const v=parseFloat(String(e.target.value).replace(',','.')); if(!isFinite(v)) return; const z=clamp(Math.round(v*100)/100,-3.49,3.49);
+    st.ng=z<0||Object.is(z,-0)?0:1; renderNor(); const a=Math.abs(z), r=Math.floor(a*10+1e-9), c=Math.round((a-r/10)*100); selCell('nor',r,c); });
+  el('tb-a').addEventListener('input',e=>{ const v=parseFloat(String(e.target.value).replace(',','.')); if(!(v>0&&v<1)) return; let best=null;
+    for(let r=0;r<=34;r++) for(let c=0;c<10;c++) for(const sg of [-1,1]){ const z=sg*(r/10+c/100), d=Math.abs(+Phi(z).toFixed(4)-v); if(!best||d<best.d-1e-12) best={d,r,c,ng:sg>0?1:0,z}; }
+    st.ng=best.ng; renderNor(); selCell('nor',best.r,best.c);
+    setH('tb-nor-r',$('#tb-nor-r').innerHTML+`<br>Área buscada ${fmt(v)} → el valor más cercano de la tabla está en z = ${fmt(best.z,2)}. Sin redondear, z = Φ⁻¹(${fmt(v)}) = ${fmt(Phinv(v))}.`); });
+  function go(tb,back){ st.back=back||null; const [k,a,b,c]=tb; goPanel('l8fo');
+    if(k==='bin'){ st.n=a; renderBin(); selCell('bin',c,PB.findIndex(p=>Math.abs(p-b)<1e-9)); }
+    if(k==='poi'){ st.pg=a<=1?0:1; renderPoi(); selCell('poi',b,PG[st.pg].findIndex(m=>Math.abs(m-a)<1e-9)); }
+    if(k==='nor'){ const z=Math.round(a*100)/100; st.ng=z<0?0:1; renderNor(); const A=Math.abs(z), r=Math.floor(A*10+1e-9); selCell('nor',r,Math.round((A-r/10)*100)); el('tb-z').value=String(z); }
+    $$('.tback',root).forEach(x=>{ x.hidden=!st.back; if(st.back) x.textContent=`← Volver al ${st.back.label}`; });
+    const card=el(`tb-${k}`); requestAnimationFrame(()=>{ card.scrollIntoView({block:'start'}); const on=$('td.on',card); if(on) on.scrollIntoView({block:'nearest',inline:'center'}); card.classList.remove('flash'); void card.offsetWidth; card.classList.add('flash'); }); }
+  renderBin(); renderPoi(); renderNor(); readBin(); readPoi(); readNor();
+  return {go};
+})();
 
 // ================================================================ routing
 const tabs=$$('.tab'), panels=$$('.panel');
@@ -1550,6 +2659,9 @@ window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
 // ================================================================ boot
 renderEx();
 renderExtras();
+renderRep();
+renderGuide();
+checkRep();
 readTheme();
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',readTheme);
 new MutationObserver(readTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
