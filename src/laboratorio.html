@@ -49,6 +49,13 @@ a{color:var(--accent)}
 .subtabs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding-bottom:10px}
 .subtabs .gl{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px;white-space:nowrap}
 .subtabs .sep{width:1px;height:22px;background:var(--line);margin:0 6px;flex:none}
+.subwrap{position:relative;min-width:0}
+.tabs{grid-template-columns:minmax(0,1fr)}
+.subtabs{min-width:0}
+.snav{display:none;position:absolute;top:0;bottom:10px;z-index:2;width:30px;height:30px;margin:auto 0;padding:0;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 20px/1 var(--f-body);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.snav.l{left:-8px}
+.snav.r{right:-8px}
+.snav:hover{border-color:var(--accent);color:var(--accent)}
 @media (max-width:640px){
   .les{padding:7px 10px;gap:8px}
   .les .lt span{display:none}
@@ -58,6 +65,7 @@ a{color:var(--accent)}
   .subtabs .tab{flex:none}
   .subtabs.fr{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}
   .subtabs.fl{-webkit-mask-image:linear-gradient(90deg,transparent,#000 56px);mask-image:linear-gradient(90deg,transparent,#000 56px)}
+  .subwrap.fl .snav.l,.subwrap.fr .snav.r{display:flex}
   .subtabs.fl.fr{-webkit-mask-image:linear-gradient(90deg,transparent,#000 56px,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,transparent,#000 56px,#000 calc(100% - 56px),transparent)}
 }
 .tab{font:500 13px/1 var(--f-body);color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;white-space:nowrap}
@@ -275,6 +283,9 @@ table.zt td.on{background:var(--hit);color:#fff;font-weight:600}
       <button class="les" data-les="l7"><span class="lb">L7</span><span class="lt"><strong>Discretas</strong><span>Uniforme, binomial, hipergeométrica, Poisson, geométrica</span></span></button>
       <button class="les" data-les="l8"><span class="lb">L8</span><span class="lt"><strong>Continuas</strong><span>Normal, estandarización, problema inverso, aproximaciones</span></span></button>
     </div>
+    <div class="subwrap">
+    <button class="snav l" type="button" aria-label="Ver pestañas a la izquierda" tabindex="-1">‹</button>
+    <button class="snav r" type="button" aria-label="Ver pestañas a la derecha" tabindex="-1">›</button>
     <div class="subtabs" data-les="l7">
       <span class="gl">Videos</span>
       <button class="tab" data-go="l7v1"><b>V1</b>Uniforme y Bernoulli</button>
@@ -293,6 +304,7 @@ table.zt td.on{background:var(--hit);color:#fff;font-weight:600}
       <span class="sep" aria-hidden="true"></span><span class="gl">Práctica</span>
       <button class="tab rep-t" data-go="l8ej">Repartido</button>
       <button class="tab rep-t" data-go="l8fo">Fórmulas y tablas</button>
+    </div>
     </div>
   </nav>
 
@@ -2679,8 +2691,12 @@ function show(id){ if(!panels.some(p=>p.dataset.panel===id)) id='l7v1'; active=i
   if(t){ const sc=t.closest('.subtabs'), tr=t.getBoundingClientRect(), sr=sc.getBoundingClientRect(); sc.scrollLeft+=(tr.left+tr.width/2)-(sr.left+sr.width/2); }
   navFades(); fitForms(); }
 // en pantallas chicas las pestañas se deslizan: un degradé avisa que hay más a los costados
-function navFades(){ subs.forEach(s=>{ const m=s.scrollWidth-s.clientWidth; s.classList.toggle('fl',s.scrollLeft>4); s.classList.toggle('fr',m>4&&s.scrollLeft<m-4); }); }
+// y una flecha a cada lado donde quedan pestañas ocultas
+const subW=$('.subwrap');
+function navFades(){ subs.forEach(s=>{ const m=s.scrollWidth-s.clientWidth; s.classList.toggle('fl',s.scrollLeft>4); s.classList.toggle('fr',m>4&&s.scrollLeft<m-4); });
+  const v=subs.find(s=>!s.hidden); subW.classList.toggle('fl',!!v&&v.classList.contains('fl')); subW.classList.toggle('fr',!!v&&v.classList.contains('fr')); }
 subs.forEach(s=>s.addEventListener('scroll',navFades,{passive:true})); window.addEventListener('resize',navFades);
+$$('.snav',subW).forEach(b=>b.addEventListener('click',()=>{ const v=subs.find(s=>!s.hidden); if(v) v.scrollBy({left:(b.classList.contains('l')?-1:1)*v.clientWidth*0.6,behavior:RM?'auto':'smooth'}); }));
 lesB.forEach(b=>b.addEventListener('click',()=>{ const id=lastTab[b.dataset.les]; if(location.hash!=='#'+id) location.hash=id; else show(id); window.scrollTo({top:0}); }));
 { const nav=$('.tabs'); const setH=()=>document.documentElement.style.setProperty('--navh',nav.offsetHeight+'px'); new ResizeObserver(setH).observe(nav); setH(); }
 // a formula that does not fit in its card takes the full row
